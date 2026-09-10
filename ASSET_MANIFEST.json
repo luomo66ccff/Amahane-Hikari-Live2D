@@ -1,0 +1,138 @@
+{
+  "schema": "amahane-hikari-assets/v1",
+  "version": "1.0.0",
+  "files": [
+    {
+      "path": "model/source/Cubism/SuJiangXue_HairFlow_t001.cmo3",
+      "bytes": 38201449,
+      "sha256": "ba82e510fb97222d1dec6c878d6fe806884d7ce84b239483c61079078776196a",
+      "license": "LicenseRef-Model-Attribution-NoAI-1.0"
+    },
+    {
+      "path": "model/source/Photoshop/SuJiangXue_HairFlow_ArtMaster_WIP_t001.psd",
+      "bytes": 33142384,
+      "sha256": "ddc69ab1792c46a1098894c51b9765cc21f19e5648f763f612c1b91d4e7c8423",
+      "license": "LicenseRef-Model-Attribution-NoAI-1.0"
+    },
+    {
+      "path": "model/source/Photoshop/SuJiangXue_HairFlow_BackHair_TexturePatch_t001.psd",
+      "bytes": 9547682,
+      "sha256": "d24c8be42de95d12b466f52eae34364e0a8f5451e41653721d9799b7f8f6b0ea",
+      "license": "LicenseRef-Model-Attribution-NoAI-1.0"
+    },
+    {
+      "path": "model/runtime/expressions/Angry.exp3.json",
+      "bytes": 1730,
+      "sha256": "58f09f1f73644d1a452701eb355a24c09fcb9034e46454c05a5a2b334f249e4f",
+      "license": "LicenseRef-Model-Attribution-NoAI-1.0"
+    },
+    {
+      "path": "model/runtime/expressions/Cry.exp3.json",
+      "bytes": 1728,
+      "sha256": "d810be2b202aaeb47783fa5b7502865bf5c7bc30eac4466459afe038feaedce3",
+      "license": "LicenseRef-Model-Attribution-NoAI-1.0"
+    },
+    {
+      "path": "model/runtime/expressions/Happy.exp3.json",
+      "bytes": 1731,
+      "sha256": "ddc1be91111e2ff9ecceb231201393cab17f147cbcf57e3b75f5e97f8bbf412c",
+      "license": "LicenseRef-Model-Attribution-NoAI-1.0"
+    },
+    {
+      "path": "model/runtime/expressions/HappyCat.exp3.json",
+      "bytes": 1730,
+      "sha256": "c3f8998a9b6f1723dbc54e409e93942cda731f993daa3614c6e0da9c98528443",
+      "license": "LicenseRef-Model-Attribution-NoAI-1.0"
+    },
+    {
+      "path": "model/runtime/expressions/Neutral.exp3.json",
+      "bytes": 1722,
+      "sha256": "35e47579f813a54ff47f7653ecfe7c17ba2045cffeaa2d89d5b4524a317fc9b8",
+      "license": "LicenseRef-Model-Attribution-NoAI-1.0"
+    },
+    {
+      "path": "model/runtime/expressions/Sad.exp3.json",
+      "bytes": 1727,
+      "sha256": "5569ae5d8d9178b61083e3d119a8824487dde0050aebb957c5474692575faf57",
+      "license": "LicenseRef-Model-Attribution-NoAI-1.0"
+    },
+    {
+      "path": "model/runtime/expressions/Shy.exp3.json",
+      "bytes": 1733,
+      "sha256": "38d59d6427b9767ac6b063ce019bdc72338d8b70f7a4ef83e20a5556ff385f66",
+      "license": "LicenseRef-Model-Attribution-NoAI-1.0"
+    },
+    {
+      "path": "model/runtime/expressions/Sleepy.exp3.json",
+      "bytes": 1734,
+      "sha256": "ff76bf71c8b467dd2747f08c9d00b91695c6378607edaa0946c087506949f0d6",
+      "license": "LicenseRef-Model-Attribution-NoAI-1.0"
+    },
+    {
+      "path": "model/runtime/expressions/Smile.exp3.json",
+      "bytes": 1720,
+      "sha256": "a6b6e9cbb7e121dae87dbcb99e79cae1e6796ee479bae4801813d1712355b7e4",
+      "license": "LicenseRef-Model-Attribution-NoAI-1.0"
+    },
+    {
+      "path": "model/runtime/expressions/Surprised.exp3.json",
+      "bytes": 1731,
+      "sha256": "95792274528ff416d242bf799e223cab23d74ab548799dace0dd7ba14d2b374f",
+      "license": "LicenseRef-Model-Attribution-NoAI-1.0"
+    },
+    {
+      "path": "model/runtime/expressions/Wink_L.exp3.json",
+      "bytes": 1724,
+      "sha256": "d86f007b2eca37f3be08e3c8ac1e510561e826cf26ba436ca7f53ece491ff643",
+      "license": "LicenseRef-Model-Attribution-NoAI-1.0"
+    },
+    {
+      "path": "model/runtime/expressions/Wink_R.exp3.json",
+      "bytes": 1724,
+      "sha256": "6199b9c08bbdb080fcf7716ea8256bb1bf3fb5cfd45962f3ccfe1c4b7ea9a562",
+      "license": "LicenseRef-Model-Attribution-NoAI-1.0"
+    },
+    {
+      "path": "model/runtime/SuJiangXue_HairFlow_t002.8192/texture_00.png",
+      "bytes": 32705708,
+      "sha256": "39893753062beff560318886b3fe2a9da14a85662666435f4a0beafcab50c233",
+      "license": "LicenseRef-Model-Attribution-NoAI-1.0"
+    },
+    {
+      "path": "model/runtime/SuJiangXue_HairFlow_t002.8192/texture_01.png",
+      "bytes": 12909,
+      "sha256": "af3215c046dd7621a8b23f21d0f83a7e05a13f38914cc3f1f53725b0f53e6776",
+      "license": "LicenseRef-Model-Attribution-NoAI-1.0"
+    },
+    {
+      "path": "model/runtime/SuJiangXue_HairFlow_t002.cdi3.json",
+      "bytes": 8537,
+      "sha256": "7af3eb51f0a94e4f0dd614d3a841c77e6c17eca5f71878948ab1ea1312b2042b",
+      "license": "LicenseRef-Model-Attribution-NoAI-1.0"
+    },
+    {
+      "path": "model/runtime/SuJiangXue_HairFlow_t002.moc3",
+      "bytes": 356864,
+      "sha256": "b74e39fa8599c50d1f2a12236f34d3e93e76a282b028616f69aa7565c9df824e",
+      "license": "LicenseRef-Model-Attribution-NoAI-1.0"
+    },
+    {
+      "path": "model/runtime/SuJiangXue_HairFlow_t002.model3.json",
+      "bytes": 1689,
+      "sha256": "b76c8980417271367577e26070c4994723593e79aeb612c440f98b74ca6299f5",
+      "license": "LicenseRef-Model-Attribution-NoAI-1.0"
+    },
+    {
+      "path": "model/runtime/SuJiangXue_HairFlow_t002.physics3.json",
+      "bytes": 24513,
+      "sha256": "34cb0b3c5e81c1ab02ff3e838506c0ea23cbcff4f33555044f99b62b04a11dc6",
+      "license": "LicenseRef-Model-Attribution-NoAI-1.0"
+    },
+    {
+      "path": "previews/neutral.png",
+      "bytes": 7816211,
+      "sha256": "6cb65a9a0d6baa8ff5e768547833478382985edb1fbcd6422f6068da9020dfde",
+      "license": "LicenseRef-Model-Attribution-NoAI-1.0"
+    }
+  ]
+}

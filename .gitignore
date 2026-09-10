@@ -1,0 +1,11 @@
+web/node_modules/
+web/dist/
+web/vendor/
+web/public/vendor/
+web/public/licenses/
+web/public/model/
+*.log
+.env
+.env.*
+.DS_Store
+Thumbs.db

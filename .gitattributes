@@ -1,0 +1,7 @@
+* text=auto eol=lf
+model/** -text whitespace=cr-at-eol
+*.cmo3 binary
+*.moc3 binary
+*.psd binary
+*.png binary
+*.webm binary

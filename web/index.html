@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#08111f" />
+    <meta name="description" content="Amahane Hikari Live2D 表情展示页" />
+    <link rel="canonical" href="https://live2d.luomo.moe/Amahane_Hikari/" />
+    <meta property="og:title" content="Amahane Hikari · Live2D" />
+    <meta property="og:description" content="选择她此刻的心情，和 Amahane Hikari 互动。" />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>Amahane Hikari · Live2D Showcase</title>
+  </head>
+  <body>
+    <noscript>请开启 JavaScript，以显示动态角色和表情控制。</noscript>
+    <div class="showcase" data-showcase data-background="night" data-state="loading">
+      <header class="topbar" aria-label="展示页顶栏">
+        <a class="wordmark" href="./" aria-label="Amahane Hikari 首页">
+          <span class="wordmark-mark" aria-hidden="true">AH</span>
+          <span class="wordmark-copy">
+            <span class="wordmark-name">Amahane Hikari</span>
+            <span class="wordmark-meta">LIVE2D SHOWCASE</span>
+          </span>
+        </a>
+
+        <div class="topbar-actions" aria-label="播放和设置">
+          <button
+            class="control-button control-button--pause"
+            id="pause-toggle"
+            type="button"
+            data-ui-control
+            data-action="pause"
+            aria-pressed="false"
+            aria-label="暂停动态"
+            disabled
+          >
+            <svg class="icon icon--pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M8 5.5v13M16 5.5v13" />
+            </svg>
+            <span data-pause-label>暂停动态</span>
+          </button>
+          <button
+            class="control-button control-button--settings"
+            id="settings-toggle"
+            type="button"
+            data-ui-control
+            data-action="open-settings"
+            aria-expanded="false"
+            aria-controls="settings-panel"
+            aria-label="打开舞台设置"
+            disabled
+          >
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M12 8.25a3.75 3.75 0 1 0 0 7.5 3.75 3.75 0 0 0 0-7.5Z" />
+              <path d="m19.2 13.36 1.15.9-1.5 2.6-1.38-.5a7.8 7.8 0 0 1-1.58.92l-.23 1.45h-3l-.23-1.45a7.8 7.8 0 0 1-1.58-.92l-1.38.5-1.5-2.6 1.15-.9a7.4 7.4 0 0 1 0-1.82l-1.15-.9 1.5-2.6 1.38.5a7.8 7.8 0 0 1 1.58-.92l.23-1.45h3l.23 1.45a7.8 7.8 0 0 1 1.58.92l1.38-.5 1.5 2.6-1.15.9a7.4 7.4 0 0 1 0 1.82Z" />
+            </svg>
+            <span>设置</span>
+          </button>
+        </div>
+      </header>
+
+      <main class="page-content">
+        <section class="stage-shell" id="stage" aria-labelledby="stage-title">
+          <div class="stage-atmosphere" aria-hidden="true">
+            <span class="stage-ring stage-ring--outer"></span>
+            <span class="stage-ring stage-ring--inner"></span>
+            <span class="stage-crosshair stage-crosshair--top"></span>
+            <span class="stage-crosshair stage-crosshair--right"></span>
+            <span class="stage-crosshair stage-crosshair--bottom"></span>
+            <span class="stage-crosshair stage-crosshair--left"></span>
+            <span class="stage-star stage-star--one"></span>
+            <span class="stage-star stage-star--two"></span>
+            <span class="stage-star stage-star--three"></span>
+          </div>
+
+          <div class="stage-heading">
+            <p class="section-kicker"><span class="kicker-line" aria-hidden="true"></span> CHARACTER / 01</p>
+            <h1 id="stage-title">Amahane Hikari</h1>
+            <p class="stage-heading-note">表达她此刻的心情</p>
+          </div>
+
+          <p class="stage-word" aria-hidden="true">HIKARI</p>
+          <p class="stage-coordinate" aria-hidden="true">LIVE2D&nbsp;&nbsp;/&nbsp;&nbsp;01</p>
+
+          <div class="model-viewport" aria-label="角色舞台">
+            <div class="model-glow" aria-hidden="true"></div>
+            <canvas id="model-canvas" width="800" height="900" tabindex="0" aria-describedby="interaction-hint" aria-label="Amahane Hikari 动态角色"></canvas>
+            <p class="model-fallback" id="model-fallback">角色画布准备中</p>
+          </div>
+
+          <div class="stage-interactions" aria-label="角色互动">
+            <div class="interaction-controls">
+              <button class="stage-action-button" id="move-toggle" type="button" data-ui-control aria-pressed="false" aria-label="开启移动模式" disabled>
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3v18M3 12h18M12 3l-2.5 2.5M12 3l2.5 2.5M21 12l-2.5-2.5M21 12l-2.5 2.5M12 21l-2.5-2.5M12 21l2.5-2.5M3 12l2.5-2.5M3 12l2.5 2.5" /></svg>
+                <span data-move-label>移动角色</span>
+              </button>
+              <button class="stage-action-button" id="center-button" type="button" data-ui-control aria-label="将角色居中" disabled>
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z" /></svg>
+                <span>居中</span>
+              </button>
+              <button class="stage-action-button stage-action-button--greet" id="greet-button" type="button" data-ui-control aria-label="向 Hikari 打招呼" disabled>
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 6.5h14v10H9l-4 3v-13Z" /><path d="M8.5 11.5h.01M12 11.5h.01M15.5 11.5h.01" /></svg>
+                <span>打招呼</span>
+              </button>
+            </div>
+            <p class="interaction-hint" id="interaction-hint">移动鼠标与她对视，点击角色互动；开启移动后可拖动角色。</p>
+            <p class="interaction-message" id="interaction-message" role="status" aria-live="polite" aria-atomic="true" hidden></p>
+          </div>
+
+          <div class="stage-status" id="model-status" data-status="loading">
+            <span class="status-pulse" aria-hidden="true"></span>
+            <div class="status-copy">
+              <span class="status-label" data-status-label>MODEL LOADING</span>
+              <span class="status-detail" id="loading-text" aria-live="polite">正在准备角色资源…</span>
+            </div>
+            <button class="retry-button" id="retry-button" type="button" data-ui-control data-action="retry" hidden disabled>
+              重新加载
+            </button>
+          </div>
+
+          <p class="stage-scroll-cue"><span aria-hidden="true">↓</span> EXPLORE EXPRESSIONS</p>
+
+          <aside class="settings-panel" id="settings-panel" aria-labelledby="settings-title" aria-hidden="true" hidden>
+            <div class="settings-header">
+              <div>
+                <p class="section-kicker"><span class="kicker-line" aria-hidden="true"></span> STAGE CONTROL</p>
+                <h2 id="settings-title">舞台设置</h2>
+              </div>
+              <button class="panel-close" id="settings-close" type="button" data-ui-control data-action="close-settings" aria-label="关闭舞台设置" disabled>
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18" /></svg>
+              </button>
+            </div>
+
+            <div class="settings-grid">
+              <fieldset class="setting-group setting-group--background">
+                <legend>背景氛围</legend>
+                <div class="segmented-control" role="group" aria-label="背景氛围">
+                  <button class="segment-button is-selected" type="button" data-ui-control data-background="night" aria-pressed="true">夜幕</button>
+                  <button class="segment-button" type="button" data-ui-control data-background="snow" aria-pressed="false">雪光</button>
+                  <button class="segment-button" type="button" data-ui-control data-background="rose" aria-pressed="false">绯色</button>
+                </div>
+              </fieldset>
+
+              <fieldset class="setting-group setting-group--zoom">
+                <legend>镜头</legend>
+                <div class="zoom-presets" role="group" aria-label="镜头预设">
+                  <button class="segment-button is-selected" type="button" data-ui-control data-zoom="1" aria-pressed="true">完整视图</button>
+                  <button class="segment-button" type="button" data-ui-control data-zoom="1.45" aria-pressed="false">近景</button>
+                </div>
+                <label class="range-label" for="zoom-range">
+                  <span>自由缩放</span>
+                  <output id="zoom-output" for="zoom-range">100%</output>
+                </label>
+                <input id="zoom-range" type="range" data-ui-control min="0.85" max="1.6" step="0.05" value="1" aria-label="自由缩放，范围百分之八十五到百分之一百六十" />
+              </fieldset>
+
+              <fieldset class="setting-group setting-group--follow">
+                <legend>互动</legend>
+                <button class="switch-row" id="follow-toggle" type="button" data-ui-control aria-pressed="true" aria-label="关闭视线跟随">
+                  <span class="switch-copy">
+                    <span class="switch-title">全页鼠标跟随</span>
+                    <span class="switch-description">双眼追视与头部、身体动作同步</span>
+                  </span>
+                  <span class="switch-track" aria-hidden="true"><span class="switch-thumb"></span></span>
+                </button>
+              </fieldset>
+            </div>
+
+            <button class="reset-button" id="reset-button" type="button" data-ui-control data-action="reset">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4.5 11.5a7.5 7.5 0 1 0 2.2-5.3L4.5 8.4M4.5 4.7v3.7h3.7" /></svg>
+              <span>恢复默认设置</span>
+            </button>
+          </aside>
+        </section>
+
+        <section class="expression-section" aria-labelledby="expressions-title">
+          <div class="section-header">
+            <div>
+              <p class="section-kicker"><span class="kicker-line" aria-hidden="true"></span> EXPRESSION LIBRARY</p>
+              <h2 id="expressions-title">选择表情</h2>
+            </div>
+            <p class="expression-count"><span id="expression-index">01</span> / 12</p>
+          </div>
+          <nav class="expression-dock" aria-label="表情选择">
+            <div class="expression-list">
+              <button class="expression-button is-selected" type="button" data-ui-control data-expression="Neutral" aria-pressed="true"><span class="expression-index">01</span><span class="expression-name">默认</span></button>
+              <button class="expression-button" type="button" data-ui-control data-expression="Smile" aria-pressed="false"><span class="expression-index">02</span><span class="expression-name">微笑</span></button>
+              <button class="expression-button" type="button" data-ui-control data-expression="Happy" aria-pressed="false"><span class="expression-index">03</span><span class="expression-name">开心</span></button>
+              <button class="expression-button" type="button" data-ui-control data-expression="Shy" aria-pressed="false"><span class="expression-index">04</span><span class="expression-name">害羞</span></button>
+              <button class="expression-button" type="button" data-ui-control data-expression="Angry" aria-pressed="false"><span class="expression-index">05</span><span class="expression-name">生气</span></button>
+              <button class="expression-button" type="button" data-ui-control data-expression="Sad" aria-pressed="false"><span class="expression-index">06</span><span class="expression-name">难过</span></button>
+              <button class="expression-button" type="button" data-ui-control data-expression="Surprised" aria-pressed="false"><span class="expression-index">07</span><span class="expression-name">惊讶</span></button>
+              <button class="expression-button" type="button" data-ui-control data-expression="Sleepy" aria-pressed="false"><span class="expression-index">08</span><span class="expression-name">困倦</span></button>
+              <button class="expression-button" type="button" data-ui-control data-expression="Cry" aria-pressed="false"><span class="expression-index">09</span><span class="expression-name">哭泣</span></button>
+              <button class="expression-button" type="button" data-ui-control data-expression="Wink_L" aria-pressed="false"><span class="expression-index">10</span><span class="expression-name">左眨眼</span></button>
+              <button class="expression-button" type="button" data-ui-control data-expression="Wink_R" aria-pressed="false"><span class="expression-index">11</span><span class="expression-name">右眨眼</span></button>
+              <button class="expression-button" type="button" data-ui-control data-expression="HappyCat" aria-pressed="false"><span class="expression-index">12</span><span class="expression-name">猫猫开心</span></button>
+            </div>
+            <p class="dock-scroll-hint"><span aria-hidden="true">↔</span> 左右滑动浏览全部表情</p>
+          </nav>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <span>Amahane Hikari</span>
+        <span class="footer-dot" aria-hidden="true"></span>
+        <span>Powered by <a href="https://www.live2d.com/" target="_blank" rel="noopener noreferrer">Live2D</a> · <a href="./licenses/Live2D-Core-LICENSE.md">Core license</a> · <a href="./licenses/Live2D-Framework-LICENSE.md">Framework license</a></span>
+      </footer>
+    </div>
+
+    <script src="./vendor/live2dcubismcore.min.js"></script>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

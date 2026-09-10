@@ -1,0 +1,56 @@
+Amahane Hikari Model Attribution and No-AI License 1.0
+
+Copyright 2026 luomo66ccff, to the extent copyright subsists and is held
+by the licensor. AI-assisted production, including Adobe Firefly content,
+forms part of the asset production history.
+
+1. Scope and permission
+
+This license applies to the model, artwork, textures, rig, expressions,
+source CMO3 and PSD files, and model previews supplied under this notice.
+Subject to the conditions below, permission is granted worldwide and
+royalty-free to use, copy, display, perform, modify, distribute and sell
+these materials, including for commercial projects, streaming and games.
+
+2. Attribution and redistribution
+
+Keep this license and credit "Amahane Hikari / SuJiangXue — luomo66ccff"
+with a link to https://github.com/luomo66ccff/Amahane-Hikari-Live2D when
+sharing the materials or a derivative. Identify substantive changes.
+Redistributed materials and derivatives must retain the restriction in
+section 3. Do not imply endorsement by the creator or by Adobe or Live2D.
+
+3. AI and machine-learning restriction
+
+Do not use, or authorize others to use, these materials or data derived
+from them to create, train, test or improve machine-learning algorithms
+or artificial-intelligence systems, including architectures, models or
+weights. Do not include them in datasets for those purposes.
+
+This condition preserves the restriction associated with Adobe-generated
+content in the production history. It does not authorize any action
+otherwise prohibited by applicable third-party terms.
+
+4. Separate software and third-party terms
+
+The project's original web application and utility code use the MIT
+License. This model license does not apply to that code. Live2D SDK,
+Core and Framework remain under their respective third-party terms and
+are not supplied or relicensed by this model license. Preserve any
+existing attribution, watermarks and content-origin credentials.
+
+5. Warranty and other rights
+
+The materials are provided as is, without warranties, to the fullest
+extent permitted by law. The licensor is not liable for claims or damages
+arising from their use to the fullest extent permitted by law. No rights
+in third-party trademarks, personality rights or patents are granted.
+This license does not restrict uses allowed independently by applicable
+law. Its permissions are conditioned on compliance with these terms.
+
+This is a custom source-available asset license with a use restriction.
+It is not CC BY 4.0 and is not an OSI-approved open-source license.
+
+Reference: Adobe Generative AI Product Specific Terms, effective
+2026-04-23, section 3.3:
+https://www.adobe.com/cc-shared/assets/pdf/legal/servicetou/adobe-generative-ai-product-specific-terms-en-us-20260423.pdf
