@@ -103,6 +103,8 @@ for (const mode of ['ok', 'allocation-failed', 'upload-failed', 'destroyed', 'de
   await test('actual texture loop: ' + mode, async () => {
     const revoked = []; const images = []; const texture = {}; const abort = new AbortController();
     let binds = 0;
+    let markDecodeStarted;
+    const decodeStarted = new Promise(resolve => { markDecodeStarted = resolve; });
     const gl = {
       createTexture: () => mode === 'allocation-failed' ? null : texture,
       bindTexture() {}, pixelStorei() {}, texParameteri() {},
@@ -115,6 +117,7 @@ for (const mode of ['ok', 'allocation-failed', 'upload-failed', 'destroyed', 'de
         src = '';
         constructor() { images.push(this); }
         decode() {
+          markDecodeStarted();
           if (mode === 'decode-failed') return Promise.reject(new Error('decode failed'));
           if (mode === 'decode-timeout') return new Promise(() => {});
           if (mode === 'aborted') abort.abort();
@@ -136,8 +139,12 @@ for (const mode of ['ok', 'allocation-failed', 'upload-failed', 'destroyed', 'de
     }[mode];
     const completion = expected ? assert.rejects(pending, expected) : pending;
     if (mode === 'decode-timeout') {
-      // The loop first awaits fetchFile, then registers its decode timeout.
-      await Promise.resolve(); fireTimeout();
+      // Cross-VM Promise assimilation can take several microtasks. Wait for
+      // the actual operation boundary rather than guessing a microtask count.
+      await Promise.race([decodeStarted, completion.then(() => {
+        throw new Error('Texture loop finished without starting decode');
+      })]);
+      fireTimeout();
     }
     await completion;
     assert.equal(stage.textures.length, mode === 'ok' || mode === 'upload-failed' ? 1 : 0);
