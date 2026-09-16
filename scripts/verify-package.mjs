@@ -16,15 +16,20 @@ for (const item of manifest.files) {
   if (bytes.length >= 100 * 1024 * 1024) throw new Error(`Asset exceeds regular Git size limit: ${item.path}`);
 }
 const runtime = path.join(root,'model/runtime');
-const settings = JSON.parse(await fs.readFile(path.join(runtime,'SuJiangXue_HairFlow_t002.model3.json'),'utf8'));
+const settingsFile = 'SuJiangXue_HikariSmirk_t001.model3.json';
+const settings = JSON.parse(await fs.readFile(path.join(runtime,settingsFile),'utf8'));
 const refs = settings.FileReferences;
-const references = [refs.Moc, refs.Physics, refs.DisplayInfo, ...refs.Textures, ...refs.Expressions.map(item=>item.File)].filter(Boolean);
+const motions = Object.values(refs.Motions ?? {}).flat();
+const references = [refs.Moc, refs.Physics, refs.DisplayInfo, ...refs.Textures, ...refs.Expressions.map(item=>item.File), ...motions.flatMap(item=>[item.File,item.Sound])].filter(Boolean);
 for (const reference of references) {
   if (!(await fs.stat(inside(runtime, reference))).isFile()) throw new Error(`Missing runtime reference: ${reference}`);
 }
-if (refs.Expressions.length !== 12 || refs.Textures.length !== 2) throw new Error('Unexpected expressions or texture count');
+if (refs.Expressions.length !== 12 || refs.Textures.length !== 8 || motions.length !== 1) throw new Error('Unexpected expressions, textures or motions');
+if (JSON.stringify([settingsFile,...new Set(references)].sort()) !== JSON.stringify(await walk(runtime))) throw new Error('Runtime reference closure differs');
 const physics = JSON.parse(await fs.readFile(inside(runtime, refs.Physics),'utf8'));
 if (physics.PhysicsSettings.length !== 14 || physics.PhysicsSettings.reduce((sum,group)=>sum+group.Output.length,0) !== 17) throw new Error('Unexpected physics inventory');
 const runtimeCount = actual.filter(p=>p.startsWith('model/runtime/')).length;
-if (runtimeCount !== 18) throw new Error('Unexpected runtime file count');
-console.log(JSON.stringify({status:'PASS',assets:paths.length,runtime_files:runtimeCount,expressions:12,physics_groups:14,physics_outputs:17}));
+if (runtimeCount !== 25) throw new Error('Unexpected runtime file count');
+const definitions = JSON.parse(await fs.readFile(path.join(root,'model/parameter-definitions.json'),'utf8'));
+if (definitions.parameters.length !== 66 || new Set(definitions.parameters.map(p=>p.id)).size !== 66) throw new Error('Unexpected parameter definitions');
+console.log(JSON.stringify({status:'PASS',assets:paths.length,runtime_files:runtimeCount,expressions:12,textures:8,motions:1,parameters:66,physics_groups:14,physics_outputs:17}));

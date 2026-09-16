@@ -14,10 +14,10 @@ No SDK, Core, Framework, shader or SDK type declaration is committed or included
 
 ## Development tools
 
-The npm lockfile pins Vite 8.2.2 and TypeScript 5.9.3 and their dependencies. Vite is MIT-licensed and TypeScript is Apache-2.0-licensed; consult the license files supplied with each installed package. Dependency packages and `node_modules` are not redistributed in this repository.
+The npm lockfile pins Vite 8.0.2, TypeScript 5.9.3 and Playwright 1.58.2 and their dependencies. Vite is MIT-licensed and TypeScript and Playwright are Apache-2.0-licensed; consult the license files supplied with each installed package. Dependency packages and `node_modules` are not redistributed in this repository.
 
 ## Model scope
 
-The published files are the current model project and its HairFlow artwork. Other outfits, style-reference folders, internal audit records and older model versions are not part of this release.
+The current native102 CMO3 and runtime contain three outfits. The original HairFlow CMO3 and Photoshop artwork are retained as historical source materials; the PSDs are not a complete artwork master for all three current outfits. Private style references and raw internal audit logs are excluded.
 
 Production includes Adobe Firefly-generated content. The model license preserves the no-AI/ML-training restriction associated with that content; it is a custom source-available asset license, not CC BY. See [provenance](docs/PROVENANCE.md), the [model license](LICENSES/Model-Attribution-NoAI-1.0.txt) and [Adobe's Generative AI Product Specific Terms, section 3.3](https://www.adobe.com/cc-shared/assets/pdf/legal/servicetou/adobe-generative-ai-product-specific-terms-en-us-20260423.pdf).

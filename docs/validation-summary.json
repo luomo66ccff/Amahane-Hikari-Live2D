@@ -1,0 +1,122 @@
+{
+  "schema": "hikari-validation-summary/v1",
+  "release": "v2.0.0",
+  "model": "native102",
+  "model_counts": {
+    "parameters": 66,
+    "drawables": 226,
+    "parts": 59
+  },
+  "runtime_files": 25,
+  "textures": 8,
+  "expressions": 12,
+  "motions": 1,
+  "core_comparison": {
+    "before": "native101",
+    "after": "native102",
+    "unchanged_legacy_geometry_states": 231,
+    "unchanged_textures": 8,
+    "new_parameter": "ParamMouthCornerRaiseR",
+    "visual_acceptance": "Separate rendered review; geometry equality alone is not visual approval"
+  },
+  "controller": {
+    "cases": 21,
+    "fps_inputs": [
+      15,
+      30,
+      60,
+      120
+    ],
+    "status": "PASS"
+  },
+  "local_production_smoke": {
+    "status": "PASS",
+    "checks": 62,
+    "errors": 0,
+    "viewports": [
+      [
+        1440,
+        1000
+      ],
+      [
+        390,
+        844
+      ]
+    ],
+    "browser": "Edge 153",
+    "outfit_sequence": [
+      0,
+      1,
+      2,
+      0
+    ]
+  },
+  "mouth_ownership_browser": {
+    "status": "PASS",
+    "checks": 22,
+    "scope": "Fresh speech input, closed-mouth chew, exit/cancel handoff, pause, interruption and reentry"
+  },
+  "continuous_video": {
+    "before": "native101 (already contains head and shoulder upgrades)",
+    "after": "native102 and final controller",
+    "seconds_per_clip": 54,
+    "outfits": 3,
+    "review": "Finite 2 fps sampling plus selected full-resolution frames; not every frame or arbitrary parameter combination"
+  },
+  "performance": {
+    "metric": "Intervals between actual draw timestamps, not per-frame GPU execution time",
+    "seconds_per_outfit_and_version": 10,
+    "viewport": [
+      1100,
+      1450
+    ],
+    "canvas": [
+      1000,
+      1200
+    ],
+    "dpr": 1,
+    "zoom": 1.15,
+    "median_ms_before": [
+      4.2,
+      4.2,
+      4.2
+    ],
+    "median_ms_after": [
+      4.2,
+      4.2,
+      4.2
+    ],
+    "p95_ms_before": [
+      4.4,
+      4.4,
+      4.4
+    ],
+    "p95_ms_after": [
+      4.8,
+      4.6,
+      4.4
+    ],
+    "mean_interval_change_percent": [
+      1.912,
+      1.518,
+      -0.009
+    ],
+    "errors": 0,
+    "limits": "One local headless Edge environment; no FPS guarantee or broad device benchmark"
+  },
+  "limitations": [
+    "Art ends at the upper thighs; no lower-leg/foot artwork was added.",
+    "This release did not revalidate VTube Studio, camera tracking or microphone input.",
+    "Historical PSDs do not cover all final outfit artwork.",
+    "Raw workstation/UI logs remain private."
+  ],
+  "public_production_smoke": {
+    "status": "PASS",
+    "checks": 62,
+    "errors": 0,
+    "protocol": "HTTP/1.1; QUIC and HTTP/2 disabled in the final runner",
+    "report": "browser-smoke.json",
+    "initial_default_connection_run": "34 checks passed; later repeated large-texture loads timed out",
+    "scope": "Real public page with ordinary desktop URL and QA-query narrow URL; no request interception or model injection"
+  }
+}

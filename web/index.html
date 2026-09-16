@@ -9,14 +9,14 @@
     <meta property="og:title" content="Amahane Hikari · Live2D" />
     <meta property="og:description" content="选择她此刻的心情，和 Amahane Hikari 互动。" />
     <meta property="og:type" content="website" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="%BASE_URL%favicon.svg" type="image/svg+xml" />
     <title>Amahane Hikari · Live2D Showcase</title>
   </head>
   <body>
     <noscript>请开启 JavaScript，以显示动态角色和表情控制。</noscript>
     <div class="showcase" data-showcase data-background="night" data-state="loading">
       <header class="topbar" aria-label="展示页顶栏">
-        <a class="wordmark" href="./" aria-label="Amahane Hikari 首页">
+        <a class="wordmark" href="%BASE_URL%" aria-label="Amahane Hikari 首页">
           <span class="wordmark-mark" aria-hidden="true">AH</span>
           <span class="wordmark-copy">
             <span class="wordmark-name">Amahane Hikari</span>
@@ -104,6 +104,17 @@
                 <span>打招呼</span>
               </button>
             </div>
+            <div class="interaction-actions" aria-label="动作互动">
+              <button class="stage-action-button stage-action-button--momentary" type="button" data-ui-control data-hikari-action="curiosity" aria-label="好奇动作" disabled>
+                <span>好奇</span>
+              </button>
+              <button class="stage-action-button stage-action-button--momentary" type="button" data-ui-control data-hikari-action="shy" aria-label="害羞动作" disabled>
+                <span>害羞</span>
+              </button>
+              <button class="stage-action-button stage-action-button--momentary" type="button" data-ui-control data-hikari-action="smug" aria-label="得意动作" disabled>
+                <span>得意</span>
+              </button>
+            </div>
             <p class="interaction-hint" id="interaction-hint">移动鼠标与她对视，点击角色互动；开启移动后可拖动角色。</p>
             <p class="interaction-message" id="interaction-message" role="status" aria-live="polite" aria-atomic="true" hidden></p>
           </div>
@@ -133,6 +144,15 @@
             </div>
 
             <div class="settings-grid">
+              <fieldset class="setting-group setting-group--outfit">
+                <legend>服装</legend>
+                <div class="segmented-control" role="group" aria-label="服装选择">
+                  <button class="segment-button is-selected" type="button" data-ui-control data-outfit="0" aria-pressed="true">礼装</button>
+                  <button class="segment-button" type="button" data-ui-control data-outfit="1" aria-pressed="false">校服</button>
+                  <button class="segment-button" type="button" data-ui-control data-outfit="2" aria-pressed="false">泳装</button>
+                </div>
+              </fieldset>
+
               <fieldset class="setting-group setting-group--background">
                 <legend>背景氛围</legend>
                 <div class="segmented-control" role="group" aria-label="背景氛围">

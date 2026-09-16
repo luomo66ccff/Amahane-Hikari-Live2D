@@ -1,4 +1,5 @@
 import './styles.css';
+import type { ActionName } from './action-controller';
 
 export const EXPRESSION_NAMES = [
   'Neutral',
@@ -16,13 +17,17 @@ export const EXPRESSION_NAMES = [
 ] as const;
 
 export type ExpressionName = (typeof EXPRESSION_NAMES)[number];
+export type OutfitValue = 0 | 1 | 2;
 
 export interface UICallbacks {
   expression(name: string): void;
+  action(name: ActionName): void;
+  greet(): void;
   pause(paused: boolean): void;
   zoom(value: number): void;
   follow(enabled: boolean): void;
   move(enabled: boolean): void;
+  outfit(value: OutfitValue): void;
   center(): void;
   reset(): void;
   retry(): void;
@@ -78,10 +83,14 @@ export function setupUI(callbacks: UICallbacks): UIHandle {
   const expressionButtons = Array.from(
     document.querySelectorAll<HTMLButtonElement>('[data-expression]'),
   );
+  const actionButtons = Array.from(
+    document.querySelectorAll<HTMLButtonElement>('button[data-hikari-action]'),
+  );
   const backgroundButtons = Array.from(
     document.querySelectorAll<HTMLButtonElement>('[data-background]'),
   );
   const zoomButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-zoom]'));
+  const outfitButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-outfit]'));
   const controls = Array.from(
     document.querySelectorAll<HTMLButtonElement | HTMLInputElement>('[data-ui-control]'),
   );
@@ -94,9 +103,18 @@ export function setupUI(callbacks: UICallbacks): UIHandle {
   let activeExpression: ExpressionName = 'Neutral';
   let activeBackground: BackgroundName = 'night';
   let activeZoom = 1;
+  let activeOutfit: OutfitValue = 0;
   let settingsWasOpen = false;
   let interactionTimer: number | undefined;
   let lastInteractionAt = Number.NEGATIVE_INFINITY;
+  let supportedActions = new Set<ActionName>();
+  const actionMessages: Record<'curiosity' | 'shy' | 'smug', string> = {
+    curiosity: '好奇地看看你～',
+    shy: '别、别一直看啦……',
+    smug: '哼哼，被我发现啦。',
+  };
+  const isVisibleAction = (value: string): value is 'curiosity' | 'shy' | 'smug' =>
+    value === 'curiosity' || value === 'shy' || value === 'smug';
 
   const updateInteractionHint = (): void => {
     if (!interactionHint) return;
@@ -107,6 +125,15 @@ export function setupUI(callbacks: UICallbacks): UIHandle {
     } else {
       interactionHint.textContent = '点击角色试试互动；开启全页鼠标跟随后，她会随鼠标轻轻转向。';
     }
+  };
+
+  const updateActionAvailability = (): void => {
+    actionButtons.forEach((button) => {
+      const action = button.dataset.hikariAction;
+      const supported = !!action && supportedActions.has(action as ActionName);
+      button.disabled = isLoading || !supported;
+      button.dataset.supported = String(supported);
+    });
   };
 
   const updatePauseButton = (): void => {
@@ -147,6 +174,23 @@ export function setupUI(callbacks: UICallbacks): UIHandle {
     });
     root.style.setProperty('--model-zoom', String(activeZoom));
     if (notify) callbacks.zoom(activeZoom);
+  };
+
+  const parseOutfit = (value: string | undefined): OutfitValue | null => {
+    if (value === '0') return 0;
+    if (value === '1') return 1;
+    if (value === '2') return 2;
+    return null;
+  };
+
+  const updateOutfit = (value: OutfitValue, notify = true): void => {
+    activeOutfit = value;
+    outfitButtons.forEach((button) => {
+      const selected = parseOutfit(button.dataset.outfit) === activeOutfit;
+      setPressed(button, selected);
+      button.dataset.active = String(selected);
+    });
+    if (notify) callbacks.outfit(activeOutfit);
   };
 
   const updateExpression = (name: string, notify = true): void => {
@@ -233,6 +277,7 @@ export function setupUI(callbacks: UICallbacks): UIHandle {
     const reaction = tapReactions[area];
     if (!announceInteraction(choose(reaction.messages))) return;
     updateExpression(choose(reaction.expressions));
+    callbacks.greet();
   };
 
   const onHikariZoom = (event: Event): void => {
@@ -245,6 +290,7 @@ export function setupUI(callbacks: UICallbacks): UIHandle {
     controls.forEach((control) => {
       control.disabled = disabled && !(keepRetryEnabled && control === retryButton);
     });
+    updateActionAvailability();
   };
 
   const closeSettings = (restoreFocus = true): void => {
@@ -286,6 +332,16 @@ export function setupUI(callbacks: UICallbacks): UIHandle {
     });
   });
 
+  actionButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      if (isLoading || button.disabled) return;
+      const value = button.dataset.hikariAction;
+      if (!value || !isVisibleAction(value) || !supportedActions.has(value)) return;
+      callbacks.action(value);
+      announceInteraction(actionMessages[value]);
+    });
+  });
+
   backgroundButtons.forEach((button) => {
     button.addEventListener('click', () => {
       if (isLoading) return;
@@ -303,6 +359,15 @@ export function setupUI(callbacks: UICallbacks): UIHandle {
   zoomRange?.addEventListener('input', () => {
     if (isLoading) return;
     updateZoom(Number(zoomRange.value));
+  });
+
+  outfitButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      if (isLoading) return;
+      const value = parseOutfit(button.dataset.outfit);
+      if (value === null) return;
+      updateOutfit(value);
+    });
   });
 
   followButton?.addEventListener('click', () => {
@@ -329,6 +394,7 @@ export function setupUI(callbacks: UICallbacks): UIHandle {
   greetButton?.addEventListener('click', () => {
     if (isLoading || !announceInteraction('嗨～今天也一起发光吧。')) return;
     updateExpression('Smile');
+    callbacks.greet();
   });
 
   resetButton?.addEventListener('click', () => {
@@ -337,6 +403,7 @@ export function setupUI(callbacks: UICallbacks): UIHandle {
     isPaused = reducedMotion;
     isFollowing = !reducedMotion;
     isMoving = false;
+    updateOutfit(0, false);
     updateExpression(activeExpression, false);
     updatePauseButton();
     updateFollowButton();
@@ -366,10 +433,20 @@ export function setupUI(callbacks: UICallbacks): UIHandle {
 
   root.addEventListener('hikari:tap', onHikariTap);
   root.addEventListener('hikari:zoom', onHikariZoom);
+  document.addEventListener('hikari:actions-supported', (event: Event) => {
+    const actions = (event as CustomEvent<{ actions?: unknown }>).detail?.actions;
+    supportedActions = new Set(
+      Array.isArray(actions)
+        ? actions.filter((value): value is ActionName => typeof value === 'string')
+        : [],
+    );
+    updateActionAvailability();
+  });
 
   const handle: UIHandle = {
     setLoading(detail: string): void {
       isLoading = true;
+      supportedActions = new Set();
       clearInteractionMessage();
       root.dataset.state = 'loading';
       status?.setAttribute('data-status', 'loading');
@@ -379,6 +456,7 @@ export function setupUI(callbacks: UICallbacks): UIHandle {
       if (retryButton) retryButton.hidden = true;
       setControlsDisabled(true);
       if (settingsWasOpen) closeSettings(false);
+      updateActionAvailability();
     },
     setReady(): void {
       isLoading = false;
@@ -394,10 +472,14 @@ export function setupUI(callbacks: UICallbacks): UIHandle {
       updatePauseButton();
       updateFollowButton();
       updateZoom(activeZoom, false);
+      updateOutfit(activeOutfit, false);
       callbacks.expression(activeExpression);
+      callbacks.outfit(activeOutfit);
+      updateActionAvailability();
     },
     setError(message: string): void {
       isLoading = false;
+      supportedActions = new Set();
       clearInteractionMessage();
       root.dataset.state = 'error';
       status?.setAttribute('data-status', 'error');
@@ -406,12 +488,14 @@ export function setupUI(callbacks: UICallbacks): UIHandle {
       if (modelFallback) modelFallback.hidden = false;
       if (retryButton) retryButton.hidden = false;
       setControlsDisabled(true, true);
+      updateActionAvailability();
     },
   };
 
   updateExpression(activeExpression, false);
   updateBackground(activeBackground);
   updateZoom(activeZoom, false);
+  updateOutfit(activeOutfit, false);
   updatePauseButton();
   updateFollowButton();
   updateMoveButton();
@@ -419,6 +503,7 @@ export function setupUI(callbacks: UICallbacks): UIHandle {
   callbacks.follow(isFollowing);
   callbacks.zoom(activeZoom);
   callbacks.move(false);
+  callbacks.outfit(activeOutfit);
 
   return handle;
 }

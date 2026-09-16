@@ -1,0 +1,89 @@
+{
+  "Version": 3,
+  "FileReferences": {
+    "Moc": "SuJiangXue_HikariSmirk_t001.moc3",
+    "Textures": [
+      "SuJiangXue_HikariSmirk_t001.8192/texture_00.png",
+      "SuJiangXue_HikariSmirk_t001.8192/texture_01.png",
+      "SuJiangXue_HikariSmirk_t001.8192/texture_02.png",
+      "SuJiangXue_HikariSmirk_t001.8192/texture_03.png",
+      "SuJiangXue_HikariSmirk_t001.8192/texture_04.png",
+      "SuJiangXue_HikariSmirk_t001.8192/texture_05.png",
+      "SuJiangXue_HikariSmirk_t001.8192/texture_06.png",
+      "SuJiangXue_HikariSmirk_t001.8192/texture_07.png"
+    ],
+    "Physics": "SuJiangXue_HikariSmirk_t001.physics3.json",
+    "DisplayInfo": "SuJiangXue_HikariSmirk_t001.cdi3.json",
+    "Expressions": [
+      {
+        "Name": "Neutral",
+        "File": "expressions/Neutral.exp3.json"
+      },
+      {
+        "Name": "Smile",
+        "File": "expressions/Smile.exp3.json"
+      },
+      {
+        "Name": "Happy",
+        "File": "expressions/Happy.exp3.json"
+      },
+      {
+        "Name": "Shy",
+        "File": "expressions/Shy.exp3.json"
+      },
+      {
+        "Name": "Angry",
+        "File": "expressions/Angry.exp3.json"
+      },
+      {
+        "Name": "Sad",
+        "File": "expressions/Sad.exp3.json"
+      },
+      {
+        "Name": "Surprised",
+        "File": "expressions/Surprised.exp3.json"
+      },
+      {
+        "Name": "Sleepy",
+        "File": "expressions/Sleepy.exp3.json"
+      },
+      {
+        "Name": "Cry",
+        "File": "expressions/Cry.exp3.json"
+      },
+      {
+        "Name": "Wink_L",
+        "File": "expressions/Wink_L.exp3.json"
+      },
+      {
+        "Name": "Wink_R",
+        "File": "expressions/Wink_R.exp3.json"
+      },
+      {
+        "Name": "HappyCat",
+        "File": "expressions/HappyCat.exp3.json"
+      }
+    ],
+    "Motions": {
+      "BouncyDemo": [
+        {
+          "FadeOutTime": 0.2,
+          "File": "motions/SuJiangXue_Bouncy_Demo_t001.motion3.json",
+          "FadeInTime": 0.15
+        }
+      ]
+    }
+  },
+  "Groups": [
+    {
+      "Target": "Parameter",
+      "Name": "EyeBlink",
+      "Ids": []
+    },
+    {
+      "Target": "Parameter",
+      "Name": "LipSync",
+      "Ids": []
+    }
+  ]
+}

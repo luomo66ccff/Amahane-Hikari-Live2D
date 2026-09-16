@@ -15,6 +15,7 @@ export class HikariPresentation {
   private eyeY:number;
   private eyes:{iris:number[];mask:number;open:number}[];
   private applied=false;
+  private rawNativeGaze=false;
   bounds:ModelBounds;
   gazeOrigin:{x:number;y:number};
   headBoundaryY:number;
@@ -45,6 +46,14 @@ export class HikariPresentation {
     model.getDrawableDynamicFlagVertexPositionsDidChange=()=>true;
   }
 
+  setRawNativeGaze(value:boolean):void {
+    this.rawNativeGaze=value;
+  }
+
+  isRawNativeGaze():boolean {
+    return this.rawNativeGaze;
+  }
+
   private restoreNative():void {
     if(!this.applied)return;
     for(let i=0;i<this.native.length;i++)this.model.getDrawableVertices(i).set(this.native[i]);
@@ -58,21 +67,27 @@ export class HikariPresentation {
     // Render both at neutral gaze, then apply one shared binocular offset.
     // Keep the actual values (including expression offsets) visible to callers.
     const eyeX=model.getParameterValueByIndex(this.eyeX),eyeY=model.getParameterValueByIndex(this.eyeY);
-    model.setParameterValueByIndex(this.eyeX,0);
-    model.setParameterValueByIndex(this.eyeY,0);
-    try{model.update();}
-    finally{
-      model.setParameterValueByIndex(this.eyeX,eyeX);
-      model.setParameterValueByIndex(this.eyeY,eyeY);
+    if(this.rawNativeGaze){
+      model.update();
+    }else{
+      model.setParameterValueByIndex(this.eyeX,0);
+      model.setParameterValueByIndex(this.eyeY,0);
+      try{model.update();}
+      finally{
+        model.setParameterValueByIndex(this.eyeX,eyeX);
+        model.setParameterValueByIndex(this.eyeY,eyeY);
+      }
     }
     for(let i=0;i<this.native.length;i++)this.native[i].set(model.getDrawableVertices(i));
-    const gx=eyeX/.88,gy=eyeY/.85,ellipse=Math.max(1,Math.hypot(gx,gy));
-    for(const eye of this.eyes){
-      const opening=smoothstep(.05,.25,model.getParameterValueByIndex(eye.open));
-      const dx=gx/ellipse*.006*opening,dy=gy/ellipse*.003*opening;
-      for(const index of eye.iris){
-        const vertices=model.getDrawableVertices(index);
-        for(let j=0;j<vertices.length;j+=2){vertices[j]+=dx;vertices[j+1]+=dy;}
+    if(!this.rawNativeGaze){
+      const gx=eyeX/.88,gy=eyeY/.85,ellipse=Math.max(1,Math.hypot(gx,gy));
+      for(const eye of this.eyes){
+        const opening=smoothstep(.05,.25,model.getParameterValueByIndex(eye.open));
+        const dx=gx/ellipse*.006*opening,dy=gy/ellipse*.003*opening;
+        for(const index of eye.iris){
+          const vertices=model.getDrawableVertices(index);
+          for(let j=0;j<vertices.length;j+=2){vertices[j]+=dx;vertices[j+1]+=dy;}
+        }
       }
     }
     const bounds={left:Infinity,right:-Infinity,bottom:Infinity,top:-Infinity};

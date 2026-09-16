@@ -9,3 +9,5 @@ web/public/model/
 .env.*
 .DS_Store
 Thumbs.db
+
+web/reports/
