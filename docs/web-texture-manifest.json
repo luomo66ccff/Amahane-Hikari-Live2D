@@ -1,0 +1,102 @@
+{
+  "schema": "hikari-web-textures/v1",
+  "version": "hikari_t002",
+  "sharp": "0.35.4",
+  "encoding": {
+    "lossless": true,
+    "exact": true,
+    "effort": 6
+  },
+  "textures": [
+    {
+      "source": "SuJiangXue_HikariSmirk_t001.8192/texture_00.png",
+      "output": "SuJiangXue_HikariSmirk_t001.8192/texture_00.webp",
+      "sourceBytes": 32705708,
+      "webpBytes": 7569482,
+      "sourceSha256": "39893753062beff560318886b3fe2a9da14a85662666435f4a0beafcab50c233",
+      "webpSha256": "c35ec0f66b5655ba39e97b11b15f79df37a7b6de6b7246165d0a676e93c1d145",
+      "width": 8192,
+      "height": 8192,
+      "rgbaExact": true
+    },
+    {
+      "source": "SuJiangXue_HikariSmirk_t001.8192/texture_01.png",
+      "output": "SuJiangXue_HikariSmirk_t001.8192/texture_01.webp",
+      "sourceBytes": 12909,
+      "webpBytes": 5742,
+      "sourceSha256": "af3215c046dd7621a8b23f21d0f83a7e05a13f38914cc3f1f53725b0f53e6776",
+      "webpSha256": "b5253e6bff7dc88ef58602d2b35fb8c4fd50e971134928a3ada97659476e8a82",
+      "width": 512,
+      "height": 512,
+      "rgbaExact": true
+    },
+    {
+      "source": "SuJiangXue_HikariSmirk_t001.8192/texture_02.png",
+      "output": "SuJiangXue_HikariSmirk_t001.8192/texture_02.webp",
+      "sourceBytes": 8121191,
+      "webpBytes": 3495794,
+      "sourceSha256": "18da962a17423f495dbc9a59e805c00b7ca266faa4ab3e62fb0e1b7e6ba836bc",
+      "webpSha256": "e518e02a8982718da97c2286566fdb8136823f8f481c5a6de8d277ac4ae5e2a9",
+      "width": 4096,
+      "height": 4096,
+      "rgbaExact": true
+    },
+    {
+      "source": "SuJiangXue_HikariSmirk_t001.8192/texture_03.png",
+      "output": "SuJiangXue_HikariSmirk_t001.8192/texture_03.webp",
+      "sourceBytes": 2410423,
+      "webpBytes": 1021426,
+      "sourceSha256": "2d02b474be86d043a4568994afb159115f9524178221f0598ffa9157b2c29d7f",
+      "webpSha256": "cae351bdd61856d21a95fba8f180c988defd8c75c61fa1dfafcbc12d290c00c3",
+      "width": 2048,
+      "height": 2048,
+      "rgbaExact": true
+    },
+    {
+      "source": "SuJiangXue_HikariSmirk_t001.8192/texture_04.png",
+      "output": "SuJiangXue_HikariSmirk_t001.8192/texture_04.webp",
+      "sourceBytes": 607353,
+      "webpBytes": 278846,
+      "sourceSha256": "f0f0f9baa772af556732805b52fd975acec2ab827669a1149c1d3b1d6a87623a",
+      "webpSha256": "5715fbcb3f6b9aa79a95c8d842568eb0efeb45a2e30b0ba65114f3057985f0d4",
+      "width": 2048,
+      "height": 2048,
+      "rgbaExact": true
+    },
+    {
+      "source": "SuJiangXue_HikariSmirk_t001.8192/texture_05.png",
+      "output": "SuJiangXue_HikariSmirk_t001.8192/texture_05.webp",
+      "sourceBytes": 654665,
+      "webpBytes": 320872,
+      "sourceSha256": "d8222ddd25270597a566ebe9f5fe76601b623231815b26a85ef9309d7ab5a129",
+      "webpSha256": "db68a5663c7bfe94396df6ce095ec11471a8b9ee1a395f86bdad4c27798e08fd",
+      "width": 2048,
+      "height": 2048,
+      "rgbaExact": true
+    },
+    {
+      "source": "SuJiangXue_HikariSmirk_t001.8192/texture_06.png",
+      "output": "SuJiangXue_HikariSmirk_t001.8192/texture_06.webp",
+      "sourceBytes": 819130,
+      "webpBytes": 362492,
+      "sourceSha256": "1df7ae9f935cdb756b399813979035279dc135c0efa3c5e499e49e50b91d1b88",
+      "webpSha256": "37329e67635dd7a192864621eff71db9e6ddd5a07aa92355e2c576a2548075b6",
+      "width": 2048,
+      "height": 2048,
+      "rgbaExact": true
+    },
+    {
+      "source": "SuJiangXue_HikariSmirk_t001.8192/texture_07.png",
+      "output": "SuJiangXue_HikariSmirk_t001.8192/texture_07.webp",
+      "sourceBytes": 635895,
+      "webpBytes": 281940,
+      "sourceSha256": "a0bb36e52209413825fd2c5731e7f4308c7983bc9e1363a7943a037a97978f30",
+      "webpSha256": "49c18e5816ccaa3fe1dccf9835f2f4d7656a263c4548129c141e5091c4a73db3",
+      "width": 2048,
+      "height": 2048,
+      "rgbaExact": true
+    }
+  ],
+  "sourceBytes": 45967274,
+  "webpBytes": 13336594
+}

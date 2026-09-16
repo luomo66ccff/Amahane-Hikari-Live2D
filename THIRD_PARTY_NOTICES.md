@@ -14,7 +14,7 @@ No SDK, Core, Framework, shader or SDK type declaration is committed or included
 
 ## Development tools
 
-The npm lockfile pins Vite 8.0.2, TypeScript 5.9.3 and Playwright 1.58.2 and their dependencies. Vite is MIT-licensed and TypeScript and Playwright are Apache-2.0-licensed; consult the license files supplied with each installed package. Dependency packages and `node_modules` are not redistributed in this repository.
+The npm lockfile pins Vite 8.0.2, TypeScript 5.9.3, Playwright 1.58.2 and Sharp 0.35.4 and their dependencies. Vite is MIT-licensed; TypeScript, Playwright and Sharp are Apache-2.0-licensed. Sharp is a build-time tool for lossless web texture encoding; consult its distributed notices for libvips and codec dependencies. Dependency packages and `node_modules` are not redistributed in this repository.
 
 ## Model scope
 

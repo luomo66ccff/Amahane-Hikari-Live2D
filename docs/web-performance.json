@@ -1,0 +1,75 @@
+{
+  "schema": "hikari-web-performance/v1",
+  "release": "v2.0.1-t028",
+  "url": "https://live2d.luomo.moe/Amahane_Hikari/",
+  "conditions": {
+    "browser": "153.0.4234.32",
+    "viewport": [
+      1440,
+      1000
+    ],
+    "deviceScaleFactor": 1,
+    "protocol": "HTTP/1.1 forced",
+    "networkThrottling": false,
+    "sample": "One before and one final after cold/warm pair, at different times on the same machine; not field CWV."
+  },
+  "before": [
+    {
+      "mode": "cold",
+      "status": "PASS",
+      "modelReadyMs": 70027.89999999851,
+      "fcpMs": 1080,
+      "transferredBytes": 46674094,
+      "errorCount": 0
+    },
+    {
+      "mode": "warm",
+      "status": "PASS",
+      "modelReadyMs": 35824.10000000149,
+      "fcpMs": 256,
+      "transferredBytes": 40846557,
+      "errorCount": 0
+    }
+  ],
+  "after": [
+    {
+      "mode": "cold",
+      "status": "PASS",
+      "modelReadyMs": 16483.599999999627,
+      "fcpMs": 752,
+      "transferredBytes": 14044366,
+      "errorCount": 0
+    },
+    {
+      "mode": "warm",
+      "status": "PASS",
+      "modelReadyMs": 2612.7999999988824,
+      "fcpMs": 316,
+      "transferredBytes": 1177,
+      "errorCount": 0
+    }
+  ],
+  "textures": {
+    "originalBytes": 45967274,
+    "webpBytes": 13336594,
+    "count": 8,
+    "decodedRgbaExact": true
+  },
+  "validation": {
+    "localUiChecks": 64,
+    "loadingRecoveryCases": 4,
+    "cachedRevisitTextureNetworkRequests": 0,
+    "controllerRuntimeResourceCases": 52,
+    "domEventCases": [
+      9,
+      9
+    ],
+    "publicUiChecks": 64,
+    "publicUiProtocol": "Browser defaults, no HTTP/1.1 override",
+    "publicUiErrors": 0
+  },
+  "limitations": [
+    "Intermediate remote texture and shader timeouts were retained; a successful sample is not a universal network guarantee.",
+    "No native rig changes; no new VTS/camera/microphone acceptance."
+  ]
+}

@@ -1,8 +1,8 @@
-# Amahane Hikari · Live2D v2.0.0
+# Amahane Hikari · Live2D v2.0.1
 
 [English](README.en.md) · [在线互动](https://live2d.luomo.moe/Amahane_Hikari/) · [发布仓库](https://github.com/luomo66ccff/Amahane-Hikari-Live2D)
 
-银白长发、红瞳、白色兽耳与月雪主题的 Live2D 角色。v2.0.0 采用 native102 运行模型，提供三套服装、12 种表情和可复现的网页互动源码。
+银白长发、红瞳、白色兽耳与月雪主题的 Live2D 角色。当前采用 native102 运行模型，提供三套服装、12 种表情和可复现的网页互动源码。v2.0.1 优化网页加载，并公开从美术生成到模型交付的制作 Skill。
 
 <img src="previews/native102-dress.png" alt="Amahane Hikari native102 礼装中立态预览" width="420" />
 
@@ -50,7 +50,13 @@ npm run build
 npm run preview
 ```
 
-构建前会校验并同步 `model/runtime/`。部署到其他路径时，可通过 `VITE_BASE` 设置 Vite base。发布自己构建的网站时，继续遵守 Live2D SDK 的第三方授权条款。
+构建前会校验 `model/runtime/`，再生成 `model/hikari_t002/` 网页专用无损 WebP。8 张纹理从 45,967,274 字节降至 13,336,594 字节，每张均核对解码后的 RGBA；原 PNG、MOC3 和 CMO3 保持不变。纹理最多三路下载，逐张解码上传，并按模型版本保存在浏览器 Cache Storage；存储不可用时回退网络。首次构建需要编码时间，后续按哈希复用产物。部署到其他路径时，可通过 `VITE_BASE` 设置 Vite base；版本化模型 URL 应配置长期缓存。测量与配置见 [网页性能记录](docs/WEB_PERFORMANCE.md)。发布自己构建的网站时，继续遵守 Live2D SDK 的第三方授权条款。
+
+## 可复用的制作 Skill
+
+[live2d-end-to-end](skills/live2d-end-to-end/SKILL.md) 覆盖角色需求、候选生成、拆层补绘、Photoshop 验收、Cubism 绑定与物理、Q 弹动态、真实模型验收、网页发布和错误纠正。它包含可移植的运行包引用核验脚本，并区分项目经验与新模型仍需验证的步骤。
+
+可从 [v2.0.1 Release](https://github.com/luomo66ccff/Amahane-Hikari-Live2D/releases/tag/v2.0.1) 下载独立 Skill ZIP，或把仓库中的 `skills/live2d-end-to-end/` 整个目录放到 `~/.codex/skills/`，然后使用 `$live2d-end-to-end`。技能文档采用 CC BY 4.0，辅助脚本采用 MIT；独立包不含模型资产或 Live2D SDK。
 
 ## 网页口型输入
 
@@ -81,7 +87,7 @@ npm run test:events
 npm run test:smoke -- http://127.0.0.1:5188/Amahane_Hikari/ ./reports/page-smoke
 ```
 
-`verify` 检查资产清单和运行资源引用；`test:controller` 检查动作意图、取消、暂停、重入和复位；`test:smoke` 使用真实无头浏览器完成普通页面检查，验证网页入口、真实资源、表情、服装和生产构建中的 DEV 边界，不注入模型内部控制器。口型 handoff 与 TTL 由单独的浏览器所有权验收覆盖。首次运行 smoke 可执行 `npx playwright install chromium`；使用已安装 Edge 时可跳过并设置 `BROWSER_CHANNEL=msedge`。本地与公网最终各 62 项通过；连接方式和未覆盖项目见 [验证说明](docs/VALIDATION.md)。
+`verify` 检查资产清单和运行资源引用；`test:controller` 检查动作意图、取消、暂停、重入和复位；`test:smoke` 使用真实无头浏览器完成普通页面检查，验证网页入口、真实资源、表情、服装和生产构建中的 DEV 边界，不注入模型内部控制器。口型 handoff 与 TTL 由单独的浏览器所有权验收覆盖。首次运行 smoke 可执行 `npx playwright install chromium`；使用已安装 Edge 时可跳过并设置 `BROWSER_CHANNEL=msedge`。历史 native102 证据见 [验证说明](docs/VALIDATION.md)，本次网页与加载失败重试结果见 [网页性能记录](docs/WEB_PERFORMANCE.md)。
 
 `npm test` 合并执行控制器测试与新增的运行时回归。`test:runtime` 用 SDK/控制器替身执行真实运行时代码，检查低帧率分步计时、暂停/恢复、口型输入与超时清理；`test:events` 在真实 Chromium 中执行实际事件注册代码与本页口型示例。两者不需要 Live2D SDK，也不等同于真实模型的画面验收。CI 会运行这些检查及资产校验；完整构建、原生模型与视觉验收仍需按授权配置 SDK，详见 [本次运行时修复与验证边界](docs/RUNTIME_FIXES.md)。
 

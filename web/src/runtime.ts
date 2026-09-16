@@ -162,6 +162,7 @@ export class HikariStage extends CubismUserModel {
   private abort = new AbortController();
   private expressions = new Map<string,ACubismMotion>();
   private textures:WebGLTexture[] = [];
+  private textureCache:Promise<Cache|null>|undefined;
   private indices = new Map<string,number>();
   private defaults:number[] = [];
   private frozenPhysics:number[] = [];
@@ -258,10 +259,33 @@ export class HikariStage extends CubismUserModel {
       CubismFramework.initialize();
     }
   }
+  private getTextureCache():Promise<Cache|null> {
+    // Only this immutable production route is eligible; DEV overrides bypass it.
+    return this.textureCache??=this.modelBase===productionModelBase&&'caches' in globalThis
+      ?Promise.resolve().then(()=>caches.open('hikari-textures-hikari_t002')).catch(():Cache|null=>null):Promise.resolve(null);
+  }
   private async fetchFile(path:string):Promise<ArrayBuffer> {
-    const response = await fetch(this.modelBase+path,{signal:AbortSignal.any([this.abort.signal,AbortSignal.timeout(60000)])});
+    this.abort.signal.throwIfAborted();
+    const url=this.modelBase+path;
+    const cache=path.endsWith('.webp')?await this.getTextureCache():null;
+    if(cache){
+      try{
+        const stored=await cache.match(url);
+        if(stored){
+          const bytes=await stored.arrayBuffer();
+          this.abort.signal.throwIfAborted();
+          return bytes;
+        }
+      }catch{this.abort.signal.throwIfAborted();}
+    }
+    const response = await fetch(url,{signal:AbortSignal.any([this.abort.signal,AbortSignal.timeout(60000)])});
     if(!response.ok) throw new Error('模型资源加载失败，请检查网络后重新加载。');
     const bytes=await response.arrayBuffer();
+    this.abort.signal.throwIfAborted();
+    // Large entries can miss the HTTP cache even with a long max-age. Cache
+    // Storage retains this 13 MB version explicitly; quota/disabled storage
+    // falls back to the successful network result. Bad decodes are evicted.
+    if(cache)await cache.put(url,new Response(bytes,{headers:{'Content-Type':'image/webp'}})).catch(()=>{});
     this.abort.signal.throwIfAborted();
     return bytes;
   }
@@ -342,9 +366,11 @@ export class HikariStage extends CubismUserModel {
       const url=URL.createObjectURL(new Blob([textureBytes[i]],{type}));
       textureBytes[i]=new ArrayBuffer(0);
       const img=new Image();
+      let decoded=false;
       try {
         img.src=url;
         await withTimeout(()=>img.decode(),20000,'高清材质加载超时，请重新加载。',this.abort.signal);
+        decoded=true;
         if(this.destroyed) return;
         const gl=this.gl;
         const texture=gl.createTexture();
@@ -360,6 +386,12 @@ export class HikariStage extends CubismUserModel {
         gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
         gl.bindTexture(gl.TEXTURE_2D,null);
         renderer.bindTexture(i,texture);
+      } catch(error) {
+        if(!decoded){
+          const cache=await this.getTextureCache();
+          await cache?.delete(this.modelBase+refs.Textures[i]).catch(()=>false);
+        }
+        throw error;
       } finally { URL.revokeObjectURL(url); img.src=''; }
     }
     this.progress('正在准备舞台…');

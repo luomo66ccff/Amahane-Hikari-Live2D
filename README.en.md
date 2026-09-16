@@ -1,8 +1,8 @@
-# Amahane Hikari · Live2D v2.0.0
+# Amahane Hikari · Live2D v2.0.1
 
 [简体中文](README.md) · [Interactive demo](https://live2d.luomo.moe/Amahane_Hikari/) · [Release repository](https://github.com/luomo66ccff/Amahane-Hikari-Live2D)
 
-A silver-haired, red-eyed Live2D character with white animal ears and moon/snow details. v2.0.0 uses the native102 runtime model and includes three outfits, twelve expressions and reproducible web interactions.
+A silver-haired, red-eyed Live2D character with white animal ears and moon/snow details. The native102 model includes three outfits, twelve expressions and reproducible web interactions. v2.0.1 improves web loading and publishes the reusable production skill.
 
 <img src="previews/native102-dress.png" alt="Amahane Hikari native102 formal neutral preview" width="420" />
 
@@ -52,6 +52,14 @@ npm run preview
 
 The build verifies and synchronizes `model/runtime/`. Set `VITE_BASE` when serving under another path. Any public build must retain the applicable Live2D SDK terms.
 
+## Reusable production skill
+
+[live2d-end-to-end](skills/live2d-end-to-end/SKILL.md) covers character requirements, candidate generation, layered artwork, Photoshop QA, Cubism rigging and physics, motion, real-model acceptance, publishing and recovery. The Chinese instructions include a portable package-reference checker and distinguish historical evidence from work that must be verified on a new model.
+
+Download the standalone skill ZIP from [v2.0.1](https://github.com/luomo66ccff/Amahane-Hikari-Live2D/releases/tag/v2.0.1), or copy `skills/live2d-end-to-end/` into `~/.codex/skills/` and invoke `$live2d-end-to-end`. Skill documentation is CC BY 4.0 and helper scripts are MIT. The standalone skill contains no model assets or SDK.
+
+The web build generates lossless WebP textures under `model/hikari_t002/`: 45,967,274 → 13,336,594 bytes, with decoded RGBA equality verified for all eight textures. Canonical PNG, MOC3 and CMO3 files stay unchanged. Downloads use three concurrent requests; images are decoded and uploaded one at a time, with versioned Cache Storage and a network fallback. See [web performance evidence and caching](docs/WEB_PERFORMANCE.md).
+
 ## Mouth input
 
 The viewer exposes a short-lived mouth input event for an external controller. It does not request microphone access:
@@ -77,7 +85,7 @@ npm run test:controller
 npm run test:smoke -- http://127.0.0.1:5188/Amahane_Hikari/ ./reports/page-smoke
 ```
 
-`verify` checks the asset manifest and runtime references. `test:controller` covers action intent, cancellation, pause, re-entry and reset only. `test:smoke` performs ordinary-page checks in a real headless browser, including the page entry, real resources, expressions, outfits and the absence of the DEV surface in the production build; it does not inject the internal model controller. Mouth handoff and TTL are covered by a separate browser ownership check. Install Chromium with `npx playwright install chromium`, or skip that step and set `BROWSER_CHANNEL=msedge` for installed Edge. The final local and public runs each passed 62 checks. See [validation](docs/VALIDATION.md) for network settings and limits.
+`verify` checks the asset manifest and runtime references. `test:controller` covers action intent, cancellation, pause, re-entry and reset only. `test:smoke` performs ordinary-page checks in a real headless browser, including the page entry, real resources, expressions, outfits and the absence of the DEV surface in the production build; it does not inject the internal model controller. Mouth handoff and TTL are covered by a separate browser ownership check. Install Chromium with `npx playwright install chromium`, or skip that step and set `BROWSER_CHANNEL=msedge` for installed Edge. Historical native102 checks are documented in [validation](docs/VALIDATION.md); current web checks and loading recovery are recorded in [web performance](docs/WEB_PERFORMANCE.md).
 
 ## Repository layout
 

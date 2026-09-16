@@ -127,7 +127,7 @@ for (const mode of ['ok', 'allocation-failed', 'upload-failed', 'destroyed', 'de
       renderer: { bindTexture() { binds++; } },
     });
     vm.runInContext(loopCode, sandbox);
-    const stage = { textures: [], gl, abort, destroyed: mode === 'destroyed', progress() {},
+    const stage = { textures: [], gl, abort, destroyed: mode === 'destroyed', progress() {}, getTextureCache: async () => null,
       fetchFile: async () => new ArrayBuffer(1) };
     const pending = sandbox.run.call(stage);
     const expected = {

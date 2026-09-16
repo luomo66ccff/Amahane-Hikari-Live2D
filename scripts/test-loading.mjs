@@ -41,6 +41,20 @@ try{
     await page.screenshot({path:path.join(out,fault+'-recovered.png')});
     await page.close();
   }
+  const cachedPage=await browser.newPage();
+  const cacheCase={fault:'texture-network-blocked-on-revisit',recovered:false,textureNetworkRequests:0};report.cases.push(cacheCase);
+  const ready=()=>cachedPage.waitForFunction(()=>document.querySelector('#model-canvas')?.dataset.ready==='true',null,{timeout:30000});
+  await cachedPage.goto(url);await ready();
+  await cachedPage.route('**/*.webp',async route=>{cacheCase.textureNetworkRequests++;await route.abort();});
+  await cachedPage.reload();await ready();
+  assert.equal(cacheCase.textureNetworkRequests,0,'Warm visit must use the versioned texture cache');
+  cacheCase.recovered=true;await cachedPage.close();
+  const noStorage=await browser.newPage();
+  const storageCase={fault:'storage-quota-exceeded',recovered:false};report.cases.push(storageCase);
+  await noStorage.addInitScript(()=>Object.defineProperty(window,'caches',{value:{open:async()=>({match:async()=>undefined,put:async()=>{throw new DOMException('test quota','QuotaExceededError');}})}}));
+  await noStorage.goto(url);
+  await noStorage.waitForFunction(()=>document.querySelector('#model-canvas')?.dataset.ready==='true',null,{timeout:30000});
+  storageCase.recovered=true;await noStorage.close();
   report.status='PASS';
 }catch(e){report.status='FAIL';report.error=String(e.stack??e);process.exitCode=1;}
 finally{await browser.close();fs.writeFileSync(path.join(out,'report.json'),JSON.stringify(report,null,2)+'\n',{flag:'wx'});console.log(JSON.stringify(report));}

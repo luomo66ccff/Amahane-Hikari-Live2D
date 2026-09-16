@@ -1,5 +1,15 @@
 # Release notes
 
+## v2.0.1 · Web loading and reusable production skill
+
+- Lossless web-only WebP reduces eight texture files from 45,967,274 to 13,336,594 bytes; decoded RGBA matches every original PNG.
+- Three concurrent texture downloads, versioned HTTP caching and a bounded, version-named texture Cache Storage remove repeat downloads. Storage failures fall back to the network; bad image entries are removed before retry.
+- Includes upstream PR #2/#3 runtime timing, mouth event and resource ownership fixes.
+- Adds the reusable Chinese `live2d-end-to-end` skill, complete licenses, stage references and portable package checks. The skill does not bundle model assets or the SDK.
+- Formal releases remain in `luomo66ccff/Amahane-Hikari-Live2D`; the mistaken temporary fork was deleted after the v2.0.0 source and all nine assets were verified in the canonical repository.
+
+See [web performance evidence](WEB_PERFORMANCE.md) and [the skill](../skills/live2d-end-to-end/SKILL.md). The editable native102 model and original runtime exports remain available in v2.0.0.
+
 ## v2.0.0 · native102 and public actions
 
 v2.0.0 updates the public package from the earlier HairFlow viewer to the native102 model and a web runtime with public action and mouth-input ownership.

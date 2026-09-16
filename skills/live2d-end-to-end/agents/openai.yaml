@@ -1,0 +1,8 @@
+interface:
+  display_name: "Hikari Live2D 端到端制作"
+  short_description: "从角色需求到 Cubism、网页验收与发布的可复用流程"
+  default_prompt: "使用 $live2d-end-to-end 从角色需求开始规划并验证 Hikari 的 Live2D 制作与发布。"
+
+policy:
+  allow_implicit_invocation: true
+
