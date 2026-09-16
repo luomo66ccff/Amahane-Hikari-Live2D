@@ -32,7 +32,7 @@ import {
 
 const base = import.meta.env.BASE_URL;
 const shaderPath = `${base}vendor/shaders/`;
-const productionModelBase = `${base}model/hikari_t001/`;
+const productionModelBase = `${base}model/hikari_t002/`;
 const productionModelFile = 'SuJiangXue_HikariSmirk_t001.model3.json';
 const outputIds = ['ParamEarLPhysics','ParamEarRPhysics','ParamAhogeMid','ParamAhogeTip','ParamHairFront','ParamHairSideL','ParamHairBackUpper','ParamHairBackMid','ParamHairBackTip','ParamRibbonHead','ParamChainHead','ParamRibbonBody','ParamChainBody','ParamHairSideR','ParamClothSway','ParamArmSwayL','ParamArmSwayR'];
 const clamp = (value:number, low:number, high:number) => Math.max(low,Math.min(high,value));
@@ -263,11 +263,42 @@ export class HikariStage extends CubismUserModel {
     this.abort.signal.throwIfAborted();
     return bytes;
   }
+  private async fetchTextures(paths:string[]):Promise<ArrayBuffer[]> {
+    const buffers:ArrayBuffer[]=new Array(paths.length);
+    let next=0,completed=0;
+    // Bound downloads while retaining compressed bytes only. Decode and upload
+    // one image at a time below, so eight large RGBA bitmaps never coexist.
+    await Promise.all(Array.from({length:Math.min(3,paths.length)},async()=>{
+      while(next<paths.length){
+        const index=next++;
+        buffers[index]=await this.fetchFile(paths[index]);
+        this.progress(`正在读取高清材质 ${++completed} / ${paths.length}…`);
+      }
+    }));
+    return buffers;
+  }
   async mount():Promise<void> {
     this.progress('正在读取模型…');
     const file = await this.fetchFile(this.modelFile);
     const refs = (JSON.parse(new TextDecoder().decode(file)) as {FileReferences:References}).FileReferences;
-    const moc = await this.fetchFile(refs.Moc);
+    const expressions=refs.Expressions??[];
+    const physicsReference=typeof refs.Physics==='string'?refs.Physics.trim():'';
+    // SDK 5-r.5 does not reject unsuccessful shader fetches itself.
+    const shaderFiles=['vertshadersrc.vert','vertshadersrcmasked.vert','vertshadersrcsetupmask.vert','fragshadersrcsetupmask.frag','fragshadersrcpremultipliedalpha.frag','fragshadersrcmaskpremultipliedalpha.frag','fragshadersrcmaskinvertedpremultipliedalpha.frag','vertshadersrccopy.vert','fragshadersrccopy.frag','fragshadersrccolorblend.frag','fragshadersrcalphablend.frag','vertshadersrcblend.vert','fragshadersrcpremultipliedalphablend.frag'];
+    this.progress('正在加载模型与高清材质…');
+    // All promises have a rejection handler immediately; a failed mount is
+    // destroyed by main.ts, aborting the remaining requests before a retry.
+    const [textureBytes,moc,physics,expressionBytes]=await Promise.all([
+      this.fetchTextures(refs.Textures),
+      this.fetchFile(refs.Moc),
+      physicsReference?this.fetchFile(physicsReference):Promise.resolve(null),
+      Promise.all(expressions.map(expression=>this.fetchFile(expression.File))),
+      Promise.all(shaderFiles.map(async name=>{
+        const response=await fetch(shaderPath+name,{signal:AbortSignal.any([this.abort.signal,AbortSignal.timeout(20000)])});
+        if(!response.ok||!(await response.text()).trim())throw new Error('舞台资源加载失败，请重新加载。');
+      })),
+    ]);
+    this.abort.signal.throwIfAborted();
     this.loadModel(moc,true);
     if (!this._model) throw new Error('模型未能打开，请重新加载。');
     for(let i=0;i<this._model.getParameterCount();i++) {
@@ -293,37 +324,26 @@ export class HikariStage extends CubismUserModel {
       throw new Error('换装模型的 ParamOutfit 范围无效，请重新加载。');
     }
     this.applyOutfit();
-    let completed=0;
-    const expressions=refs.Expressions??[];
-    await Promise.all(expressions.map(async expression=>{
-      const bytes = await this.fetchFile(expression.File);
+    expressions.forEach((expression,index)=>{
+      const bytes=expressionBytes[index];
       this.expressions.set(expression.Name,this.loadExpression(bytes,bytes.byteLength,expression.Name));
-      this.progress(`正在读取表情 ${++completed} / ${expressions.length}…`);
-    }));
-    const physicsReference = typeof refs.Physics==='string' ? refs.Physics.trim() : '';
-    if(physicsReference) {
-      const physics = await this.fetchFile(physicsReference);
-      this.loadPhysics(physics,physics.byteLength);
-    }
+    });
+    if(physics)this.loadPhysics(physics,physics.byteLength);
     this.resize();
     this.createRenderer(this.canvas.width,this.canvas.height,1);
     const renderer = this.getRenderer();
     renderer.startUp(this.gl);
     renderer.setIsPremultipliedAlpha(true);
-    // SDK 5-r.5 does not reject unsuccessful shader fetches itself.
-    const shaderFiles=['vertshadersrc.vert','vertshadersrcmasked.vert','vertshadersrcsetupmask.vert','fragshadersrcsetupmask.frag','fragshadersrcpremultipliedalpha.frag','fragshadersrcmaskpremultipliedalpha.frag','fragshadersrcmaskinvertedpremultipliedalpha.frag','vertshadersrccopy.vert','fragshadersrccopy.frag','fragshadersrccolorblend.frag','fragshadersrcalphablend.frag','vertshadersrcblend.vert','fragshadersrcpremultipliedalphablend.frag'];
-    await Promise.all(shaderFiles.map(async name=>{
-      const response=await fetch(shaderPath+name,{signal:AbortSignal.any([this.abort.signal,AbortSignal.timeout(20000)])});
-      if(!response.ok||!(await response.text()).trim()) throw new Error('舞台资源加载失败，请重新加载。');
-    }));
     for(let i=0;i<refs.Textures.length;i++) {
-      this.progress(`正在加载高清材质 ${i+1} / ${refs.Textures.length}，首次打开可能需要一点时间…`);
-      const bytes = await this.fetchFile(refs.Textures[i]);
-      const url=URL.createObjectURL(new Blob([bytes],{type:'image/png'}));
+      this.progress(`正在绘制高清材质 ${i+1} / ${refs.Textures.length}…`);
+      const type=refs.Textures[i].endsWith('.webp')?'image/webp':'image/png';
+      const url=URL.createObjectURL(new Blob([textureBytes[i]],{type}));
+      textureBytes[i]=new ArrayBuffer(0);
       const img=new Image();
+      let decodeTimer:ReturnType<typeof setTimeout>|undefined;
       try {
         img.src=url;
-        await Promise.race([img.decode(),new Promise<void>((_,reject)=>setTimeout(()=>reject(new Error('高清材质加载超时，请重新加载。')),20000))]);
+        await Promise.race([img.decode(),new Promise<void>((_,reject)=>{decodeTimer=setTimeout(()=>reject(new Error('高清材质加载超时，请重新加载。')),20000);})]);
         if(this.destroyed) return;
         const gl=this.gl;
         const texture=gl.createTexture();
@@ -337,7 +357,7 @@ export class HikariStage extends CubismUserModel {
         gl.bindTexture(gl.TEXTURE_2D,null);
         this.textures.push(texture);
         renderer.bindTexture(i,texture);
-      } finally { URL.revokeObjectURL(url); img.src=''; }
+      } finally { clearTimeout(decodeTimer); URL.revokeObjectURL(url); img.src=''; }
     }
     this.progress('正在准备舞台…');
     renderer.loadShaders(shaderPath);

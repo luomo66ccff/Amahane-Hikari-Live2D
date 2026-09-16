@@ -1,7 +1,7 @@
 {
   "name": "amahane-hikari-showcase",
   "private": true,
-  "version": "2.0.0",
+  "version": "2.0.1",
   "license": "MIT",
   "engines": {
     "node": ">=22.12.0"
@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "playwright": "1.58.2",
+    "sharp": "0.35.4",
     "typescript": "5.9.3",
     "vite": "8.0.2"
   }

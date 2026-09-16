@@ -31,7 +31,7 @@ try {
     const shot=async name=>{const file=`${viewport.width}-${name}.png`;await page.screenshot({path:path.join(out,file)});item.screenshots.push(file);};
     const ready=()=>page.waitForFunction(()=>document.querySelector('#model-canvas')?.dataset.ready==='true'&&document.querySelector('[data-showcase]')?.dataset.state==='ready',null,{timeout:120000});
     // Use the ordinary URL on desktop and the QA-query URL on narrow screens.
-    // Both load the full real production model; avoid an extra 45 MB reload per case.
+    // Both load the full real production model in separate browser contexts.
     const pageUrl=viewport.width<500?url+(url.includes('?')?'&':'?')+'__hikariQa=1':url;
     item.url=pageUrl;
     const response=await page.goto(pageUrl,{waitUntil:'load',timeout:120000});check('HTTP 200',response.status()===200);await ready();
@@ -59,10 +59,11 @@ try {
     }
     await page.locator('#reset-button').click();await page.waitForTimeout(250);
     check('Reset neutral',await page.locator('#model-canvas').getAttribute('data-expression')==='Neutral');
-    const modelUrl=new URL('model/hikari_t001/SuJiangXue_HikariSmirk_t001.model3.json',url).href;
+    const modelUrl=new URL('model/hikari_t002/SuJiangXue_HikariSmirk_t001.model3.json',url).href;
     const modelResponse=await page.request.get(modelUrl);check('Current model HTTP 200',modelResponse.status()===200);
     const model=await modelResponse.json();check('Eight textures',model.FileReferences.Textures.length===8);
-    check('Current model requested',item.modelRequests.some(p=>p.endsWith('/hikari_t001/SuJiangXue_HikariSmirk_t001.model3.json')));
+    check('Lossless WebP references',model.FileReferences.Textures.every(p=>p.endsWith('.webp')));
+    check('Current model requested',item.modelRequests.some(p=>p.endsWith('/hikari_t002/SuJiangXue_HikariSmirk_t001.model3.json')));
     check('Production QA remains absent after interactions',await page.evaluate(()=>typeof window.__hikariQa==='undefined'&&typeof window.__charmQa==='undefined'));
     await page.close();
   }
