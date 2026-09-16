@@ -1,4 +1,5 @@
 import './styles.css';
+import './project.css';
 import type { ActionName } from './action-controller';
 
 export const EXPRESSION_NAMES = [
@@ -452,7 +453,10 @@ export function setupUI(callbacks: UICallbacks): UIHandle {
       status?.setAttribute('data-status', 'loading');
       if (statusLabel) statusLabel.textContent = 'MODEL LOADING';
       if (statusDetail) statusDetail.textContent = detail;
-      if (modelFallback) modelFallback.hidden = false;
+      if (modelFallback) {
+        modelFallback.hidden = false;
+        modelFallback.textContent = '动态载入中 · 静态预览';
+      }
       if (retryButton) retryButton.hidden = true;
       setControlsDisabled(true);
       if (settingsWasOpen) closeSettings(false);
@@ -485,7 +489,10 @@ export function setupUI(callbacks: UICallbacks): UIHandle {
       status?.setAttribute('data-status', 'error');
       if (statusLabel) statusLabel.textContent = 'MODEL UNAVAILABLE';
       if (statusDetail) statusDetail.textContent = message;
-      if (modelFallback) modelFallback.hidden = false;
+      if (modelFallback) {
+        modelFallback.hidden = false;
+        modelFallback.textContent = '动态暂不可用 · 静态预览';
+      }
       if (retryButton) retryButton.hidden = false;
       setControlsDisabled(true, true);
       updateActionAvailability();

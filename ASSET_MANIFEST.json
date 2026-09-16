@@ -1,6 +1,6 @@
 {
   "schema": "amahane-hikari-assets/v1",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "files": [
     {
       "path": "model/parameter-definitions.json",
@@ -210,6 +210,12 @@
       "path": "previews/neutral.png",
       "bytes": 7816211,
       "sha256": "6cb65a9a0d6baa8ff5e768547833478382985edb1fbcd6422f6068da9020dfde",
+      "license": "LicenseRef-Model-Attribution-NoAI-1.0"
+    },
+    {
+      "path": "previews/oss-showcase.webp",
+      "bytes": 69588,
+      "sha256": "11ca3080a02df4deee498881e0c7f71cfd8d70335b98b28b706bc9575cfd98b3",
       "license": "LicenseRef-Model-Attribution-NoAI-1.0"
     }
   ]

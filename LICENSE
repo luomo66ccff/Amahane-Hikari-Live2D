@@ -4,13 +4,15 @@ License scope
 Copyright 2026 luomo66ccff.
 
 The model, artwork, textures, rig, expressions and previews in model/
-and previews/ use the Amahane Hikari Model Attribution and No-AI License
+and previews/, plus web/public/character-poster.webp and
+web/public/social-preview.webp, use the Amahane Hikari Model Attribution and No-AI License
 1.0. See LICENSES/Model-Attribution-NoAI-1.0.txt. This permits commercial
 use, modification and redistribution with attribution, but prohibits
 AI/ML training and related uses. It is not CC BY 4.0 or an OSI-approved
 open-source license.
 
-The textual project documentation in docs/, README.md and README.en.md
+The textual project documentation in docs/, README.md, README.en.md,
+CONTRIBUTING.md, SECURITY.md and the .github/ contribution templates
 uses Creative Commons Attribution 4.0 International (CC-BY-4.0).
 Embedded model images retain the model license. See LICENSES/CC-BY-4.0.txt.
 

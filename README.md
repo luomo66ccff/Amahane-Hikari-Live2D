@@ -1,47 +1,84 @@
-# Amahane Hikari · Live2D v2.0.1
+# Amahane Hikari · Live2D v2.1.0
 
-[English](README.en.md) · [在线互动](https://live2d.luomo.moe/Amahane_Hikari/) · [发布仓库](https://github.com/luomo66ccff/Amahane-Hikari-Live2D)
+[简体中文](README.md) / [English](README.en.md)
 
-银白长发、红瞳、白色兽耳与月雪主题的 Live2D 角色。当前采用 native102 运行模型，提供三套服装、12 种表情和可复现的网页互动源码。v2.0.1 优化网页加载，并公开从美术生成到模型交付的制作 Skill。
+[![SDK-free regression](https://github.com/luomo66ccff/Amahane-Hikari-Live2D/actions/workflows/sdk-free-regression.yml/badge.svg)](https://github.com/luomo66ccff/Amahane-Hikari-Live2D/actions/workflows/sdk-free-regression.yml)
 
-<img src="previews/native102-dress.png" alt="Amahane Hikari native102 礼装中立态预览" width="420" />
+月雪、冰蓝色调的 Live2D 角色与一套可复用的 TypeScript/Vite 运行时。仓库同时保留网页源码、动作与口型输入、可复现检查、模型制作 Skill，以及可继续编辑的模型文件。
 
-项目展示名称为 **Amahane Hikari**；制作文件沿用 **苏绛雪 / SuJiangXue** 的历史名称，以保持 Cubism 与运行资源的相对引用。
+[在线试玩](https://live2d.luomo.moe/Amahane_Hikari/) · [模型下载（v2.0.0）](https://github.com/luomo66ccff/Amahane-Hikari-Live2D/releases/tag/v2.0.0) · [制作 Skill 源码](skills/live2d-end-to-end/SKILL.md) · [Skill 包（v2.0.1）](https://github.com/luomo66ccff/Amahane-Hikari-Live2D/releases/tag/v2.0.1) · [参与贡献](CONTRIBUTING.md) · [安全披露](SECURITY.md)
 
-## 当前发布
+<p align="center">
+  <img src="previews/oss-showcase.webp" alt="Amahane Hikari 月雪主题 Live2D 展示" width="960" />
+</p>
 
-| 项目 | 内容 |
+<details>
+<summary>查看三套服装的静态预览</summary>
+
+<p align="center">
+  <a href="previews/native102-dress.png"><img src="previews/native102-dress.png" alt="礼装预览" width="30%" /></a>
+  <a href="previews/native102-school.png"><img src="previews/native102-school.png" alt="校服预览" width="30%" /></a>
+  <a href="previews/native102-swim.png"><img src="previews/native102-swim.png" alt="泳装预览" width="30%" /></a>
+</p>
+
+</details>
+
+## 这个仓库是什么
+
+Amahane Hikari 把一个真实的 Live2D Cubism 角色带进浏览器，并公开实现它的代码与制作流程。你可以研究动作控制器、复现加载与资源清理问题，也可以用制作 Skill 开始自己的角色项目。
+
+软件与工具采用 MIT，文档采用 CC BY 4.0；角色资产采用独立的 Attribution + No-AI 许可，属于 source-available。各部分的使用范围见[许可说明](#许可与署名)。
+
+维护者：`luomo66ccff`。代码协作辅助：Hermes（`Amahane-Hikari`）。
+
+## 当前内容
+
+| 部分 | 已提交内容 |
 | --- | --- |
-| 原生版本 | native102；可编辑工程为 `model/source/Cubism/SuJiangXue_HairFlow_WIP_t102.cmo3` |
-| 运行资源 | `model/runtime/`，25 个文件、8 张纹理、66 个参数、226 个 drawable、59 个 part |
-| 服装 | 礼装、校服、泳装；保持现有素材的上大腿范围 |
-| 表情 | 默认、微笑、开心、害羞、生气、难过、惊讶、困倦、哭泣、左右眨眼、猫猫开心，共 12 种 |
-| 网页动作 | 好奇、害羞、得意；左右闭口轻咀嚼；取消、重入、暂停、复位和口型交接 |
-| 网页控制 | 视线跟随、点击反馈、拖动、缩放、换装、暂停、复位和响应式布局 |
+| 网页运行时 | TypeScript/Vite、WebGL 2、Cubism Core/Framework 接入、响应式控制台 |
+| 角色互动 | 12 个表情、礼装/校服/泳装三套服装、视线跟随、点击反馈、拖动、缩放、暂停和复位 |
+| 动作系统 | `curiosity`、`shy`、`smug` 三个网页动作；控制器还保留 `chewLeft` / `chewRight` 的口型交接边界 |
+| 外部输入 | `hikari:mouth-input` 短时口型事件；不申请麦克风权限 |
+| 制作 Skill | 从素材检查、Photoshop 门禁、Cubism 绑定到运行时验收和回退的可复用流程 |
+| 可复现检查 | 不需要 SDK 的控制器、运行时替身、资源清理和 DOM 事件检查；真实模型网页检查另需 SDK |
 
-原生运行包还保留一条演示 motion。其他 native102 静态样例见 `previews/native102-school.png`、`previews/native102-swim.png` 和 `previews/native102-mobile.png`。网页动作入口使用实际绑定的参数；参数 ID 存在本身不代表已经完成语义绑定，具体边界见 [验证说明](docs/VALIDATION.md)。
+当前模型为 `native102`。源文件仍使用历史名称 `SuJiangXue / 苏绛雪`，以保持 Cubism 工程和运行资源引用稳定。美术目前延伸到大腿上部；预览不能推断出小腿或脚部内容。
 
-## 下载与使用模型
+## 先跑不需要 SDK 的检查
 
-[v2.0.0 下载](https://github.com/luomo66ccff/Amahane-Hikari-Live2D/releases/tag/v2.0.0)包含运行包、可编辑 CMO3、三套服装的前后对照录像和发布清单。录像 before 为已升级头肩的 native101，after 为 native102 与最终控制器。
-
-保持 `model/runtime/` 的目录结构，加载其中的 `SuJiangXue_HikariSmirk_t001.model3.json`。继续绑定时，用 Live2D Cubism Editor **5.3.01** 打开 `model/source/Cubism/SuJiangXue_HairFlow_WIP_t102.cmo3`，保存、重开并重新导出相关运行资源。
-
-`model/source/Photoshop/` 中保留的 PSD 是制作来源和局部美术输入，并不代表三套服装的完整最终 PSD。模型、美术、贴图、绑定、表情和预览的修改与再分发必须遵守 [模型许可](LICENSES/Model-Attribution-NoAI-1.0.txt)。
-
-## 本地运行网页
-
-需要 Node.js **22.12+ 或 24**。Live2D SDK 不随仓库分发，请从 [Cubism SDK for Web 官方下载页](https://www.live2d.com/en/sdk/download/web/) 获取 **5-r.5**，阅读其官方条款并解压到本机目录。
+Node.js 需要满足 `web/package.json` 中的要求，即 **22.12+**。依赖安装和以下检查都在 `web/` 中进行：
 
 ```sh
 git clone https://github.com/luomo66ccff/Amahane-Hikari-Live2D.git
 cd Amahane-Hikari-Live2D/web
 npm ci
+npm test
+npx playwright install chromium
+npm run test:events
+```
+
+`npm test` 运行动作控制器、时间步进、口型 TTL、暂停/复位、资源清理等 SDK-free 回归；它使用 TypeScript 转译和明确的运行时替身，不渲染真实模型。`npm run test:events` 使用真实 Chromium 检查 `main.ts` 的 DOM 事件注册和 README 中的口型示例，也不加载 SDK 或模型。Chromium 只需安装一次；若使用本机 Edge，可设置 `BROWSER_CHANNEL=msedge` 后运行同一命令。
+
+资产清单和运行资源引用可以单独检查：
+
+```sh
+npm run verify
+```
+
+## 本地运行网页
+
+v2.1.0 更新了项目首页、静态预览与贡献文档。可编辑模型包见 v2.0.0，独立 Skill 包见 v2.0.1；各版内容和验证范围见[发布记录](docs/RELEASE_NOTES.md)。
+
+完整网页需要你从 [Live2D 官方 Cubism SDK for Web 下载页](https://www.live2d.com/en/sdk/download/web/) 获取 **5-r.5**，阅读并遵守其官方条款，再把 SDK 解压到本机目录。SDK、Core、Framework、shader 和类型声明不随本仓库分发。
+
+从 `web/` 执行：
+
+```sh
 npm run setup:sdk -- "/path/to/CubismSdkForWeb-5-r.5"
 npm run dev
 ```
 
-打开终端显示的 `/Amahane_Hikari/` 地址。Windows 下同样要为带空格的 SDK 路径加引号。安装脚本只从你提供的本地 SDK 复制需要的文件，不下载 SDK、不修改原 SDK 目录；目标文件存在且内容不一致时会停止。
+打开 Vite 输出的 `http://127.0.0.1:5188/Amahane_Hikari/`。Windows 路径同样建议加引号。设置脚本会检查 SDK 中的 `cubism-info.yml` 是否为 `5-r.5`，只复制运行所需文件到被忽略的 `web/vendor/`、`web/public/vendor/`、`web/public/licenses/`；不会修改你的 SDK 源目录，也不会下载 SDK。
 
 构建和本地预览：
 
@@ -50,17 +87,21 @@ npm run build
 npm run preview
 ```
 
-构建前会校验 `model/runtime/`，再生成 `model/hikari_t002/` 网页专用无损 WebP。8 张纹理从 45,967,274 字节降至 13,336,594 字节，每张均核对解码后的 RGBA；原 PNG、MOC3 和 CMO3 保持不变。纹理最多三路下载，逐张解码上传，并按模型版本保存在浏览器 Cache Storage；存储不可用时回退网络。首次构建需要编码时间，后续按哈希复用产物。部署到其他路径时，可通过 `VITE_BASE` 设置 Vite base；版本化模型 URL 应配置长期缓存。测量与配置见 [网页性能记录](docs/WEB_PERFORMANCE.md)。发布自己构建的网站时，继续遵守 Live2D SDK 的第三方授权条款。
+`dev`、`build` 和 `preview` 会先校验模型并准备网页专用资源，所以完整网页路径必须先完成 SDK 设置。默认 Vite base 是 `/Amahane_Hikari/`；部署到其他路径时可设置 `VITE_BASE`。网页专用纹理由构建脚本生成并放入被忽略目录，原始 PNG、MOC3 和 CMO3 不会被改写。要做真实页面 smoke 检查，可在另一个终端运行：
 
-## 可复用的制作 Skill
+```sh
+npm run test:smoke -- http://127.0.0.1:5188/Amahane_Hikari/ ./reports/page-smoke
+npm run test:project-page -- http://127.0.0.1:5188/Amahane_Hikari/ ./reports/project-page
+```
 
-[live2d-end-to-end](skills/live2d-end-to-end/SKILL.md) 覆盖角色需求、候选生成、拆层补绘、Photoshop 验收、Cubism 绑定与物理、Q 弹动态、真实模型验收、网页发布和错误纠正。它包含可移植的运行包引用核验脚本，并区分项目经验与新模型仍需验证的步骤。
+该检查使用 `npm run build` 后的 `npm run preview` 生产预览服务、浏览器和本地 SDK 生成的网页资源。它还检查生产构建中没有开发调试接口，因此不要针对 `npm run dev` 运行。结果覆盖报告中列出的浏览器、视口与操作。
 
-可从 [v2.0.1 Release](https://github.com/luomo66ccff/Amahane-Hikari-Live2D/releases/tag/v2.0.1) 下载独立 Skill ZIP，或把仓库中的 `skills/live2d-end-to-end/` 整个目录放到 `~/.codex/skills/`，然后使用 `$live2d-end-to-end`。技能文档采用 CC BY 4.0，辅助脚本采用 MIT；独立包不含模型资产或 Live2D SDK。
+## 口型输入
 
-## 网页口型输入
+外部控制器可以向 `window` 分发短时口型事件。`open` 的范围是 `0–1`，`form` 是 `−1–1`，`pucker` 是 `0–1`；`ttlMs` 默认 `180` 毫秒，允许 `1–1000` 毫秒。传入 `null` 会清除当前输入。详细所有权和动作交接边界见[架构说明](docs/ARCHITECTURE.md)。
 
-网页提供短时口型输入事件，便于语音或其他外部控制器接入。事件只接受有限数值，不申请麦克风权限：
+<details>
+<summary>最小发送与清除示例</summary>
 
 ```js
 window.dispatchEvent(new CustomEvent('hikari:mouth-input', {
@@ -71,47 +112,35 @@ window.dispatchEvent(new CustomEvent('hikari:mouth-input', {
 window.dispatchEvent(new CustomEvent('hikari:mouth-input', { detail: null }));
 ```
 
-推荐在 `window` 上分发；也兼容在当前页面的 `document` 或已连接 DOM 元素上分发，无需设置 `bubbles: true`，每次分发只接收一次。
-
-`open` 范围为 0–1，`form` 为 −1–1，`pucker` 为 0–1，`ttlMs` 默认 180ms、允许 1–1000ms。暂停会冻结最终画面，但 TTL 仍按墙钟过期；复位和销毁会清除输入。闭口轻咀嚼在活跃和取消过渡期间保持口型优先权，动作结束后再交回外部输入。
-
-## 可复现验证
-
-从 `web/` 执行：
-
-```sh
-npm run verify
-npm test
-npx playwright install chromium
-npm run test:events
-npm run test:smoke -- http://127.0.0.1:5188/Amahane_Hikari/ ./reports/page-smoke
-```
-
-`verify` 检查资产清单和运行资源引用；`test:controller` 检查动作意图、取消、暂停、重入和复位；`test:smoke` 使用真实无头浏览器完成普通页面检查，验证网页入口、真实资源、表情、服装和生产构建中的 DEV 边界，不注入模型内部控制器。口型 handoff 与 TTL 由单独的浏览器所有权验收覆盖。首次运行 smoke 可执行 `npx playwright install chromium`；使用已安装 Edge 时可跳过并设置 `BROWSER_CHANNEL=msedge`。历史 native102 证据见 [验证说明](docs/VALIDATION.md)，本次网页与加载失败重试结果见 [网页性能记录](docs/WEB_PERFORMANCE.md)。
-
-`npm test` 合并执行控制器测试与新增的运行时回归。`test:runtime` 用 SDK/控制器替身执行真实运行时代码，检查低帧率分步计时、暂停/恢复、口型输入与超时清理；`test:events` 在真实 Chromium 中执行实际事件注册代码与本页口型示例。两者不需要 Live2D SDK，也不等同于真实模型的画面验收。CI 会运行这些检查及资产校验；完整构建、原生模型与视觉验收仍需按授权配置 SDK，详见 [本次运行时修复与验证边界](docs/RUNTIME_FIXES.md)。
+</details>
 
 ## 目录
 
 ```text
-model/source/Cubism/       可继续编辑的 native102 CMO3
-model/source/Photoshop/    制作来源 PSD；不等同于三套服装的完整最终母版
-model/runtime/             native102 的 MOC3、model3、physics3、CDI、纹理、表情和 motion
-previews/                  native102 礼装、校服、泳装和窄屏样例；neutral.png 为历史预览
-web/                       网页应用源码；SDK 和构建目录被忽略
-scripts/                   SDK 设置、模型同步、清单校验和发布验证工具
-ASSET_MANIFEST.json        资产身份与 SHA-256 清单
-LICENSES/                  项目与模型授权文本
+model/runtime/             native102 运行资源：model3、MOC3、physics、表情、motion、纹理
+model/source/Cubism/       可继续编辑的 CMO3；文件名保留 SuJiangXue 历史名称
+model/source/Photoshop/    制作来源和局部补丁，不是三套服装的完整最终 PSD
+previews/                  角色预览；OSS 门面图和各服装样例
+web/src/                   UI、运行时、动作、口型、姿态和辅助模块
+scripts/                   SDK 设置、模型同步、清单校验和浏览器检查
+skills/                    可移植的 Live2D 制作 Skill
+LICENSES/                  MIT、CC BY 4.0 和模型许可文本
+ASSET_MANIFEST.json        模型与预览文件的身份及 SHA-256 清单
 ```
 
-制作与发布流程见 [工作流](docs/WORKFLOW.md)，经验复盘见 [Lessons Learned](docs/LESSONS_LEARNED.md)，版本变化见 [发布说明](docs/RELEASE_NOTES.md)，素材来源见 [来源说明](docs/PROVENANCE.md)。
+技术边界和参数管线见[架构说明](docs/ARCHITECTURE.md)，尚未承诺日期的待办见[路线图](docs/ROADMAP.md)。制作、发布和证据边界见[工作流](docs/WORKFLOW.md)、[验证说明](docs/VALIDATION.md)、[来源说明](docs/PROVENANCE.md)和[第三方说明](THIRD_PARTY_NOTICES.md)。
 
-## 授权与署名
+## 许可与署名
 
-模型、美术、贴图、绑定、表情及预览采用 [Model Attribution and No-AI License 1.0](LICENSES/Model-Attribution-NoAI-1.0.txt)：允许商用、修改和再分发，但须署名、保留授权、标明修改，并禁止用于创建、训练、测试或改进 AI / 机器学习系统及相关数据集。它是附用途限制的 source-available 模型许可，不是 CC BY 或 OSI 标准开源许可。
+| 内容 | 许可 | 说明 |
+| --- | --- | --- |
+| 原创网页代码、样式、HTML、SVG favicon 和工具 | [MIT](LICENSES/MIT.txt) | 以仓库中各文件的 SPDX 标记和许可文本为准 |
+| 文档与 Skill 文字 | [CC BY 4.0](LICENSES/CC-BY-4.0.txt) | 转载或改编时保留署名、许可链接和修改说明 |
+| 模型、美术、贴图、绑定、表情、源 CMO3/PSD 和预览 | [Model Attribution and No-AI License 1.0](LICENSES/Model-Attribution-NoAI-1.0.txt) | 允许范围、署名、修改标记和 AI/ML 限制以该文件为准；这是 custom source-available 许可，不是 OSI 开源许可 |
+| Live2D Core、Framework、shader 和类型声明 | Live2D 官方条款 | SDK 独立授权，由使用者自行获取；生成网页构建若包含 SDK 组件，必须保留适用的第三方说明 |
 
-自写网页代码、样式、HTML、SVG favicon 和工具采用 [MIT](LICENSES/MIT.txt)；文档文字采用 CC BY 4.0。建议署名：
+再分发模型或衍生模型时，请保留许可并使用以下署名：
 
-> Amahane Hikari / 苏绛雪 — luomo66ccff，Model Attribution and No-AI License 1.0。来源：https://github.com/luomo66ccff/Amahane-Hikari-Live2D
+> Amahane Hikari / SuJiangXue — luomo66ccff，Model Attribution and No-AI License 1.0。来源：https://github.com/luomo66ccff/Amahane-Hikari-Live2D
 
-Live2D Core、Framework、shader 和类型声明属于第三方 SDK，不随源码仓库或源模型下载包提供；生成的网页构建可能包含运行所需组件，并必须保留适用的第三方说明和授权。详见 [第三方说明](THIRD_PARTY_NOTICES.md)。
+模型许可禁止把这些模型材料或其衍生数据用于创建、训练、测试或改进 AI/机器学习系统及相关数据集。代码贡献、文档翻译和模型资产修改的边界不同，提交前请阅读 [CONTRIBUTING.md](CONTRIBUTING.md)。
