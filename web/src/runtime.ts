@@ -1,3 +1,5 @@
+import { getFrameTiming } from './frame-timing';
+import { withTimeout } from './async-utils';
 import { CubismFramework, LogLevel, Option } from '@framework/live2dcubismframework';
 import { CubismUserModel } from '@framework/model/cubismusermodel';
 import { CubismMatrix44 } from '@framework/math/cubismmatrix44';
@@ -6,8 +8,6 @@ import { CubismShaderManager_WebGL } from '@framework/rendering/cubismshader_web
 import { CubismWebGLOffscreenManager } from '@framework/rendering/cubismoffscreenmanager';
 import { CubismRenderer_WebGL } from '@framework/rendering/cubismrenderer_webgl';
 import { HikariPresentation } from './presentation';
-import { frameDeltaSeconds, forEachPhysicsStep } from './frame-time';
-import { decodeImage } from './decode-image';
 import { SecondaryMotionController, secondaryMotionChannels, addSecondaryMotion } from './secondary-motion';
 import {
   RuntimeDebugController,
@@ -325,12 +325,12 @@ export class HikariStage extends CubismUserModel {
       const img=new Image();
       try {
         img.src=url;
-        await decodeImage(img,this.abort.signal);
+        await withTimeout(()=>img.decode(),20000,'高清材质加载超时，请重新加载。',this.abort.signal);
         if(this.destroyed) return;
         const gl=this.gl;
         const texture=gl.createTexture();
-        if(!texture)throw new Error('显存不足，无法创建模型材质，请关闭其他图形页面后重试。');
-        // Register immediately so destroy() owns it even if upload throws.
+        if(!texture)throw new Error('无法分配模型材质，请关闭其他标签页后重试。');
+        // Track ownership before upload so destroy() also releases failed uploads.
         this.textures.push(texture);
         gl.bindTexture(gl.TEXTURE_2D,texture);
         gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL,true);
@@ -902,7 +902,7 @@ export class HikariStage extends CubismUserModel {
   }
   private changeZoom(value:number):void {
     this.setZoom(value);this.canvas.dispatchEvent(new CustomEvent('hikari:zoom',{bubbles:true,detail:{zoom:this.zoom}}));
-  };
+  }
   private onWheel=(event:WheelEvent):void=>{
     if(!this.ready||!this.moveMode||event.ctrlKey)return;
     event.preventDefault();this.changeZoom(this.zoom*Math.exp(-event.deltaY*.0015));
@@ -1143,10 +1143,20 @@ export class HikariStage extends CubismUserModel {
     this.expireMouthInput();
     this.frame=requestAnimationFrame(this.tick);
     if(document.hidden){this.lastTime=null;return;}
-    // Animation receives elapsed wall time; only long stalls are bounded.
-    // Physics below consumes the same interval through smaller solver steps.
-    const dt=frameDeltaSeconds(time,this.lastTime);
-    this.lastTime=time;
+    const timing=getFrameTiming(time,this.lastTime,this.paused);
+    this.lastTime=Number.isFinite(time)&&time>=0?time:null;
+    // Advance the complete parameter pipeline in bounded steps. Clamping the
+    // frame delta itself to 1/30 made a 15 FPS session run at half speed.
+    for(let i=0;i<timing.stepCount;i++){
+      const sampleTime=time-(timing.stepCount-1-i)*timing.stepSeconds*1000;
+      this.advanceSimulation(timing.stepSeconds,sampleTime,i===timing.stepCount-1);
+    }
+    // Geometry upload and rendering remain once per browser frame.
+    this.presentation.update();
+    this.draw();
+  };
+  private advanceSimulation(dt:number,time:number,recordDiagnostics:boolean):void {
+    const captureDiagnostics=this.debugEnabled&&recordDiagnostics;
     if(!this.paused)this.elapsed+=dt;
     const debug=this.debugController?.getControls();
     const idleEnabled=debug?.idleEnabled??true;
@@ -1184,7 +1194,7 @@ export class HikariStage extends CubismUserModel {
       // One owner for the base pose: attention settles first in the eyes,
       // then in the head and body. Idle targets dwell between small changes.
       presence=this.presence.update(dt,{pointer:this.pointer,pointerActive:this.cursor!==null&&this.contacts.size===0,followEnabled:this.follow,outfit:this.outfit});
-      if(this.debugEnabled)rawPresenceCue=presence.autonomousCue?{...presence.autonomousCue}:null;
+      if(captureDiagnostics)rawPresenceCue=presence.autonomousCue?{...presence.autonomousCue}:null;
       for(const [id,value] of Object.entries(presence.parameters))this.setParameter(id,value);
       for(const [id,value] of Object.entries(presence.articulated))this.setParameter(id,value);
       this.look={x:presence.parameters.ParamEyeBallX/.88,y:presence.parameters.ParamEyeBallY/.85};
@@ -1205,7 +1215,7 @@ export class HikariStage extends CubismUserModel {
     if(!this.paused&&expressionEnabled)this._expressionManager.updateMotion(model,dt);
     if(!this.paused&&action.active)this.applyActionIntents(action.prePhysicsPose);
     if(!this.paused&&physicsEnabled){
-      forEachPhysicsStep(dt,step=>this._physics?.evaluate(model,step));
+      this._physics?.evaluate(model,dt);
       // Apply once after physics and before freezing. Each frame starts from
       // defaults, so the ambient offsets never accumulate in model values.
       this.applySecondaryMotion(dt,presence,action.active);
@@ -1224,7 +1234,7 @@ export class HikariStage extends CubismUserModel {
         this.suppressAutonomousUntilCueInactive=false;
       }
       this.lastAutonomousCue=this.effectiveAutonomousCue(presence);
-      if(this.debugEnabled)effectiveCue={...this.lastAutonomousCue};
+      if(captureDiagnostics)effectiveCue={...this.lastAutonomousCue};
       effectiveCueApplied=true;
       this.applyAutonomousCue(this.lastAutonomousCue);
       // Keep a greeting requested during cancellation queued until the
@@ -1243,7 +1253,7 @@ export class HikariStage extends CubismUserModel {
         const base=index===undefined?value:model.getParameterValueByIndex(index);
         this.setParameter(id,reboundEnabled?value:Math.max(base,value));
       }
-      if(this.debugEnabled){
+      if(captureDiagnostics){
         reboundOutputs={...face};
         if(Object.keys(face).length){
           const readback=this.readDebugMotionParameters(Object.keys(face));
@@ -1267,7 +1277,7 @@ export class HikariStage extends CubismUserModel {
     this.enforceGentleArmBounds();
     if(!this.paused)this.applyMouthInput(action);
     this.applyDebugOverrides();
-    if(this.debugEnabled){
+    if(captureDiagnostics){
       const postWrite=this.readDebugMotionParameters(MOTION_DIAGNOSTIC_PARAMETER_IDS);
       this.debugMotionSequence+=1;
       this.debugMotionLatest={
@@ -1315,9 +1325,7 @@ export class HikariStage extends CubismUserModel {
       this.frozenPhysics=outputIds.map(id=>model.getParameterValueByIndex(this.indices.get(id)));
       this.frozenParameters=Array.from({length:this.defaults.length},(_,index)=>model.getParameterValueByIndex(index));
     }
-    this.presentation.update();
-    this.draw();
-  };
+  }
   private draw():void {
     const gl=this.gl;
     // Context loss can precede the queued webglcontextlost event. In that

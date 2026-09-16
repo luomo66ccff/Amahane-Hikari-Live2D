@@ -3,10 +3,10 @@ name: SDK-free regression
 on:
   pull_request:
   push:
-    branches: [main, 'fix/**']
+    branches: [main]
   workflow_dispatch:
 
-# This workflow never downloads the proprietary SDK, deploys, or writes to Git.
+# One workflow for both PRs' checks; no SDK download, writes or deployment.
 permissions:
   contents: read
 
@@ -22,8 +22,10 @@ jobs:
       run:
         working-directory: web
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: '22'
           cache: npm
@@ -34,9 +36,11 @@ jobs:
         run: npm run verify
       - name: Test authored action controller
         run: npm run test:controller
-      - name: Test runtime boundaries and strict helper types
+      - name: Test complete runtime substep contracts and helper types
         run: npm run test:runtime
-      - name: Install Chromium for the event fixture
+      - name: Test texture ownership and asynchronous cleanup
+        run: npm run test:resources
+      - name: Install Chromium for the locked Playwright version
         run: npx --no-install playwright install --with-deps chromium
-      - name: Test actual listener and documented mouth-input example
-        run: npm run test:mouth-event
+      - name: Test both public event suites and the README example
+        run: npm run test:events
