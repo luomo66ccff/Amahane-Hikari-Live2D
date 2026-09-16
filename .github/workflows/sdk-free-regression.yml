@@ -1,4 +1,4 @@
-name: SDK-free checks
+name: SDK-free regression
 
 on:
   pull_request:
@@ -6,6 +6,7 @@ on:
     branches: [main]
   workflow_dispatch:
 
+# One workflow for both PRs' checks; no SDK download, writes or deployment.
 permissions:
   contents: read
 
@@ -14,7 +15,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  contracts:
+  regression:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     defaults:
@@ -31,11 +32,15 @@ jobs:
           cache-dependency-path: web/package-lock.json
       - name: Install locked dependencies without lifecycle scripts
         run: npm ci --ignore-scripts
-      - name: Verify asset inventory and hashes
+      - name: Verify unchanged asset manifest and runtime references
         run: npm run verify
-      - name: Test controller and real runtime contracts
-        run: npm test
+      - name: Test authored action controller
+        run: npm run test:controller
+      - name: Test complete runtime substep contracts and helper types
+        run: npm run test:runtime
+      - name: Test texture ownership and asynchronous cleanup
+        run: npm run test:resources
       - name: Install Chromium for the locked Playwright version
         run: npx --no-install playwright install --with-deps chromium
-      - name: Test public mouth events and the README example
+      - name: Test both public event suites and the README example
         run: npm run test:events
