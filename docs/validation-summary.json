@@ -31,7 +31,7 @@
   },
   "local_production_smoke": {
     "status": "PASS",
-    "checks": 34,
+    "checks": 62,
     "errors": 0,
     "viewports": [
       [
@@ -109,5 +109,14 @@
     "This release did not revalidate VTube Studio, camera tracking or microphone input.",
     "Historical PSDs do not cover all final outfit artwork.",
     "Raw workstation/UI logs remain private."
-  ]
+  ],
+  "public_production_smoke": {
+    "status": "PASS",
+    "checks": 62,
+    "errors": 0,
+    "protocol": "HTTP/1.1; QUIC and HTTP/2 disabled in the final runner",
+    "report": "browser-smoke.json",
+    "initial_default_connection_run": "34 checks passed; later repeated large-texture loads timed out",
+    "scope": "Real public page with ordinary desktop URL and QA-query narrow URL; no request interception or model injection"
+  }
 }

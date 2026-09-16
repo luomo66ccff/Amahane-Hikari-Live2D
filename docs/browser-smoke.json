@@ -1,0 +1,344 @@
+{
+  "schema": "hikari-browser-smoke/v1",
+  "url": "https://live2d.luomo.moe/Amahane_Hikari/",
+  "status": "PASS",
+  "pages": [
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "checks": [
+        {
+          "name": "HTTP 200",
+          "pass": true
+        },
+        {
+          "name": "No production QA global",
+          "pass": true
+        },
+        {
+          "name": "No horizontal overflow",
+          "pass": true
+        },
+        {
+          "name": "curiosity enabled",
+          "pass": true
+        },
+        {
+          "name": "shy enabled",
+          "pass": true
+        },
+        {
+          "name": "smug enabled",
+          "pass": true
+        },
+        {
+          "name": "Pause on",
+          "pass": true
+        },
+        {
+          "name": "Pause off",
+          "pass": true
+        },
+        {
+          "name": "Expression Neutral",
+          "pass": true
+        },
+        {
+          "name": "Expression Smile",
+          "pass": true
+        },
+        {
+          "name": "Expression Happy",
+          "pass": true
+        },
+        {
+          "name": "Expression Shy",
+          "pass": true
+        },
+        {
+          "name": "Expression Angry",
+          "pass": true
+        },
+        {
+          "name": "Expression Sad",
+          "pass": true
+        },
+        {
+          "name": "Expression Surprised",
+          "pass": true
+        },
+        {
+          "name": "Expression Sleepy",
+          "pass": true
+        },
+        {
+          "name": "Expression Cry",
+          "pass": true
+        },
+        {
+          "name": "Expression Wink_L",
+          "pass": true
+        },
+        {
+          "name": "Expression Wink_R",
+          "pass": true
+        },
+        {
+          "name": "Expression HappyCat",
+          "pass": true
+        },
+        {
+          "name": "Zoom",
+          "pass": true
+        },
+        {
+          "name": "Follow off",
+          "pass": true
+        },
+        {
+          "name": "Outfit 0",
+          "pass": true
+        },
+        {
+          "name": "Outfit 1",
+          "pass": true
+        },
+        {
+          "name": "Outfit 2",
+          "pass": true
+        },
+        {
+          "name": "Outfit 0",
+          "pass": true
+        },
+        {
+          "name": "Reset neutral",
+          "pass": true
+        },
+        {
+          "name": "Current model HTTP 200",
+          "pass": true
+        },
+        {
+          "name": "Eight textures",
+          "pass": true
+        },
+        {
+          "name": "Current model requested",
+          "pass": true
+        },
+        {
+          "name": "Production QA remains absent after interactions",
+          "pass": true
+        }
+      ],
+      "screenshots": [
+        "1440-ready.png",
+        "1440-curiosity.png",
+        "1440-shy.png",
+        "1440-smug.png",
+        "1440-outfit-1.png",
+        "1440-outfit-2.png"
+      ],
+      "modelRequests": [
+        "/Amahane_Hikari/model/hikari_t001/SuJiangXue_HikariSmirk_t001.model3.json",
+        "/Amahane_Hikari/model/hikari_t001/SuJiangXue_HikariSmirk_t001.moc3",
+        "/Amahane_Hikari/model/hikari_t001/expressions/Neutral.exp3.json",
+        "/Amahane_Hikari/model/hikari_t001/expressions/Smile.exp3.json",
+        "/Amahane_Hikari/model/hikari_t001/expressions/Happy.exp3.json",
+        "/Amahane_Hikari/model/hikari_t001/expressions/Shy.exp3.json",
+        "/Amahane_Hikari/model/hikari_t001/expressions/Angry.exp3.json",
+        "/Amahane_Hikari/model/hikari_t001/expressions/Sad.exp3.json",
+        "/Amahane_Hikari/model/hikari_t001/expressions/Surprised.exp3.json",
+        "/Amahane_Hikari/model/hikari_t001/expressions/Sleepy.exp3.json",
+        "/Amahane_Hikari/model/hikari_t001/expressions/Cry.exp3.json",
+        "/Amahane_Hikari/model/hikari_t001/expressions/Wink_L.exp3.json",
+        "/Amahane_Hikari/model/hikari_t001/expressions/Wink_R.exp3.json",
+        "/Amahane_Hikari/model/hikari_t001/expressions/HappyCat.exp3.json",
+        "/Amahane_Hikari/model/hikari_t001/SuJiangXue_HikariSmirk_t001.physics3.json",
+        "/Amahane_Hikari/model/hikari_t001/SuJiangXue_HikariSmirk_t001.8192/texture_00.png",
+        "/Amahane_Hikari/model/hikari_t001/SuJiangXue_HikariSmirk_t001.8192/texture_01.png",
+        "/Amahane_Hikari/model/hikari_t001/SuJiangXue_HikariSmirk_t001.8192/texture_02.png",
+        "/Amahane_Hikari/model/hikari_t001/SuJiangXue_HikariSmirk_t001.8192/texture_03.png",
+        "/Amahane_Hikari/model/hikari_t001/SuJiangXue_HikariSmirk_t001.8192/texture_04.png",
+        "/Amahane_Hikari/model/hikari_t001/SuJiangXue_HikariSmirk_t001.8192/texture_05.png",
+        "/Amahane_Hikari/model/hikari_t001/SuJiangXue_HikariSmirk_t001.8192/texture_06.png",
+        "/Amahane_Hikari/model/hikari_t001/SuJiangXue_HikariSmirk_t001.8192/texture_07.png"
+      ],
+      "url": "https://live2d.luomo.moe/Amahane_Hikari/"
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "checks": [
+        {
+          "name": "HTTP 200",
+          "pass": true
+        },
+        {
+          "name": "No production QA global",
+          "pass": true
+        },
+        {
+          "name": "No horizontal overflow",
+          "pass": true
+        },
+        {
+          "name": "curiosity enabled",
+          "pass": true
+        },
+        {
+          "name": "shy enabled",
+          "pass": true
+        },
+        {
+          "name": "smug enabled",
+          "pass": true
+        },
+        {
+          "name": "Pause on",
+          "pass": true
+        },
+        {
+          "name": "Pause off",
+          "pass": true
+        },
+        {
+          "name": "Expression Neutral",
+          "pass": true
+        },
+        {
+          "name": "Expression Smile",
+          "pass": true
+        },
+        {
+          "name": "Expression Happy",
+          "pass": true
+        },
+        {
+          "name": "Expression Shy",
+          "pass": true
+        },
+        {
+          "name": "Expression Angry",
+          "pass": true
+        },
+        {
+          "name": "Expression Sad",
+          "pass": true
+        },
+        {
+          "name": "Expression Surprised",
+          "pass": true
+        },
+        {
+          "name": "Expression Sleepy",
+          "pass": true
+        },
+        {
+          "name": "Expression Cry",
+          "pass": true
+        },
+        {
+          "name": "Expression Wink_L",
+          "pass": true
+        },
+        {
+          "name": "Expression Wink_R",
+          "pass": true
+        },
+        {
+          "name": "Expression HappyCat",
+          "pass": true
+        },
+        {
+          "name": "Zoom",
+          "pass": true
+        },
+        {
+          "name": "Follow off",
+          "pass": true
+        },
+        {
+          "name": "Outfit 0",
+          "pass": true
+        },
+        {
+          "name": "Outfit 1",
+          "pass": true
+        },
+        {
+          "name": "Outfit 2",
+          "pass": true
+        },
+        {
+          "name": "Outfit 0",
+          "pass": true
+        },
+        {
+          "name": "Reset neutral",
+          "pass": true
+        },
+        {
+          "name": "Current model HTTP 200",
+          "pass": true
+        },
+        {
+          "name": "Eight textures",
+          "pass": true
+        },
+        {
+          "name": "Current model requested",
+          "pass": true
+        },
+        {
+          "name": "Production QA remains absent after interactions",
+          "pass": true
+        }
+      ],
+      "screenshots": [
+        "390-ready.png",
+        "390-curiosity.png",
+        "390-shy.png",
+        "390-smug.png",
+        "390-outfit-1.png",
+        "390-outfit-2.png"
+      ],
+      "modelRequests": [
+        "/Amahane_Hikari/model/hikari_t001/SuJiangXue_HikariSmirk_t001.model3.json",
+        "/Amahane_Hikari/model/hikari_t001/SuJiangXue_HikariSmirk_t001.moc3",
+        "/Amahane_Hikari/model/hikari_t001/expressions/Neutral.exp3.json",
+        "/Amahane_Hikari/model/hikari_t001/expressions/Smile.exp3.json",
+        "/Amahane_Hikari/model/hikari_t001/expressions/Happy.exp3.json",
+        "/Amahane_Hikari/model/hikari_t001/expressions/Shy.exp3.json",
+        "/Amahane_Hikari/model/hikari_t001/expressions/Angry.exp3.json",
+        "/Amahane_Hikari/model/hikari_t001/expressions/Sad.exp3.json",
+        "/Amahane_Hikari/model/hikari_t001/expressions/Surprised.exp3.json",
+        "/Amahane_Hikari/model/hikari_t001/expressions/Sleepy.exp3.json",
+        "/Amahane_Hikari/model/hikari_t001/expressions/Cry.exp3.json",
+        "/Amahane_Hikari/model/hikari_t001/expressions/Wink_L.exp3.json",
+        "/Amahane_Hikari/model/hikari_t001/expressions/Wink_R.exp3.json",
+        "/Amahane_Hikari/model/hikari_t001/expressions/HappyCat.exp3.json",
+        "/Amahane_Hikari/model/hikari_t001/SuJiangXue_HikariSmirk_t001.physics3.json",
+        "/Amahane_Hikari/model/hikari_t001/SuJiangXue_HikariSmirk_t001.8192/texture_00.png",
+        "/Amahane_Hikari/model/hikari_t001/SuJiangXue_HikariSmirk_t001.8192/texture_01.png",
+        "/Amahane_Hikari/model/hikari_t001/SuJiangXue_HikariSmirk_t001.8192/texture_02.png",
+        "/Amahane_Hikari/model/hikari_t001/SuJiangXue_HikariSmirk_t001.8192/texture_03.png",
+        "/Amahane_Hikari/model/hikari_t001/SuJiangXue_HikariSmirk_t001.8192/texture_04.png",
+        "/Amahane_Hikari/model/hikari_t001/SuJiangXue_HikariSmirk_t001.8192/texture_05.png",
+        "/Amahane_Hikari/model/hikari_t001/SuJiangXue_HikariSmirk_t001.8192/texture_06.png",
+        "/Amahane_Hikari/model/hikari_t001/SuJiangXue_HikariSmirk_t001.8192/texture_07.png"
+      ],
+      "url": "https://live2d.luomo.moe/Amahane_Hikari/?__hikariQa=1"
+    }
+  ],
+  "errors": [],
+  "scope": "Production UI, resources and screenshots; native geometry was validated separately.",
+  "disableQuic": false,
+  "http1": true,
+  "browserVersion": "153.0.4234.32"
+}

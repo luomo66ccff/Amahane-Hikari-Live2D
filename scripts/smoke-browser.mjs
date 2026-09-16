@@ -16,7 +16,8 @@ let browser;
 try {
   const disableQuic=process.env.BROWSER_DISABLE_QUIC==='1';
   report.disableQuic=disableQuic;
-  browser=await chromium.launch({headless:true,args:disableQuic?['--disable-quic']:[],...(process.env.BROWSER_CHANNEL?{channel:process.env.BROWSER_CHANNEL}:{}),...(process.env.BROWSER_PROXY?{proxy:{server:process.env.BROWSER_PROXY}}:{})});
+  const http1=process.env.BROWSER_HTTP1==='1';report.http1=http1;
+  browser=await chromium.launch({headless:true,args:http1?['--disable-quic','--disable-http2']:(disableQuic?['--disable-quic']:[]),...(process.env.BROWSER_CHANNEL?{channel:process.env.BROWSER_CHANNEL}:{}),...(process.env.BROWSER_PROXY?{proxy:{server:process.env.BROWSER_PROXY}}:{})});
   report.browserVersion=browser.version();
   for (const viewport of [{width:1440,height:1000},{width:390,height:844}]) {
     const page=await browser.newPage({viewport,deviceScaleFactor:1});
@@ -29,7 +30,11 @@ try {
     const check=(name,condition)=>{item.checks.push({name,pass:!!condition});assert(condition,name);};
     const shot=async name=>{const file=`${viewport.width}-${name}.png`;await page.screenshot({path:path.join(out,file)});item.screenshots.push(file);};
     const ready=()=>page.waitForFunction(()=>document.querySelector('#model-canvas')?.dataset.ready==='true'&&document.querySelector('[data-showcase]')?.dataset.state==='ready',null,{timeout:120000});
-    const response=await page.goto(url,{waitUntil:'load',timeout:120000});check('HTTP 200',response.status()===200);await ready();
+    // Use the ordinary URL on desktop and the QA-query URL on narrow screens.
+    // Both load the full real production model; avoid an extra 45 MB reload per case.
+    const pageUrl=viewport.width<500?url+(url.includes('?')?'&':'?')+'__hikariQa=1':url;
+    item.url=pageUrl;
+    const response=await page.goto(pageUrl,{waitUntil:'load',timeout:120000});check('HTTP 200',response.status()===200);await ready();
     check('No production QA global',await page.evaluate(()=>typeof window.__hikariQa==='undefined'&&typeof window.__charmQa==='undefined'));
     check('No horizontal overflow',await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
     await shot('ready');
@@ -58,8 +63,7 @@ try {
     const modelResponse=await page.request.get(modelUrl);check('Current model HTTP 200',modelResponse.status()===200);
     const model=await modelResponse.json();check('Eight textures',model.FileReferences.Textures.length===8);
     check('Current model requested',item.modelRequests.some(p=>p.endsWith('/hikari_t001/SuJiangXue_HikariSmirk_t001.model3.json')));
-    await page.goto(url+(url.includes('?')?'&':'?')+'__hikariQa=1',{waitUntil:'load',timeout:120000});await ready();
-    check('Query cannot enable production QA',await page.evaluate(()=>typeof window.__hikariQa==='undefined'&&typeof window.__charmQa==='undefined'));
+    check('Production QA remains absent after interactions',await page.evaluate(()=>typeof window.__hikariQa==='undefined'&&typeof window.__charmQa==='undefined'));
     await page.close();
   }
   assert.equal(report.errors.length,0,'Browser/resource errors');report.status='PASS';

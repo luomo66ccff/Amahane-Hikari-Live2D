@@ -77,7 +77,7 @@ npm run test:controller
 npm run test:smoke -- http://127.0.0.1:5188/Amahane_Hikari/ ./reports/page-smoke
 ```
 
-`verify` checks the asset manifest and runtime references. `test:controller` covers action intent, cancellation, pause, re-entry and reset only. `test:smoke` performs ordinary-page checks in a real headless browser, including the page entry, real resources, expressions, outfits and the absence of the DEV surface in the production build; it does not inject the internal model controller. Mouth handoff and TTL are covered by a separate browser ownership check. Install Chromium with `npx playwright install chromium`, or skip that step and set `BROWSER_CHANNEL=msedge` for installed Edge. See [validation](docs/VALIDATION.md) for results and limits.
+`verify` checks the asset manifest and runtime references. `test:controller` covers action intent, cancellation, pause, re-entry and reset only. `test:smoke` performs ordinary-page checks in a real headless browser, including the page entry, real resources, expressions, outfits and the absence of the DEV surface in the production build; it does not inject the internal model controller. Mouth handoff and TTL are covered by a separate browser ownership check. Install Chromium with `npx playwright install chromium`, or skip that step and set `BROWSER_CHANNEL=msedge` for installed Edge. The final local and public runs each passed 62 checks. See [validation](docs/VALIDATION.md) for network settings and limits.
 
 ## Repository layout
 
