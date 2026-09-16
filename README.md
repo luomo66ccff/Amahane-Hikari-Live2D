@@ -1,6 +1,6 @@
 # Amahane Hikari · Live2D v2.0.0
 
-[English](README.en.md) · [在线互动](https://live2d.luomo.moe/Amahane_Hikari/) · [发布仓库](https://github.com/Amahane-Hikari/Amahane-Hikari-Live2D) · [上游仓库](https://github.com/luomo66ccff/Amahane-Hikari-Live2D)
+[English](README.en.md) · [在线互动](https://live2d.luomo.moe/Amahane_Hikari/) · [发布仓库](https://github.com/luomo66ccff/Amahane-Hikari-Live2D)
 
 银白长发、红瞳、白色兽耳与月雪主题的 Live2D 角色。v2.0.0 采用 native102 运行模型，提供三套服装、12 种表情和可复现的网页互动源码。
 
@@ -23,7 +23,7 @@
 
 ## 下载与使用模型
 
-[v2.0.0 下载](https://github.com/Amahane-Hikari/Amahane-Hikari-Live2D/releases/tag/v2.0.0)包含运行包、可编辑 CMO3、三套服装的前后对照录像和发布清单。录像 before 为已升级头肩的 native101，after 为 native102 与最终控制器。
+[v2.0.0 下载](https://github.com/luomo66ccff/Amahane-Hikari-Live2D/releases/tag/v2.0.0)包含运行包、可编辑 CMO3、三套服装的前后对照录像和发布清单。录像 before 为已升级头肩的 native101，after 为 native102 与最终控制器。
 
 保持 `model/runtime/` 的目录结构，加载其中的 `SuJiangXue_HikariSmirk_t001.model3.json`。继续绑定时，用 Live2D Cubism Editor **5.3.01** 打开 `model/source/Cubism/SuJiangXue_HairFlow_WIP_t102.cmo3`，保存、重开并重新导出相关运行资源。
 
@@ -34,7 +34,7 @@
 需要 Node.js **22.12+ 或 24**。Live2D SDK 不随仓库分发，请从 [Cubism SDK for Web 官方下载页](https://www.live2d.com/en/sdk/download/web/) 获取 **5-r.5**，阅读其官方条款并解压到本机目录。
 
 ```sh
-git clone https://github.com/Amahane-Hikari/Amahane-Hikari-Live2D.git
+git clone https://github.com/luomo66ccff/Amahane-Hikari-Live2D.git
 cd Amahane-Hikari-Live2D/web
 npm ci
 npm run setup:sdk -- "/path/to/CubismSdkForWeb-5-r.5"
@@ -100,6 +100,6 @@ LICENSES/                  项目与模型授权文本
 
 自写网页代码、样式、HTML、SVG favicon 和工具采用 [MIT](LICENSES/MIT.txt)；文档文字采用 CC BY 4.0。建议署名：
 
-> Amahane Hikari / 苏绛雪 — luomo66ccff，Model Attribution and No-AI License 1.0。来源：https://github.com/Amahane-Hikari/Amahane-Hikari-Live2D
+> Amahane Hikari / 苏绛雪 — luomo66ccff，Model Attribution and No-AI License 1.0。来源：https://github.com/luomo66ccff/Amahane-Hikari-Live2D
 
 Live2D Core、Framework、shader 和类型声明属于第三方 SDK，不随源码仓库或源模型下载包提供；生成的网页构建可能包含运行所需组件，并必须保留适用的第三方说明和授权。详见 [第三方说明](THIRD_PARTY_NOTICES.md)。

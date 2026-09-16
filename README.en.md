@@ -1,6 +1,6 @@
 # Amahane Hikari · Live2D v2.0.0
 
-[简体中文](README.md) · [Interactive demo](https://live2d.luomo.moe/Amahane_Hikari/) · [Release repository](https://github.com/Amahane-Hikari/Amahane-Hikari-Live2D) · [Upstream repository](https://github.com/luomo66ccff/Amahane-Hikari-Live2D)
+[简体中文](README.md) · [Interactive demo](https://live2d.luomo.moe/Amahane_Hikari/) · [Release repository](https://github.com/luomo66ccff/Amahane-Hikari-Live2D)
 
 A silver-haired, red-eyed Live2D character with white animal ears and moon/snow details. v2.0.0 uses the native102 runtime model and includes three outfits, twelve expressions and reproducible web interactions.
 
@@ -23,7 +23,7 @@ The native package also retains one demo motion. Other native102 stills are avai
 
 ## Use the model
 
-[Download v2.0.0](https://github.com/Amahane-Hikari/Amahane-Hikari-Live2D/releases/tag/v2.0.0): runtime, editable CMO3, three-outfit comparison clips and release manifest. Before is native101 with head/shoulder upgrades already present; after is native102 and the final controller.
+[Download v2.0.0](https://github.com/luomo66ccff/Amahane-Hikari-Live2D/releases/tag/v2.0.0): runtime, editable CMO3, three-outfit comparison clips and release manifest. Before is native101 with head/shoulder upgrades already present; after is native102 and the final controller.
 
 Preserve the directory structure under `model/runtime/` and load `SuJiangXue_HikariSmirk_t001.model3.json`. To continue rigging, open `model/source/Cubism/SuJiangXue_HairFlow_WIP_t102.cmo3` in **Live2D Cubism Editor 5.3.01**, then save, reopen and re-export the affected runtime resources.
 
@@ -34,7 +34,7 @@ The PSD files retained under `model/source/Photoshop/` are production inputs and
 Use Node.js **22.12+ or 24**. Obtain **Cubism SDK for Web 5-r.5** from the [official Live2D download page](https://www.live2d.com/en/sdk/download/web/), read its terms and extract it locally. The SDK is not redistributed here.
 
 ```sh
-git clone https://github.com/Amahane-Hikari/Amahane-Hikari-Live2D.git
+git clone https://github.com/luomo66ccff/Amahane-Hikari-Live2D.git
 cd Amahane-Hikari-Live2D/web
 npm ci
 npm run setup:sdk -- "/path/to/CubismSdkForWeb-5-r.5"
