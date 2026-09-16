@@ -12,6 +12,6 @@ for (const relative of required) {
   catch { throw new Error('Live2D SDK is not set up. Run npm run setup:sdk -- "/path/to/CubismSdkForWeb-5-r.5" from web/. See README.md.'); }
 }
 const source = path.join(root,'model/runtime');
-const destination = path.join(root,'web/public/model/v2');
+const destination = path.join(root,'web/public/model/hikari_t001');
 for (const relative of await walk(source)) await copyUnchanged(inside(source,relative),inside(destination,relative));
 console.log('Model resources are ready.');

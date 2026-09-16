@@ -1,23 +1,11 @@
 {
   "schema": "amahane-hikari-assets/v1",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "files": [
     {
-      "path": "model/source/Cubism/SuJiangXue_HairFlow_t001.cmo3",
-      "bytes": 38201449,
-      "sha256": "ba82e510fb97222d1dec6c878d6fe806884d7ce84b239483c61079078776196a",
-      "license": "LicenseRef-Model-Attribution-NoAI-1.0"
-    },
-    {
-      "path": "model/source/Photoshop/SuJiangXue_HairFlow_ArtMaster_WIP_t001.psd",
-      "bytes": 33142384,
-      "sha256": "ddc69ab1792c46a1098894c51b9765cc21f19e5648f763f612c1b91d4e7c8423",
-      "license": "LicenseRef-Model-Attribution-NoAI-1.0"
-    },
-    {
-      "path": "model/source/Photoshop/SuJiangXue_HairFlow_BackHair_TexturePatch_t001.psd",
-      "bytes": 9547682,
-      "sha256": "d24c8be42de95d12b466f52eae34364e0a8f5451e41653721d9799b7f8f6b0ea",
+      "path": "model/parameter-definitions.json",
+      "bytes": 8002,
+      "sha256": "cc567c76747d672bd9f984f209a06edc23fcae5c2c4804c12bc9efa27d4a0833",
       "license": "LicenseRef-Model-Attribution-NoAI-1.0"
     },
     {
@@ -93,39 +81,129 @@
       "license": "LicenseRef-Model-Attribution-NoAI-1.0"
     },
     {
-      "path": "model/runtime/SuJiangXue_HairFlow_t002.8192/texture_00.png",
+      "path": "model/runtime/motions/SuJiangXue_Bouncy_Demo_t001.motion3.json",
+      "bytes": 1512,
+      "sha256": "0cbf650264718bf2f996191a8be61db0f90cf94d69f5aa7ba3e463e79caf2b2c",
+      "license": "LicenseRef-Model-Attribution-NoAI-1.0"
+    },
+    {
+      "path": "model/runtime/SuJiangXue_HikariSmirk_t001.8192/texture_00.png",
       "bytes": 32705708,
       "sha256": "39893753062beff560318886b3fe2a9da14a85662666435f4a0beafcab50c233",
       "license": "LicenseRef-Model-Attribution-NoAI-1.0"
     },
     {
-      "path": "model/runtime/SuJiangXue_HairFlow_t002.8192/texture_01.png",
+      "path": "model/runtime/SuJiangXue_HikariSmirk_t001.8192/texture_01.png",
       "bytes": 12909,
       "sha256": "af3215c046dd7621a8b23f21d0f83a7e05a13f38914cc3f1f53725b0f53e6776",
       "license": "LicenseRef-Model-Attribution-NoAI-1.0"
     },
     {
-      "path": "model/runtime/SuJiangXue_HairFlow_t002.cdi3.json",
-      "bytes": 8537,
-      "sha256": "7af3eb51f0a94e4f0dd614d3a841c77e6c17eca5f71878948ab1ea1312b2042b",
+      "path": "model/runtime/SuJiangXue_HikariSmirk_t001.8192/texture_02.png",
+      "bytes": 8121191,
+      "sha256": "18da962a17423f495dbc9a59e805c00b7ca266faa4ab3e62fb0e1b7e6ba836bc",
       "license": "LicenseRef-Model-Attribution-NoAI-1.0"
     },
     {
-      "path": "model/runtime/SuJiangXue_HairFlow_t002.moc3",
-      "bytes": 356864,
-      "sha256": "b74e39fa8599c50d1f2a12236f34d3e93e76a282b028616f69aa7565c9df824e",
+      "path": "model/runtime/SuJiangXue_HikariSmirk_t001.8192/texture_03.png",
+      "bytes": 2410423,
+      "sha256": "2d02b474be86d043a4568994afb159115f9524178221f0598ffa9157b2c29d7f",
       "license": "LicenseRef-Model-Attribution-NoAI-1.0"
     },
     {
-      "path": "model/runtime/SuJiangXue_HairFlow_t002.model3.json",
-      "bytes": 1689,
-      "sha256": "b76c8980417271367577e26070c4994723593e79aeb612c440f98b74ca6299f5",
+      "path": "model/runtime/SuJiangXue_HikariSmirk_t001.8192/texture_04.png",
+      "bytes": 607353,
+      "sha256": "f0f0f9baa772af556732805b52fd975acec2ab827669a1149c1d3b1d6a87623a",
       "license": "LicenseRef-Model-Attribution-NoAI-1.0"
     },
     {
-      "path": "model/runtime/SuJiangXue_HairFlow_t002.physics3.json",
+      "path": "model/runtime/SuJiangXue_HikariSmirk_t001.8192/texture_05.png",
+      "bytes": 654665,
+      "sha256": "d8222ddd25270597a566ebe9f5fe76601b623231815b26a85ef9309d7ab5a129",
+      "license": "LicenseRef-Model-Attribution-NoAI-1.0"
+    },
+    {
+      "path": "model/runtime/SuJiangXue_HikariSmirk_t001.8192/texture_06.png",
+      "bytes": 819130,
+      "sha256": "1df7ae9f935cdb756b399813979035279dc135c0efa3c5e499e49e50b91d1b88",
+      "license": "LicenseRef-Model-Attribution-NoAI-1.0"
+    },
+    {
+      "path": "model/runtime/SuJiangXue_HikariSmirk_t001.8192/texture_07.png",
+      "bytes": 635895,
+      "sha256": "a0bb36e52209413825fd2c5731e7f4308c7983bc9e1363a7943a037a97978f30",
+      "license": "LicenseRef-Model-Attribution-NoAI-1.0"
+    },
+    {
+      "path": "model/runtime/SuJiangXue_HikariSmirk_t001.cdi3.json",
+      "bytes": 10815,
+      "sha256": "132a1081e669addb486d593388930a60efefa23ebfb435be94033077414d23e5",
+      "license": "LicenseRef-Model-Attribution-NoAI-1.0"
+    },
+    {
+      "path": "model/runtime/SuJiangXue_HikariSmirk_t001.moc3",
+      "bytes": 1170880,
+      "sha256": "3fff659c00ff9060c82ff748fe5f15b6366b50db7fea39523013e3390a2d2cb8",
+      "license": "LicenseRef-Model-Attribution-NoAI-1.0"
+    },
+    {
+      "path": "model/runtime/SuJiangXue_HikariSmirk_t001.model3.json",
+      "bytes": 2175,
+      "sha256": "9b352bab2613a2562720e5e8c1f1f84315aead63fac9f25e971f095c21a55f32",
+      "license": "LicenseRef-Model-Attribution-NoAI-1.0"
+    },
+    {
+      "path": "model/runtime/SuJiangXue_HikariSmirk_t001.physics3.json",
       "bytes": 24513,
       "sha256": "34cb0b3c5e81c1ab02ff3e838506c0ea23cbcff4f33555044f99b62b04a11dc6",
+      "license": "LicenseRef-Model-Attribution-NoAI-1.0"
+    },
+    {
+      "path": "model/source/Cubism/SuJiangXue_HairFlow_t001.cmo3",
+      "bytes": 38201449,
+      "sha256": "ba82e510fb97222d1dec6c878d6fe806884d7ce84b239483c61079078776196a",
+      "license": "LicenseRef-Model-Attribution-NoAI-1.0"
+    },
+    {
+      "path": "model/source/Cubism/SuJiangXue_HairFlow_WIP_t102.cmo3",
+      "bytes": 70243255,
+      "sha256": "4fd81b2c75a2602cafac8ecded9c9e419b1f26130c0cff6f450abdc1bce57a51",
+      "license": "LicenseRef-Model-Attribution-NoAI-1.0"
+    },
+    {
+      "path": "model/source/Photoshop/SuJiangXue_HairFlow_ArtMaster_WIP_t001.psd",
+      "bytes": 33142384,
+      "sha256": "ddc69ab1792c46a1098894c51b9765cc21f19e5648f763f612c1b91d4e7c8423",
+      "license": "LicenseRef-Model-Attribution-NoAI-1.0"
+    },
+    {
+      "path": "model/source/Photoshop/SuJiangXue_HairFlow_BackHair_TexturePatch_t001.psd",
+      "bytes": 9547682,
+      "sha256": "d24c8be42de95d12b466f52eae34364e0a8f5451e41653721d9799b7f8f6b0ea",
+      "license": "LicenseRef-Model-Attribution-NoAI-1.0"
+    },
+    {
+      "path": "previews/native102-dress.png",
+      "bytes": 955753,
+      "sha256": "bf43b33683d37d16d2198fbca813e6082fa5d78bd5c38b2b566bf77b3aa3e1b2",
+      "license": "LicenseRef-Model-Attribution-NoAI-1.0"
+    },
+    {
+      "path": "previews/native102-mobile.png",
+      "bytes": 291073,
+      "sha256": "d702866894a6b75ee65642afcea95167b8e909726b2667bd5256403c876344ae",
+      "license": "LicenseRef-Model-Attribution-NoAI-1.0"
+    },
+    {
+      "path": "previews/native102-school.png",
+      "bytes": 946992,
+      "sha256": "208ec304f69976734429142d6e4845e1b192fed8f234fba7737a1a631a9168a3",
+      "license": "LicenseRef-Model-Attribution-NoAI-1.0"
+    },
+    {
+      "path": "previews/native102-swim.png",
+      "bytes": 925452,
+      "sha256": "370b4d6d711224bb2e7524573c78706eb739fe7768c45dc7e4d312ae5f46131c",
       "license": "LicenseRef-Model-Attribution-NoAI-1.0"
     },
     {

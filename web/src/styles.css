@@ -502,6 +502,13 @@ input:focus:not(:focus-visible) {
   gap: 6px;
 }
 
+.interaction-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 5px;
+}
+
 .stage-action-button {
   pointer-events: auto;
   display: inline-flex;
@@ -533,6 +540,18 @@ input:focus:not(:focus-visible) {
 .stage-action-button--greet:hover:not(:disabled) {
   border-color: rgba(228, 95, 124, 0.65);
   color: var(--ruby-soft);
+}
+
+.stage-action-button--momentary {
+  min-height: 27px;
+  padding: 0 10px;
+  border-color: rgba(191, 232, 255, 0.22);
+  background: rgba(8, 17, 31, 0.42);
+  font-size: 0.58rem;
+}
+
+.stage-action-button--momentary:active:not(:disabled) {
+  transform: translateY(1px);
 }
 
 .stage-action-button .icon {
@@ -1184,10 +1203,21 @@ input[type="range"] {
     gap: 5px;
   }
 
+  .interaction-actions {
+    width: 100%;
+    gap: 5px;
+  }
+
   .stage-action-button {
     min-height: 32px;
     padding: 0 8px;
     font-size: 0.62rem;
+  }
+
+  .stage-action-button--momentary {
+    min-height: 28px;
+    padding: 0 9px;
+    font-size: 0.57rem;
   }
 
   .stage-action-button .icon {
@@ -1204,7 +1234,7 @@ input[type="range"] {
 
   .interaction-message {
     position: absolute;
-    top: 37px;
+    top: 70px;
     right: 0;
     padding: 6px 8px;
   }

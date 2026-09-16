@@ -1,13 +1,23 @@
-# 制作来源 / Production provenance
+# Production provenance
 
-本项目由 luomo66ccff 发起并维护，通过 AI 辅助完成素材制作、Photoshop 整理与补绘、Cubism 绑定及网页开发。素材制作历史包含 Adobe Firefly 生成内容；模型并非全部手工绘制。
+This project is initiated and maintained by luomo66ccff. The v2.0.0 release was produced with AI-assisted planning and implementation, Photoshop cleanup and painting, Cubism rigging, physics and expression setup, and web application development.
 
-早期制作记录列有头发部件、眼睛组件和饰品等 Firefly 生成素材。后续流程包括透明度处理、配准、局部补绘、分层、网格与变形器绑定、物理和表情配置。当前公开的 HairFlow PSD 与 CMO3 来自该制作流程的已验收交付。
+## Artwork and model
 
-现存记录没有覆盖每个像素的逐层生成来源映射，因此本次没有把无法分离的成品图像宣称为不含 Firefly 成分。完整模型资产统一采用允许商用、修改、再分发，同时要求署名并禁止 AI / ML 训练的模型许可；自写网页和工具代码独立采用 MIT。
+The retained production history includes Adobe Firefly-generated hair, eye-component and accessory material. Photoshop was used for transparency handling, registration, local repainting and layer preparation; Cubism was used for mesh, deformer, parameter, physics and expression work. The native102 CMO3 and its 25-file runtime package are the accepted release outputs.
 
-This project is initiated and maintained by luomo66ccff. Its production used AI assistance, including Adobe Firefly content, followed by Photoshop cleanup and painting, Cubism rigging, physics and expression setup, and web application development. It is not represented as entirely hand-drawn artwork.
+The provenance records do not map every final pixel back to an individual source layer or generation event. The project therefore does not describe the composite artwork as entirely hand-drawn, entirely human-made or free of Firefly material. The PSDs retained in the repository document their actual WIP and patch scope; they are not a complete final PSD for every current outfit.
 
-Earlier production records identify Firefly-generated hair-component, eye-component and accessory materials. The retained records do not provide a pixel-by-pixel provenance map for the final composite. The complete model asset set therefore uses the custom attribution and no-AI/ML-training license, while original application and tooling code is independently MIT-licensed.
+The model license preserves attribution and prohibits use of the model assets for creating, training, testing or improving AI/ML systems and related datasets. That restriction applies regardless of whether a particular asset was generated, painted or rigged by hand.
 
-See [model license](../LICENSES/Model-Attribution-NoAI-1.0.txt), [third-party notices](../THIRD_PARTY_NOTICES.md) and [Adobe's relevant terms](https://www.adobe.com/cc-shared/assets/pdf/legal/servicetou/adobe-generative-ai-product-specific-terms-en-us-20260423.pdf).
+## Software and external components
+
+The original web application, styles, HTML, SVG favicon and release tools are MIT-licensed. Project documentation is CC BY 4.0. Model assets, artwork, textures, rig, expressions and previews use the custom [Model Attribution and No-AI License 1.0](../LICENSES/Model-Attribution-NoAI-1.0.txt).
+
+Live2D Cubism Core, Framework, shaders and type declarations are obtained from the official **Cubism SDK for Web 5-r.5** by the user. The SDK source package is not redistributed by this repository; a generated web build may contain the runtime components needed by the viewer and must retain their upstream notices and terms. Read [third-party notices](../THIRD_PARTY_NOTICES.md) and the SDK licenses before setup or redistribution.
+
+## Evidence boundary
+
+The release record distinguishes native save/reopen/export checks, Core readback, browser interaction checks, media sampling and public-page smoke checks. A report proves only the cases it names. Finite samples do not establish every pose, device, browser, VTube Studio import or camera-tracking result.
+
+The performance comparison uses native101 as the already-upgraded baseline and native102 as the release candidate. It measures intervals between actual `drawModel` timestamps in one fixed headless Edge environment for three outfits and roughly ten seconds per case; it is not a general FPS guarantee. The model artwork currently reaches the upper thighs, so no lower legs or feet are implied by a full-canvas preview.
