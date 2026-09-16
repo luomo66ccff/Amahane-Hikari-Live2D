@@ -65,6 +65,8 @@ window.dispatchEvent(new CustomEvent('hikari:mouth-input', {
 window.dispatchEvent(new CustomEvent('hikari:mouth-input', { detail: null }));
 ```
 
+推荐向 `window` 发送事件；原有的 `document.dispatchEvent`（无论是否冒泡）也受支持，每次发送只处理一次。请在模型加载完成后发送；加载期间的输入不会排队。
+
 `open` 范围为 0–1，`form` 为 −1–1，`pucker` 为 0–1，`ttlMs` 默认 180ms、允许 1–1000ms。暂停会冻结最终画面，但 TTL 仍按墙钟过期；复位和销毁会清除输入。闭口轻咀嚼在活跃和取消过渡期间保持口型优先权，动作结束后再交回外部输入。
 
 ## 可复现验证
@@ -74,10 +76,15 @@ window.dispatchEvent(new CustomEvent('hikari:mouth-input', { detail: null }));
 ```sh
 npm run verify
 npm run test:controller
+npm run test:runtime
+npx playwright install chromium
+npm run test:mouth-event
 npm run test:smoke -- http://127.0.0.1:5188/Amahane_Hikari/ ./reports/page-smoke
 ```
 
 `verify` 检查资产清单和运行资源引用；`test:controller` 检查动作意图、取消、暂停、重入和复位；`test:smoke` 使用真实无头浏览器完成普通页面检查，验证网页入口、真实资源、表情、服装和生产构建中的 DEV 边界，不注入模型内部控制器。口型 handoff 与 TTL 由单独的浏览器所有权验收覆盖。首次运行 smoke 可执行 `npx playwright install chromium`；使用已安装 Edge 时可跳过并设置 `BROWSER_CHANNEL=msedge`。本地与公网最终各 62 项通过；连接方式和未覆盖项目见 [验证说明](docs/VALIDATION.md)。
+
+`test:runtime` 不需要 SDK：从实际 `runtime.ts` 抽取方法，检查帧率计时、暂停与后台切换、口型输入边界及纹理清理，并严格检查新增工具模块的类型。`test:mouth-event` 在真实 Chromium 中执行实际事件监听器和本页示例，但不加载模型。两者不能替代原生物理、完整构建或画面验收。修复范围、运行环境与发布前检查见 [运行时修复说明](docs/RUNTIME_FIXES_2026-09-16.md)。
 
 ## 目录
 

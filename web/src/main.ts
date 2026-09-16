@@ -113,10 +113,12 @@ const ui=setupUI({
   reset:()=>{zoom=1;moveMode=false;selectedOutfit=0;engine?.reset();},
   retry:()=>void start(),
 });
-document.addEventListener('hikari:mouth-input',(event:Event)=>{
+// Capture on window accepts the documented window target and legacy document
+// dispatches (including non-bubbling events), exactly once per dispatch.
+window.addEventListener('hikari:mouth-input',(event:Event)=>{
   const detail=(event as CustomEvent<MouthInput|null>).detail;
   engine?.setMouthInput(detail);
-});
+},{capture:true});
 const publishSupportedActions=():void=>{
   document.dispatchEvent(new CustomEvent<{actions:ActionName[]}>('hikari:actions-supported',{
     detail:{actions:engine?.getSupportedActions()??[]},
