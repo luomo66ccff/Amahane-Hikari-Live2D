@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Report a security vulnerability privately
+    url: https://github.com/luomo66ccff/Amahane-Hikari-Live2D/security/advisories/new
+    about: Please keep exploit details and sensitive material out of public issues.

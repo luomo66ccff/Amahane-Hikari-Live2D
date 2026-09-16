@@ -1,5 +1,17 @@
 # Release notes
 
+## v2.1.0 · Project homepage and contributor experience
+
+- Rebuilds the moon-and-snow homepage around a readable character introduction, a four-stage production guide, source downloads, the reusable Skill and contribution links. The existing native102 model and interaction runtime are preserved.
+- Adds a 162,448-byte lossless poster captured from the real renderer. It remains visible while the model loads or when loading fails; the page labels this as a static preview, and retry restores the interactive character.
+- Adds responsive layouts, keyboard skip navigation, native FAQ disclosure controls, reduced-motion checks, page metadata and a screenshot-based social preview. No external fonts or new runtime dependencies are introduced.
+- Reworks Chinese and English READMEs with a real page cover, SDK-free entry points, clear model/SDK licensing and production-preview test commands. Adds contribution and security policies, an architecture guide, a roadmap, issue templates and a PR template.
+- Adds `npm run test:project-page` for responsive layout, keyboard navigation, reduced-motion preferences, load failure/retry and no-JavaScript documentation. This suite requires a production preview and the separately obtained SDK.
+
+Validation on Windows with Edge 153 covered **35 project-page checks** at 320, 390, 768, 1440 and 1920 CSS pixels, plus **64 real-model interaction checks**. The existing **70 SDK-free checks** also passed. These are the named browser and test scenarios, not a claim of exhaustive device or assistive-technology coverage. The 35 existing model/preview manifest entries retain their original bytes; one new page cover expands the inventory to 36.
+
+The editable model downloads remain in [v2.0.0](https://github.com/luomo66ccff/Amahane-Hikari-Live2D/releases/tag/v2.0.0); the standalone Skill package remains in [v2.0.1](https://github.com/luomo66ccff/Amahane-Hikari-Live2D/releases/tag/v2.0.1).
+
 ## v2.0.1 · Web loading and reusable production skill
 
 - Lossless web-only WebP reduces eight texture files from 45,967,274 to 13,336,594 bytes; decoded RGBA matches every original PNG.

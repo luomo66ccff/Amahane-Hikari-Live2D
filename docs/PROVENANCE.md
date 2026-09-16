@@ -12,6 +12,8 @@ The model license preserves attribution and prohibits use of the model assets fo
 
 ## Software and external components
 
+The v2.1.0 `web/public/character-poster.webp` is a capture of the real native102 renderer, trimmed only to its transparent bounds and encoded as lossless WebP. The project cover and social preview are browser screenshots of the working page. These character images remain under the model/preview license; their presence beside MIT HTML and styles does not change that scope.
+
 The original web application, styles, HTML, SVG favicon and release tools are MIT-licensed. Project documentation is CC BY 4.0. Model assets, artwork, textures, rig, expressions and previews use the custom [Model Attribution and No-AI License 1.0](../LICENSES/Model-Attribution-NoAI-1.0.txt).
 
 Live2D Cubism Core, Framework, shaders and type declarations are obtained from the official **Cubism SDK for Web 5-r.5** by the user. The SDK source package is not redistributed by this repository; a generated web build may contain the runtime components needed by the viewer and must retain their upstream notices and terms. Read [third-party notices](../THIRD_PARTY_NOTICES.md) and the SDK licenses before setup or redistribution.

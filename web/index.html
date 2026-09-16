@@ -4,27 +4,39 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#08111f" />
-    <meta name="description" content="Amahane Hikari Live2D 表情展示页" />
+    <meta name="description" content="与 Amahane Hikari 互动：三套衣装、十二种表情与轻盈动态。探索 MIT 网页源码、可编辑 Live2D 工程，以及从原画到交付的制作指南。" />
     <link rel="canonical" href="https://live2d.luomo.moe/Amahane_Hikari/" />
     <meta property="og:title" content="Amahane Hikari · Live2D" />
-    <meta property="og:description" content="选择她此刻的心情，和 Amahane Hikari 互动。" />
+    <meta property="og:description" content="A living character, an open creative process. Explore Hikari, the MIT web viewer, and the complete Live2D production skill." />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://live2d.luomo.moe/Amahane_Hikari/" />
+    <meta property="og:image" content="https://live2d.luomo.moe/Amahane_Hikari/social-preview.webp" />
+    <meta property="og:image:alt" content="Amahane Hikari interactive Live2D character and creative toolkit" />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" href="%BASE_URL%favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href="%BASE_URL%character-poster.webp" as="image" type="image/webp" />
     <title>Amahane Hikari · Live2D Showcase</title>
   </head>
   <body>
-    <noscript>请开启 JavaScript，以显示动态角色和表情控制。</noscript>
+    <a class="skip-link" href="#stage">跳至角色舞台</a>
+    <noscript><p class="noscript-note">开启 JavaScript 即可与角色互动。你也可以直接阅读下方制作指南，或访问 <a href="https://github.com/luomo66ccff/Amahane-Hikari-Live2D">GitHub 项目</a>。</p></noscript>
     <div class="showcase" data-showcase data-background="night" data-state="loading">
       <header class="topbar" aria-label="展示页顶栏">
         <a class="wordmark" href="%BASE_URL%" aria-label="Amahane Hikari 首页">
           <span class="wordmark-mark" aria-hidden="true">AH</span>
           <span class="wordmark-copy">
             <span class="wordmark-name">Amahane Hikari</span>
-            <span class="wordmark-meta">LIVE2D SHOWCASE</span>
+            <span class="wordmark-meta">A LITTLE LIGHT, BROUGHT TO LIFE</span>
           </span>
         </a>
 
+        <nav class="project-nav" aria-label="项目导航">
+          <a href="#process">制作旅程</a>
+          <a href="#build">一起创作</a>
+          <a href="https://github.com/luomo66ccff/Amahane-Hikari-Live2D/blob/main/README.en.md" lang="en">EN docs <span aria-hidden="true">↗</span></a>
+        </nav>
         <div class="topbar-actions" aria-label="播放和设置">
+          <a class="source-link" href="https://github.com/luomo66ccff/Amahane-Hikari-Live2D" aria-label="查看 GitHub 项目源码"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18c-4 1-4-2-6-2m12 5v-3.4c0-1 .1-1.5-.5-2.1 3-.3 6-1.5 6-6.5 0-1.5-.5-2.5-1.4-3.5.1-.4.6-1.8-.1-3.5 0 0-1.2-.4-3.8 1.4a13.4 13.4 0 0 0-7 0C4.6 1.6 3.4 2 3.4 2c-.7 1.7-.2 3.1-.1 3.5C2.4 6.5 2 7.5 2 9c0 5 3 6.2 6 6.5-.5.5-.6 1.1-.6 2.1V21"/></svg><span>GitHub</span></a>
           <button
             class="control-button control-button--pause"
             id="pause-toggle"
@@ -75,18 +87,29 @@
           </div>
 
           <div class="stage-heading">
-            <p class="section-kicker"><span class="kicker-line" aria-hidden="true"></span> CHARACTER / 01</p>
-            <h1 id="stage-title">Amahane Hikari</h1>
-            <p class="stage-heading-note">表达她此刻的心情</p>
+            <p class="section-kicker"><span class="kicker-line" aria-hidden="true"></span> A LIVE2D CHARACTER EXPERIENCE</p>
+            <h1 id="stage-title"><span>Amahane</span> <em>Hikari.</em></h1>
+            <p class="stage-heading-note">一瞬目光，就有回应。</p>
+            <p class="stage-intro">银发、月雪，还有一点小小的好奇。<br>移动光标，与她对视；选择一种心情，<br class="desktop-break">看看她的回应。</p>
+            <div class="hero-links">
+              <a class="primary-link" href="#expressions">探索她的表情 <span aria-hidden="true">↓</span></a>
+              <a class="quiet-link" href="#process">从零开始的制作旅程 <span aria-hidden="true">↗</span></a>
+            </div>
+            <dl class="character-facts" aria-label="角色概览">
+              <div><dt>衣装</dt><dd>03</dd></div>
+              <div><dt>表情</dt><dd>12</dd></div>
+              <div class="fact-source"><dt>创作方式</dt><dd>可继续编辑</dd></div>
+            </dl>
           </div>
 
           <p class="stage-word" aria-hidden="true">HIKARI</p>
-          <p class="stage-coordinate" aria-hidden="true">LIVE2D&nbsp;&nbsp;/&nbsp;&nbsp;01</p>
+          <p class="stage-coordinate" aria-hidden="true">MOONLIGHT / SNOW / HIKARI</p>
 
           <div class="model-viewport" aria-label="角色舞台">
             <div class="model-glow" aria-hidden="true"></div>
+            <img class="model-poster" src="%BASE_URL%character-poster.webp" alt="" aria-hidden="true" width="280" height="555" fetchpriority="high" />
             <canvas id="model-canvas" width="800" height="900" tabindex="0" aria-describedby="interaction-hint" aria-label="Amahane Hikari 动态角色"></canvas>
-            <p class="model-fallback" id="model-fallback">角色画布准备中</p>
+            <p class="model-fallback" id="model-fallback">动态载入中 · 静态预览</p>
           </div>
 
           <div class="stage-interactions" aria-label="角色互动">
@@ -130,7 +153,7 @@
             </button>
           </div>
 
-          <p class="stage-scroll-cue"><span aria-hidden="true">↓</span> EXPLORE EXPRESSIONS</p>
+          <p class="stage-scroll-cue"><span aria-hidden="true">✦</span> A LITTLE LIGHT, JUST FOR YOU</p>
 
           <aside class="settings-panel" id="settings-panel" aria-labelledby="settings-title" aria-hidden="true" hidden>
             <div class="settings-header">
@@ -194,11 +217,11 @@
           </aside>
         </section>
 
-        <section class="expression-section" aria-labelledby="expressions-title">
+        <section class="expression-section" id="expressions" aria-labelledby="expressions-title">
           <div class="section-header">
             <div>
               <p class="section-kicker"><span class="kicker-line" aria-hidden="true"></span> EXPRESSION LIBRARY</p>
-              <h2 id="expressions-title">选择表情</h2>
+              <h2 id="expressions-title">此刻，是什么心情？</h2>
             </div>
             <p class="expression-count"><span id="expression-index">01</span> / 12</p>
           </div>
@@ -220,12 +243,42 @@
             <p class="dock-scroll-hint"><span aria-hidden="true">↔</span> 左右滑动浏览全部表情</p>
           </nav>
         </section>
+
+        <section class="creation-section" id="process" aria-labelledby="process-title">
+          <div class="editorial-heading">
+            <div><p class="section-kicker"><span class="kicker-line" aria-hidden="true"></span> THE MAKING OF HIKARI</p><h2 id="process-title">从一张画，<br>到一次回应。</h2></div>
+            <div class="editorial-intro"><p>把创作过程也打开。</p><p>从角色设计、真实分层，到网格、物理与网页互动，每一步都有可追溯的制作方法、检查工具和纠错记录。</p><a class="text-link" href="https://github.com/luomo66ccff/Amahane-Hikari-Live2D/tree/main/skills/live2d-end-to-end">阅读完整制作 Skill <span aria-hidden="true">↗</span></a></div>
+          </div>
+          <ol class="process-list">
+            <li><span class="process-number" aria-hidden="true">01</span><div><span class="process-english" lang="en">Imagine</span><h3>让角色被看见</h3><p>锁定身份与配色，选择原画，规划每一个需要独立运动的部件。</p></div></li>
+            <li><span class="process-number" aria-hidden="true">02</span><div><span class="process-english" lang="en">Prepare</span><h3>为运动留出空间</h3><p>真实拆层、遮挡补绘与透明边缘检查，让转身和轻摆有据可依。</p></div></li>
+            <li><span class="process-number" aria-hidden="true">03</span><div><span class="process-english" lang="en">Bring to life</span><h3>赋予轻盈的回应</h3><p>在 Cubism 中制作网格、变形器、参数和物理，再反复观察动态。</p></div></li>
+            <li><span class="process-number" aria-hidden="true">04</span><div><span class="process-english" lang="en">Share</span><h3>让创作继续发生</h3><p>导出、核验、发布。留下可编辑工程与可复用的经验，供下一次创作起步。</p></div></li>
+          </ol>
+        </section>
+
+        <section class="build-section" id="build" aria-labelledby="build-title">
+          <div class="build-copy"><p class="section-kicker"><span class="kicker-line" aria-hidden="true"></span> MADE TO BE EXPLORED</p><h2 id="build-title">来，把灵感<br>继续写下去。</h2><p>探索她的动作系统，改进网页体验，<br>或用这份制作流程开始你的角色创作。</p><a class="primary-link" href="https://github.com/luomo66ccff/Amahane-Hikari-Live2D">在 GitHub 查看项目 <span aria-hidden="true">↗</span></a><p class="license-caption">网页代码 MIT · 制作文档 CC BY 4.0<br>角色资产使用独立署名 / No-AI 许可。</p></div>
+          <div class="resource-list">
+            <a href="https://github.com/luomo66ccff/Amahane-Hikari-Live2D/releases/tag/v2.0.0"><span class="resource-number">01 / MODEL</span><span class="resource-title">带走可编辑的 Hikari <span aria-hidden="true">↗</span></span><span class="resource-detail">Cubism 工程、运行包与三套衣装的动态对照</span></a>
+            <a href="https://github.com/luomo66ccff/Amahane-Hikari-Live2D/tree/main/skills/live2d-end-to-end"><span class="resource-number">02 / WORKFLOW</span><span class="resource-title">从零开始的制作 Skill <span aria-hidden="true">↗</span></span><span class="resource-detail">分阶段指南、核验脚本与实际排错经验</span></a>
+            <a href="https://github.com/luomo66ccff/Amahane-Hikari-Live2D/blob/main/CONTRIBUTING.md"><span class="resource-number">03 / CONTRIBUTE</span><span class="resource-title">让项目更好一点 <span aria-hidden="true">↗</span></span><span class="resource-detail">代码改进、浏览器复现、文档与翻译贡献</span></a>
+          </div>
+        </section>
+
+        <section class="project-notes" aria-labelledby="notes-title">
+          <div><p class="section-kicker"><span class="kicker-line" aria-hidden="true"></span> BEFORE YOU CREATE</p><h2 id="notes-title">开始之前</h2></div>
+          <div class="notes-list">
+            <details><summary>可以怎样使用这个项目？<span aria-hidden="true">+</span></summary><p>自写网页代码和工具采用 MIT，文档采用 CC BY 4.0。模型、美术、贴图、绑定与预览允许署名商用、修改和再分发；不得用这些材料或其衍生数据创建、训练、测试或改进 AI / 机器学习系统，或纳入这些用途的数据集。请先阅读 <a href="https://github.com/luomo66ccff/Amahane-Hikari-Live2D/blob/main/LICENSES/Model-Attribution-NoAI-1.0.txt">完整模型许可</a>。Live2D SDK 另遵循其官方条款。</p></details>
+            <details><summary>怎样在自己的电脑上开始？<span aria-hidden="true">+</span></summary><p>先从 <a href="https://github.com/luomo66ccff/Amahane-Hikari-Live2D#本地运行网页">快速上手</a> 克隆仓库。运行网页需要 Node.js 和你从官方取得的 Cubism SDK；纯逻辑测试与制作 Skill 的检查脚本可独立使用。<a href="https://github.com/luomo66ccff/Amahane-Hikari-Live2D/blob/main/README.en.md" lang="en">English setup guide ↗</a></p></details>
+            <details><summary>加载失败或动态不符合预期？<span aria-hidden="true">+</span></summary><p>可以先使用舞台的重新加载、暂停或复位功能。仍有问题时，请通过 <a href="https://github.com/luomo66ccff/Amahane-Hikari-Live2D/issues/new/choose">问题反馈</a> 提供浏览器、设备和复现步骤。性能实测的条件与边界公开在 <a href="https://github.com/luomo66ccff/Amahane-Hikari-Live2D/blob/main/docs/WEB_PERFORMANCE.md">性能记录</a> 中。</p></details>
+          </div>
+        </section>
       </main>
 
       <footer class="site-footer">
-        <span>Amahane Hikari</span>
-        <span class="footer-dot" aria-hidden="true"></span>
-        <span>Powered by <a href="https://www.live2d.com/" target="_blank" rel="noopener noreferrer">Live2D</a> · <a href="./licenses/Live2D-Core-LICENSE.md">Core license</a> · <a href="./licenses/Live2D-Framework-LICENSE.md">Framework license</a></span>
+        <div class="footer-signature"><span>Amahane Hikari<span class="signature-star" aria-hidden="true">✦</span></span><span>Created &amp; maintained by <a href="https://github.com/luomo66ccff">luomo66ccff</a></span></div>
+        <div class="footer-links"><a href="https://github.com/luomo66ccff/Amahane-Hikari-Live2D">GitHub ↗</a><a href="https://github.com/luomo66ccff/Amahane-Hikari-Live2D/blob/main/README.en.md" lang="en">English docs ↗</a><span>Powered by <a href="https://www.live2d.com/" target="_blank" rel="noopener noreferrer">Live2D</a></span><span><a href="./licenses/Live2D-Core-LICENSE.md">Core license</a> · <a href="./licenses/Live2D-Framework-LICENSE.md">Framework license</a></span></div>
       </footer>
     </div>
 
