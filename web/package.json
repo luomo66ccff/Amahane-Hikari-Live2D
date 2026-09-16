@@ -17,7 +17,12 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview --host 127.0.0.1 --port 5188",
     "test:controller": "node ../scripts/test-controller.mjs",
-    "test:smoke": "node ../scripts/smoke-browser.mjs"
+    "test:smoke": "node ../scripts/smoke-browser.mjs",
+    "test": "npm run test:controller && npm run test:runtime && npm run test:resources",
+    "test:runtime": "node ../scripts/test-runtime.mjs",
+    "test:resources": "node ../scripts/test-runtime-resources.mjs",
+    "test:mouth-event": "node ../scripts/test-mouth-event.mjs",
+    "test:events": "node ../scripts/test-mouth-events.mjs && npm run test:mouth-event"
   },
   "devDependencies": {
     "playwright": "1.58.2",
