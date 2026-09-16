@@ -1,0 +1,42 @@
+name: SDK-free regression
+
+on:
+  pull_request:
+  push:
+    branches: [main, 'fix/**']
+  workflow_dispatch:
+
+# This workflow never downloads the proprietary SDK, deploys, or writes to Git.
+permissions:
+  contents: read
+
+concurrency:
+  group: sdk-free-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - name: Install locked dependencies without lifecycle scripts
+        run: npm ci --ignore-scripts
+      - name: Verify unchanged asset manifest and runtime references
+        run: npm run verify
+      - name: Test authored action controller
+        run: npm run test:controller
+      - name: Test runtime boundaries and strict helper types
+        run: npm run test:runtime
+      - name: Install Chromium for the event fixture
+        run: npx --no-install playwright install --with-deps chromium
+      - name: Test actual listener and documented mouth-input example
+        run: npm run test:mouth-event

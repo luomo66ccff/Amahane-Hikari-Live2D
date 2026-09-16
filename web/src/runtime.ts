@@ -6,6 +6,8 @@ import { CubismShaderManager_WebGL } from '@framework/rendering/cubismshader_web
 import { CubismWebGLOffscreenManager } from '@framework/rendering/cubismoffscreenmanager';
 import { CubismRenderer_WebGL } from '@framework/rendering/cubismrenderer_webgl';
 import { HikariPresentation } from './presentation';
+import { frameDeltaSeconds, forEachPhysicsStep } from './frame-time';
+import { decodeImage } from './decode-image';
 import { SecondaryMotionController, secondaryMotionChannels, addSecondaryMotion } from './secondary-motion';
 import {
   RuntimeDebugController,
@@ -164,7 +166,7 @@ export class HikariStage extends CubismUserModel {
   private defaults:number[] = [];
   private frozenPhysics:number[] = [];
   private frame = 0;
-  private lastTime = 0;
+  private lastTime:number|null = null;
   private elapsed = 0;
   private secondaryMotion = new SecondaryMotionController();
   private nextBlink = 3.5;
@@ -323,10 +325,13 @@ export class HikariStage extends CubismUserModel {
       const img=new Image();
       try {
         img.src=url;
-        await Promise.race([img.decode(),new Promise<void>((_,reject)=>setTimeout(()=>reject(new Error('高清材质加载超时，请重新加载。')),20000))]);
+        await decodeImage(img,this.abort.signal);
         if(this.destroyed) return;
         const gl=this.gl;
         const texture=gl.createTexture();
+        if(!texture)throw new Error('显存不足，无法创建模型材质，请关闭其他图形页面后重试。');
+        // Register immediately so destroy() owns it even if upload throws.
+        this.textures.push(texture);
         gl.bindTexture(gl.TEXTURE_2D,texture);
         gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL,true);
         gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,img);
@@ -335,7 +340,6 @@ export class HikariStage extends CubismUserModel {
         gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);
         gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
         gl.bindTexture(gl.TEXTURE_2D,null);
-        this.textures.push(texture);
         renderer.bindTexture(i,texture);
       } finally { URL.revokeObjectURL(url); img.src=''; }
     }
@@ -702,7 +706,7 @@ export class HikariStage extends CubismUserModel {
   }
 
   setPaused(paused:boolean):void {
-    if(this.paused!==paused)this.lastTime=0;
+    if(this.paused!==paused)this.lastTime=null;
     if(paused&&!this.paused&&this._model&&this.defaults.length){
       this.frozenParameters=Array.from({length:this.defaults.length},(_,index)=>this._model.getParameterValueByIndex(index));
     }
@@ -774,7 +778,7 @@ export class HikariStage extends CubismUserModel {
     this.actionController.reset();
     this.actionController.update(0,this.paused);
     this.suppressAutonomousUntilCueInactive=false;
-    this.elapsed=0;this.nextBlink=3.5;this.selectedAt=0;
+    this.elapsed=0;this.lastTime=null;this.nextBlink=3.5;this.selectedAt=0;
     this.lastBase=[...this.defaults];this.frozenParameters=[...this.defaults];this.frozenPhysics=[];
     this.secondaryMotion.reset();
     if(this._model){
@@ -898,7 +902,7 @@ export class HikariStage extends CubismUserModel {
   }
   private changeZoom(value:number):void {
     this.setZoom(value);this.canvas.dispatchEvent(new CustomEvent('hikari:zoom',{bubbles:true,detail:{zoom:this.zoom}}));
-  }
+  };
   private onWheel=(event:WheelEvent):void=>{
     if(!this.ready||!this.moveMode||event.ctrlKey)return;
     event.preventDefault();this.changeZoom(this.zoom*Math.exp(-event.deltaY*.0015));
@@ -915,7 +919,7 @@ export class HikariStage extends CubismUserModel {
     event.preventDefault();
   };
   private onBlur=():void=>{this.cancelGesture();this.onLeave();};
-  private onVisibility=():void=>{this.lastTime=0;if(document.hidden)this.onBlur();};
+  private onVisibility=():void=>{this.lastTime=null;if(document.hidden)this.onBlur();};
   private onContextLost=(event:Event):void=>{
     event.preventDefault();
     cancelAnimationFrame(this.frame);
@@ -1138,8 +1142,10 @@ export class HikariStage extends CubismUserModel {
     if(this.destroyed||!this.ready) return;
     this.expireMouthInput();
     this.frame=requestAnimationFrame(this.tick);
-    if(document.hidden){this.lastTime=0;return;}
-    const dt=this.lastTime?Math.min((time-this.lastTime)/1000,1/30):1/60;
+    if(document.hidden){this.lastTime=null;return;}
+    // Animation receives elapsed wall time; only long stalls are bounded.
+    // Physics below consumes the same interval through smaller solver steps.
+    const dt=frameDeltaSeconds(time,this.lastTime);
     this.lastTime=time;
     if(!this.paused)this.elapsed+=dt;
     const debug=this.debugController?.getControls();
@@ -1199,7 +1205,7 @@ export class HikariStage extends CubismUserModel {
     if(!this.paused&&expressionEnabled)this._expressionManager.updateMotion(model,dt);
     if(!this.paused&&action.active)this.applyActionIntents(action.prePhysicsPose);
     if(!this.paused&&physicsEnabled){
-      this._physics?.evaluate(model,dt);
+      forEachPhysicsStep(dt,step=>this._physics?.evaluate(model,step));
       // Apply once after physics and before freezing. Each frame starts from
       // defaults, so the ambient offsets never accumulate in model values.
       this.applySecondaryMotion(dt,presence,action.active);
