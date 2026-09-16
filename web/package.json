@@ -17,7 +17,10 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview --host 127.0.0.1 --port 5188",
     "test:controller": "node ../scripts/test-controller.mjs",
-    "test:smoke": "node ../scripts/smoke-browser.mjs"
+    "test:smoke": "node ../scripts/smoke-browser.mjs",
+    "test": "npm run test:controller && npm run test:runtime",
+    "test:runtime": "node ../scripts/test-runtime.mjs",
+    "test:events": "node ../scripts/test-mouth-events.mjs"
   },
   "devDependencies": {
     "playwright": "1.58.2",
