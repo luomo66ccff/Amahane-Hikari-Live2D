@@ -33,6 +33,15 @@ Checks run and results:
 - [ ] If model or artwork files changed, I recorded provenance, the affected files and the manifest/verification result.
 - [ ] If documentation was translated or adapted, I retained attribution and did not alter the legal meaning of the model license.
 
+## AI assistance, when used
+
+- Tasks performed by an agent or generation tool:
+- Tool/model version, if actually recorded:
+- Contributor review and independent checks performed:
+- For generated artwork, source/provenance and applicable license:
+
+Describe the work and evidence; do not attach private transcripts, credentials or guessed generation metadata. See [our AI workflow](https://github.com/luomo66ccff/Amahane-Hikari-Live2D/blob/main/docs/AI_DEVELOPMENT.md).
+
 ## Reviewer notes
 
 State any known limitation, untested device/browser/pose, or evidence boundary that a reviewer should keep in mind.
