@@ -1,10 +1,14 @@
-# Amahane Hikari · Live2D v2.1.0
+# Amahane Hikari · AI-led Live2D creation and development
 
 [English](README.en.md) / [简体中文](README.md)
 
 [![SDK-free regression](https://github.com/luomo66ccff/Amahane-Hikari-Live2D/actions/workflows/sdk-free-regression.yml/badge.svg)](https://github.com/luomo66ccff/Amahane-Hikari-Live2D/actions/workflows/sdk-free-regression.yml)
 
-A moon-and-snow Live2D character with an editable TypeScript/Vite viewer, deterministic motion controllers, reproducible checks, and a reusable production skill.
+**AI-led creation and engineering · Built with OpenAI Codex · Human direction and acceptance**
+
+Amahane Hikari connects AI-generated artwork components, an editable Live2D character, and a TypeScript/WebGL viewer. Codex agents carry out task decomposition, code generation, tool orchestration, debugging, tests and documentation. Maintainer `luomo66ccff` sets requirements, corrects visual and motion behavior, and owns acceptance decisions and release authorization. The reusable code, production Skill, failure lessons and editable model sources are shared here.
+
+[How AI built this project: roles, evidence and corrections](docs/AI_DEVELOPMENT.md) · [中文制作记录](docs/AI_DEVELOPMENT.zh-CN.md)
 
 [Interactive demo](https://live2d.luomo.moe/Amahane_Hikari/) · [Model download (v2.0.0)](https://github.com/luomo66ccff/Amahane-Hikari-Live2D/releases/tag/v2.0.0) · [Production skill source](skills/live2d-end-to-end/SKILL.md) · [Skill package (v2.0.1)](https://github.com/luomo66ccff/Amahane-Hikari-Live2D/releases/tag/v2.0.1) · [Contributing](CONTRIBUTING.md) · [Security](SECURITY.md)
 
@@ -25,11 +29,22 @@ A moon-and-snow Live2D character with an editable TypeScript/Vite viewer, determ
 
 ## What is here
 
-Amahane Hikari brings a real Live2D Cubism character into the browser and shares the code and production process behind it. Explore the action controller, reproduce loading and resource-cleanup failures, or use the production skill to begin your own character project.
+Amahane Hikari is both an interactive character and a public case study in taking AI-assisted creation into maintainable software. Explore the action controller, reproduce loading and resource-cleanup failures, or use the production Skill to begin your own character project. Codex is used for development and maintenance; the viewer runs on Live2D/WebGL and needs no OpenAI API key.
 
 Software and tools are MIT-licensed; documentation is CC BY 4.0. Character assets are source-available under separate Attribution + No-AI terms. See the [license section](#licensing-and-attribution) for each component's scope.
 
-Maintainer: `luomo66ccff`. Code assistance: Hermes (`Amahane-Hikari`).
+Maintainer: `luomo66ccff`. AI development collaboration: OpenAI Codex; some commits use the Hermes (`Amahane-Hikari`) assistant identity. Commit attribution alone does not establish line-by-line generation provenance; the linked record explains the roles and evidence limits.
+
+## Where the AI work is visible
+
+| Stage | AI contribution | Inspectable outputs |
+| --- | --- | --- |
+| Artwork and production | The production workflow used Adobe Firefly-generated hair, eye components and accessories; agents organized preparation, rigging and acceptance steps | [Provenance](docs/PROVENANCE.md), [editable sources](model/source), [production workflow](docs/WORKFLOW.md) |
+| Coding and debugging | Generate and revise TypeScript motion/interaction code; repair event, timing, loading and resource-cleanup behavior | [Action controller](web/src/action-controller.ts), [runtime](web/src/runtime.ts), [correction cases](docs/AI_DEVELOPMENT.md#how-feedback-became-fixes) |
+| Performance and presentation | Implement lossless WebP, bounded concurrent loading, caching, a real static preview and a responsive homepage | [Performance evidence](docs/WEB_PERFORMANCE.md), [homepage PR](https://github.com/luomo66ccff/Amahane-Hikari-Live2D/pull/4) |
+| Verification and reuse | Write regressions, run real-browser checks, and distill production and recovery methods into a Skill | [CI for 70 SDK-free checks](.github/workflows/sdk-free-regression.yml), [production Skill](skills/live2d-end-to-end/SKILL.md), [failure lessons](docs/LESSONS_LEARNED.md) |
+
+Generated candidates still require transparency, edge, rigging and motion checks. The record does not support claiming that every pixel was generated or that production involved no human intervention. See the [AI development record](docs/AI_DEVELOPMENT.md) for stage ownership, fixed commit links and verification commands.
 
 ## Current contents
 

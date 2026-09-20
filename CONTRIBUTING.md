@@ -50,6 +50,12 @@ For a code change:
 
 Tests that use doubles must say what they do not prove. A passing controller or runtime-double test does not establish Cubism rendering quality, a successful model export, support on every device, or natural motion in every pose.
 
+## Contributing with AI agents
+
+AI-assisted code and documentation contributions are welcome. Our [AI development record](docs/AI_DEVELOPMENT.md) explains how Codex participates in this project. In a PR, briefly identify the tasks an agent performed, the files you inspected, and the checks that actually ran. The contributor remains responsible for the change; generated tests and an agent's completion message are not independent proof that the behavior is correct.
+
+For generated artwork, also identify the tool and available source/provenance record, and follow the model and asset rules below. Do not infer missing prompts or exact model versions, or upload private conversations and credentials as provenance. AI involvement does not change the license of any input or output.
+
 ## Documentation and translations
 
 Documentation fixes and translations are welcome. Preserve the meaning of commands, paths, version constraints, license boundaries and evidence limits. Do not turn a finite check into a general guarantee or add claims about downloads, adoption, supported devices or completed roadmap work without repository evidence.

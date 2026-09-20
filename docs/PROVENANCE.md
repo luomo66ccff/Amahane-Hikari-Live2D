@@ -1,6 +1,6 @@
 # Production provenance
 
-This project is initiated and maintained by luomo66ccff. The v2.0.0 release was produced with AI-assisted planning and implementation, Photoshop cleanup and painting, Cubism rigging, physics and expression setup, and web application development.
+This project is initiated and maintained by luomo66ccff. Its production uses an AI-led execution workflow: Codex agents perform planning, code generation, tool orchestration, debugging, checks and documentation, while the maintainer provides requirements, visual/motion corrections, acceptance decisions and release authorization. Photoshop cleanup and painting, Cubism rigging, physics and expression setup remain actual production stages. See the [AI development record](AI_DEVELOPMENT.md) for responsibilities, inspectable changes and evidence limits.
 
 ## Artwork and model
 
