@@ -35,6 +35,14 @@ npm run preview
 
 With the server running, use the smoke command from the README. Record the browser, viewport and SDK version when reporting visual results. The setup script copies SDK files only into ignored paths; never commit those copies.
 
+## One evidence-backed AI task
+
+For a focused first contribution, reproduce a reported pause, cancellation or rapid-action transition in `web/src/action-controller.ts`. Give Codex the observed input sequence, intended behavior and the owning files. Keep the change scoped to that behavior; record what the agent actually changed and what you reviewed in the [AI change record](docs/templates/AI_CHANGE_RECORD.md).
+
+From `web/`, run `npm run test:controller` and attach the result for the affected sequence. This checks controller intent and timing. If the fix changes visible motion, follow the SDK setup and production-preview instructions above, and record the same input sequence in the real viewer with browser and viewport details. The software test alone does not establish a visual improvement.
+
+Open a PR with the diff, reproduction, actual checks and remaining limitations. The [existing loading case](docs/AI_DEVELOPMENT.md#case-study-from-loading-feedback-to-reusable-tools) demonstrates this format with published source and measurement records. Raw private conversations and guessed generation metadata are unnecessary.
+
 ## JavaScript and TypeScript changes
 
 Keep runtime changes close to the module that owns the behavior. `web/src/main.ts` owns application lifecycle and the public mouth event listener, `ui.ts` owns DOM controls, `runtime.ts` owns Cubism loading and the frame pipeline, and `action-controller.ts` owns renderer-independent action intents. See [architecture](docs/ARCHITECTURE.md) before changing parameter ownership or event behavior.
