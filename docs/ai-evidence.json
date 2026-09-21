@@ -1,0 +1,85 @@
+{
+  "schema": "amahane-hikari-ai-evidence/v1",
+  "recordedOn": "2026-09-21",
+  "repository": "https://github.com/luomo66ccff/Amahane-Hikari-Live2D",
+  "publishedSourceBaseline": "a7a7b2fd1208e0530db8e7e216225f0895983eea",
+  "scope": "Index of published project records and reproducible entry points; not independent certification of AI authorship or a new test run.",
+  "attribution": {
+    "engineeringTool": "OpenAI Codex",
+    "artworkGeneratorReported": "Adobe Firefly",
+    "basis": "Maintainer production account, described in docs/PROVENANCE.md and docs/AI_DEVELOPMENT.md",
+    "exactGenerationModelVersions": null,
+    "perLineOrPixelAiPercentage": null,
+    "maintainer": "luomo66ccff",
+    "maintainerResponsibilities": ["Requirements", "Visual and motion feedback", "Acceptance decisions", "Release authorization"],
+    "assistantContributorIdentity": "Amahane-Hikari",
+    "identityLimit": "Commit attribution identifies a contributor; it does not certify which lines or pixels were generated."
+  },
+  "assetManifest": "ASSET_MANIFEST.json",
+  "evidenceKinds": {
+    "production-account": "Reported workflow and provenance; original private transcripts or generation receipts are not included.",
+    "inspectable-change": "Public fixed commit and current artifact; establishes implementation and file content.",
+    "recorded-measurement": "Published result with stated environment and sample scope; not a new measurement.",
+    "reproduction-entry": "Executable source or command; running it produces evidence for that run only."
+  },
+  "entries": [
+    {
+      "id": "artwork-components",
+      "title": "Generated components enter a real art and rigging workflow",
+      "evidenceKinds": ["production-account", "inspectable-change"],
+      "aiRoleReported": "Firefly material generation; Codex task planning and tool orchestration",
+      "paths": ["docs/PROVENANCE.md", "docs/WORKFLOW.md", "model/source/Photoshop/SuJiangXue_HairFlow_ArtMaster_WIP_t001.psd", "model/source/Photoshop/SuJiangXue_HairFlow_BackHair_TexturePatch_t001.psd"],
+      "limits": ["No public original generation sessions, prompt/seed receipts or final pixel/layer mapping.", "The retained PSDs are WIP and patch inputs, not complete final masters for all outfits."]
+    },
+    {
+      "id": "editable-character-delivery",
+      "title": "Editable Cubism source, runtime and viewer delivery",
+      "evidenceKinds": ["production-account", "inspectable-change", "reproduction-entry"],
+      "aiRoleReported": "Codex production task orchestration, software implementation and verification tooling",
+      "commit": "e73e3162cd054c686caad238abb605a392c59bfb",
+      "paths": ["model/source/Cubism/SuJiangXue_HairFlow_WIP_t102.cmo3", "model/runtime/SuJiangXue_HikariSmirk_t001.model3.json", "web/src/action-controller.ts", "docs/VALIDATION.md", "scripts/verify-package.mjs"],
+      "reproduce": [{"cwd": "web", "command": "npm run verify", "requires": "Node.js 22.12+", "establishes": "Manifest identity and runtime reference closure, not rig quality or AI authorship"}],
+      "limits": ["Finite recorded model/visual coverage is defined in docs/VALIDATION.md.", "Character assets use their own source-available license; SDK is obtained separately."]
+    },
+    {
+      "id": "loading-improvement",
+      "title": "Lossless web textures and recoverable loading",
+      "evidenceKinds": ["production-account", "inspectable-change", "recorded-measurement", "reproduction-entry"],
+      "aiRoleReported": "Codex implementation, failure diagnosis, measurement and documentation",
+      "commit": "ee9bf2cc917aa610b8773bd0500d1ba9160de3ba",
+      "paths": ["scripts/prepare-web-model.mjs", "web/src/runtime.ts", "scripts/measure-load.mjs", "scripts/test-loading.mjs", "docs/WEB_PERFORMANCE.md", "docs/web-performance.json", "docs/web-texture-manifest.json"],
+      "measurement": {"source": "docs/web-performance.json", "field": "textures", "meaning": "Eight original PNGs and lossless web copies with decoded RGBA equality; source record holds byte totals"},
+      "reproduce": [{"cwd": ".", "command": "node scripts/test-loading.mjs http://127.0.0.1:5188/Amahane_Hikari/ reports/loading-recovery", "requires": "Installed web dependencies, Playwright browser, separately obtained SDK and a running production preview; report directory must be new", "establishes": "The loading/recovery scenarios reported by this real-browser run"}],
+      "limits": ["Recorded network timings are one before/after cold/warm pair on one machine, not field performance.", "A passing final run does not erase the retained intermediate timeouts."]
+    },
+    {
+      "id": "software-regressions",
+      "title": "Runnable controller, runtime, cleanup and DOM checks",
+      "evidenceKinds": ["production-account", "inspectable-change", "reproduction-entry"],
+      "aiRoleReported": "Codex regression implementation and execution",
+      "paths": [".github/workflows/sdk-free-regression.yml", "web/package.json", "scripts/test-controller.mjs", "scripts/test-runtime.mjs", "scripts/test-runtime-resources.mjs", "scripts/test-mouth-events.mjs", "scripts/test-mouth-event.mjs"],
+      "reproduce": [{"cwd": "web", "command": "npm test", "requires": "Node.js 22.12+ and npm ci", "establishes": "Controller intent, timing, runtime and resource contracts with explicit doubles"}, {"cwd": "web", "command": "npm run test:events", "requires": "Installed dependencies and Playwright Chromium, or BROWSER_CHANNEL=msedge with local Edge", "establishes": "Public DOM listener behavior in a real browser without rendering a model"}],
+      "limits": ["SDK-free checks do not establish real Cubism rendering, visual quality or a generation percentage."]
+    },
+    {
+      "id": "reusable-production-skill",
+      "title": "Share the production and correction workflow",
+      "evidenceKinds": ["production-account", "inspectable-change", "reproduction-entry"],
+      "aiRoleReported": "Codex synthesis of production steps, failure recovery and portable validators",
+      "commit": "9db9bc776af980cfef4d21c6980ceae5ba4f1321",
+      "paths": ["skills/live2d-end-to-end/SKILL.md", "skills/live2d-end-to-end/references/art-to-cubism.md", "skills/live2d-end-to-end/references/runtime-and-acceptance.md", "skills/live2d-end-to-end/references/release-and-recovery.md", "skills/live2d-end-to-end/scripts/verify_model_package.py", "skills/live2d-end-to-end/scripts/check_package_links.py"],
+      "limits": ["Skill prose is CC BY 4.0 and utility scripts are MIT; the package does not include the character assets or Cubism SDK.", "Using the Skill does not establish that another model has passed its stage gates."]
+    },
+    {
+      "id": "project-homepage",
+      "title": "Responsive project page with actual-renderer fallback",
+      "evidenceKinds": ["production-account", "inspectable-change", "reproduction-entry"],
+      "aiRoleReported": "Codex frontend implementation, checks and contributor documentation",
+      "commit": "251ef1ebcc4c150800d748df1575fa4c71ac3502",
+      "pullRequest": "https://github.com/luomo66ccff/Amahane-Hikari-Live2D/pull/4",
+      "paths": ["web/index.html", "web/public/character-poster.webp", "scripts/check-project-page.mjs", "docs/RELEASE_NOTES.md", "CONTRIBUTING.md"],
+      "reproduce": [{"cwd": "web", "command": "npm run test:project-page -- http://127.0.0.1:5188/Amahane_Hikari/ ./reports/project-page", "requires": "Installed dependencies, Playwright browser, separately obtained SDK and running production preview; report directory must be new", "establishes": "Named responsive, keyboard, reduced-motion and load-recovery scenarios"}],
+      "limits": ["The poster and cover are captures of actual rendering, not newly generated promotional artwork.", "The published page-check scope is finite and does not establish universal device coverage."]
+    }
+  ]
+}

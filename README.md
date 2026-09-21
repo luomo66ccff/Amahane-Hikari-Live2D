@@ -10,6 +10,8 @@ Amahane Hikari 是一个把部分 AI 生成的美术组件、可编辑 Live2D �
 
 [AI 开发与生成记录](docs/AI_DEVELOPMENT.zh-CN.md) · [English: how AI built this project](docs/AI_DEVELOPMENT.md)
 
+**快速核查 AI 的实际工作：** [需求如何变成可发布成果](docs/AI_DEVELOPMENT.zh-CN.md#90-秒核查路线) · [一次完整的加载优化案例](docs/AI_DEVELOPMENT.zh-CN.md#案例从加载反馈到可复用工具) · [结构化证据索引](docs/ai-evidence.json)。从具体反馈、Codex 实现到验证和复用，逐步查看这条制作链。
+
 [在线试玩](https://live2d.luomo.moe/Amahane_Hikari/) · [模型下载（v2.0.0）](https://github.com/luomo66ccff/Amahane-Hikari-Live2D/releases/tag/v2.0.0) · [制作 Skill 源码](skills/live2d-end-to-end/SKILL.md) · [Skill 包（v2.0.1）](https://github.com/luomo66ccff/Amahane-Hikari-Live2D/releases/tag/v2.0.1) · [参与贡献](CONTRIBUTING.md) · [安全披露](SECURITY.md)
 
 <p align="center">
@@ -39,12 +41,14 @@ Amahane Hikari 既是可试玩的角色，也是一次从 AI 创作到可维护�
 
 | 环节 | AI 承担的工作 | 可以查看的成果 |
 | --- | --- | --- |
-| 素材生成与制作 | 制作流程使用 Adobe Firefly 生成的发丝、眼部组件和饰品素材；代理组织分层、绑定与验收步骤 | [素材来源](docs/PROVENANCE.md)、[可编辑工程](model/source)、[制作流程](docs/WORKFLOW.md) |
+| 素材生成与制作 | 现存制作记录记载了 Adobe Firefly 生成的发丝、眼部组件和饰品材料；代理组织分层、绑定与验收步骤 | [素材来源与记录范围](docs/PROVENANCE.md)、[可编辑工程](model/source)、[制作流程](docs/WORKFLOW.md) |
 | 编程与排错 | 生成、调整 TypeScript 动作和交互代码，修复事件、时序、加载与资源释放问题 | [动作控制器](web/src/action-controller.ts)、[运行时](web/src/runtime.ts)、[纠错案例](docs/AI_DEVELOPMENT.zh-CN.md#反馈如何变成修复) |
 | 性能与网页 | 实现无损 WebP、受控并行加载、缓存、真实静态预览与响应式首页 | [性能证据](docs/WEB_PERFORMANCE.md)、[首页改版 PR](https://github.com/luomo66ccff/Amahane-Hikari-Live2D/pull/4) |
 | 验证与经验复用 | 编写回归脚本，运行真实浏览器检查，把制作与失败恢复方法整理为 Skill | [70 项 SDK-free 检查的 CI](.github/workflows/sdk-free-regression.yml)、[制作 Skill](skills/live2d-end-to-end/SKILL.md)、[经验复盘](docs/LESSONS_LEARNED.md) |
 
 生成候选还需要透明度、边缘、绑定和动态验收；当前记录不支持“每个像素都由 AI 生成”或“完全无人参与”的说法。完整的阶段分工、固定提交链接和验证入口见 [AI 开发记录](docs/AI_DEVELOPMENT.zh-CN.md)。
+
+其他创作者与维护者可复用 MIT 运行时中的动作控制、资源释放和纹理准备工具，以及 CC BY 4.0 的制作 Skill。准备贡献时，可从[一次有证据的 AI 维护任务](CONTRIBUTING.md#one-evidence-backed-ai-task)开始；[未来 Codex 维护任务](docs/AI_DEVELOPMENT.zh-CN.md#接下来如何使用-codex)列出了具体文件、交付物和验收方式。
 
 ## 当前内容
 

@@ -6,6 +6,27 @@
 
 AI generation also appears in the artwork: the retained production account identifies Adobe Firefly-generated hair, eye-component and accessory material. This is distinct from Codex's engineering role. The final character still goes through Photoshop preparation, Cubism rigging and export, and runtime validation.
 
+## 90-second evidence tour
+
+1. Open the [evidence index](ai-evidence.json) to separate production-history attribution, inspectable code/assets, SDK-free checks and finite real-browser results.
+2. Read the [texture-loading case below](#case-study-from-loading-feedback-to-reusable-tools) alongside the [measurement conditions](WEB_PERFORMANCE.md) and [machine-readable result](web-performance.json).
+3. Inspect the [fixed implementation commit](https://github.com/luomo66ccff/Amahane-Hikari-Live2D/commit/ee9bf2cc917aa610b8773bd0500d1ba9160de3ba), [encoder](../scripts/prepare-web-model.mjs) and [recovery check](../scripts/test-loading.mjs). The commit shows a change; it does not by itself certify who generated each line.
+
+```mermaid
+flowchart LR
+    A[Maintainer defines requirements] --> B[Codex scopes work and edits]
+    B --> C{Work type}
+    C -->|Artwork or rig| D[Candidate materials, Photoshop QA, Cubism export]
+    C -->|Software| E[Viewer and verification scripts]
+    D --> F[Scope-specific readback and visual checks]
+    E --> F
+    F --> G[Maintainer reviews evidence and behavior]
+    G -->|Correction| B
+    G -->|Accepted and authorized| H[Versioned delivery]
+```
+
+This is the project workflow, not a claim that every case used every stage or that a Git author name proves AI authorship. The [change-record template](templates/AI_CHANGE_RECORD.md) keeps future task evidence and human corrections explicit without publishing private conversations.
+
 ## Responsibilities and outputs
 
 | Stage | AI execution | Maintainer's role | Public output |
@@ -27,6 +48,24 @@ These fixed commits make the engineering work inspectable. Diffs and tests estab
 2. **Reduce texture transfer without changing the original model.** [Commit `ee9bf2c`](https://github.com/luomo66ccff/Amahane-Hikari-Live2D/commit/ee9bf2cc917aa610b8773bd0500d1ba9160de3ba) adds web texture preparation and bounded loading. Eight textures go from 45,967,274 PNG bytes to 13,336,594 WebP bytes, with decoded RGBA equality checks. See [the measurement conditions](WEB_PERFORMANCE.md) and [the encoder](../scripts/prepare-web-model.mjs).
 3. **Turn production experience into a reusable Skill.** [Commit `9db9bc7`](https://github.com/luomo66ccff/Amahane-Hikari-Live2D/commit/9db9bc776af980cfef4d21c6980ceae5ba4f1321) publishes the artwork-to-Cubism-to-browser workflow, its correction/recovery references and portable package checks. Readers can inspect and adapt the [Skill source](../skills/live2d-end-to-end/SKILL.md).
 4. **Make the character and the project usable during loading.** [Commit `251ef1e`](https://github.com/luomo66ccff/Amahane-Hikari-Live2D/commit/251ef1ebcc4c150800d748df1575fa4c71ac3502), merged through [PR #4](https://github.com/luomo66ccff/Amahane-Hikari-Live2D/pull/4), adds the responsive homepage, real-model static preview, contributor guides and [35 page checks](../scripts/check-project-page.mjs). The native102 model and core renderer/runtime source files remain unchanged by that presentation update.
+
+## Case study: from loading feedback to reusable tools
+
+| Step | Inspectable record |
+| --- | --- |
+| Need | The recorded cold/warm model-ready times were 70.03/35.82 seconds, with 45,967,274 bytes of source PNG textures. This was a fixed-network performance problem, not a reason to alter the native102 rig. [Conditions and limitations](WEB_PERFORMANCE.md) |
+| Codex execution | The project records agent-led implementation. [Web-only texture preparation](../scripts/prepare-web-model.mjs) encodes lossless, exact-alpha WebP and checks decoded RGBA; [runtime loading](../web/src/runtime.ts) bounds parallel texture work and uses versioned cache/fallback behavior; [loading recovery checks](../scripts/test-loading.mjs) exercise failure paths. [Commit diff](https://github.com/luomo66ccff/Amahane-Hikari-Live2D/commit/ee9bf2cc917aa610b8773bd0500d1ba9160de3ba) shows the published source changes. |
+| Failure and correction | The earlier cache rule missed versioned `model/hikari_t001`; a large texture could also miss the HTTP cache on revisit. The final version uses `hikari-textures-hikari_t002` Cache Storage, retains network fallback, and removes a corrupt cached response before retry. Earlier remote timeouts and a failed cache-header rollout remain documented rather than being counted as successes. [Failure account](WEB_PERFORMANCE.md#实现与纠正) |
+| Measured result | Eight textures became 13,336,594 WebP bytes; the recorded final cold/warm model-ready times were 16.48/2.61 seconds. The [summary data](web-performance.json) is one before and one after cold/warm pair on one machine under forced HTTP/1.1, not field performance or a universal speed guarantee. No task-level record of individual human review steps is published. |
+| Reuse | Keep canonical model assets intact, verify decoded pixels, version generated URLs and test storage/network failure separately. The [encoder](../scripts/prepare-web-model.mjs), [recovery script](../scripts/test-loading.mjs) and [measurement script](../scripts/measure-load.mjs) can be adapted with their stated SDK/browser prerequisites. |
+
+To rerun the bounded recovery check, set up the local SDK and production preview as in the [viewer instructions](../README.en.md#run-the-complete-viewer), then use a fresh report directory from the repository root:
+
+```sh
+node scripts/test-loading.mjs http://127.0.0.1:5188/Amahane_Hikari/ reports/loading-recovery-new
+```
+
+The [evidence index](ai-evidence.json) distinguishes reported production attribution from inspectable changes. Its regression entry identifies SDK-free contracts (some with doubles, some in a browser without a model); its loading entry identifies finite SDK-backed browser measurements. None supplies a measured AI-generated percentage.
 
 ## How feedback became fixes
 
@@ -67,5 +106,15 @@ The public record is designed to be reproducible without exposing private conver
 ## What other maintainers can reuse
 
 The MIT viewer and tools expose motion ownership, cancellation, frame timing, bounded loading and cleanup patterns. The CC BY 4.0 Skill and documentation share stage gates, reproduction steps and recovery lessons. Future Codex work can build on these to reproduce reported bugs, extend cancellation/load-failure coverage, improve model adaptation guidance and keep translations aligned with actual behavior. Planned work remains in the [roadmap](ROADMAP.md).
+
+## Next Codex maintenance tasks
+
+These three tasks are **planned**, not completed features or promised dates:
+
+| Task and starting paths | Deliverable | Acceptance boundary |
+| --- | --- | --- |
+| Adapt another model: [runtime capabilities](../web/src/runtime-capabilities.ts), [package checker](../skills/live2d-end-to-end/scripts/verify_model_package.py), [roadmap](ROADMAP.md#model-adaptation-guide) | A capability matrix and DEV-only model-loading example, with required and unsupported channels stated | Package references close; a real model's parameter ranges and affected browser poses are read back. A matching ID alone is not compatibility. |
+| Extend loading recovery: [runtime](../web/src/runtime.ts), [retry lifecycle](../web/src/main.ts), [current fault injection](../scripts/test-loading.mjs) | Focused scenarios for interrupted model/shader/texture loads, retry, context loss and hidden-tab return | Record user-visible state and cleanup after each injected failure in a real browser; SDK-free doubles remain a separate layer. |
+| Publish copyable mouth-input examples: [public listener](../web/src/main.ts), [DOM event test](../scripts/test-mouth-event.mjs), [roadmap](ROADMAP.md#public-runtime-examples) | A short JavaScript/TypeScript example with input limits, expiry and clear behavior | Run the DOM contract check and, for visible mouth movement, an SDK-backed browser check; do not imply microphone or universal model support. |
 
 Codex is a development tool in this project. The published viewer uses Live2D/WebGL and does not require an OpenAI API key. Software and tools are MIT; documentation is CC BY 4.0; character assets and previews have separate [Model Attribution and No-AI terms](../LICENSES/Model-Attribution-NoAI-1.0.txt). Artwork generation provenance does not remove those downstream restrictions, and the model's license does not replace the MIT license of the code. The SDK follows its own upstream terms.
